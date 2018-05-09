@@ -26,6 +26,7 @@ class ISortable
 public:
     virtual ~ISortable() = default;
     virtual void sort(std::vector<T> & elements) = 0;
+    virtual std::string name() const = 0;
 protected:
     bool less(const T & a, const T & b)
     {

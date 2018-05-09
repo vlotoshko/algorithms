@@ -46,6 +46,7 @@ public:
             }
         }
     }
+    std::string name() const override { return  "Dummy sort"; }
 };
 
 
@@ -71,11 +72,12 @@ public:
             }
         }
     }
+    std::string name() const override { return  "Buble sort"; }
 };
 
 
 // ------------------------------------------------------------------------------------------
-// Classic buble sort algorithm
+// Comb sort algorithm
 // Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
@@ -103,18 +105,20 @@ public:
             }
         }
     }
+    std::string name() const override { return  "Comb sort"; }
 };
 
 
 
 // ------------------------------------------------------------------------------------------
-// Classic buble sort algorithm
-// Complexity: average O(n*log(n)), worst O(n*n)
+// Shake sort algorithm
+// Complexity: O(n*n)
 //
 template <typename T>
 class ShakeSort : public ISortable<T>
 {
 public:
+    // TODO: Test it
     void sort(std::vector<T> & elements) override
     {
         size_t length = elements.size();
@@ -139,6 +143,7 @@ public:
             left++;
         }
     }
+    std::string name() const override { return  "Shake sort"; }
 };
 
 

@@ -54,7 +54,8 @@ public:
             // Sort
             timer.start();
             iter->second->sort(elements);
-//            tools::show(elements);
+            std::cout << iter->second->name() << std::endl;
+            tools::show(elements);
         }
     }
 private:

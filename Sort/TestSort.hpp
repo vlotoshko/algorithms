@@ -25,6 +25,7 @@ enum class SortId : int
     SORT_DUMMY = 0,
     SORT_BUBLE,
     SORT_COMB,
+    SORT_SHAKE,
     SORT_QUICK,
 };
 
@@ -72,7 +73,7 @@ std::map<SortId, typename TestSort<T>::Alg> TestSort<T>::algorithms_ =
     {SortId::SORT_DUMMY, std::make_shared<DummySort<T>>()},
     {SortId::SORT_BUBLE, std::make_shared<BubleSort<T>>()},
     {SortId::SORT_COMB,  std::make_shared<CombSort<T>>()},
-    {SortId::SORT_QUICK, std::make_shared<BubleSort<T>>()}
+    {SortId::SORT_SHAKE, std::make_shared<ShakeSort<T>>()}
 };
 
 } // namespace sort

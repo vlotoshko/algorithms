@@ -93,12 +93,50 @@ public:
                 h /= 1.24733;
 
             swapped = false;
-            for (size_t i = 0; i + h < length; i++) {
-                if (this->less(elements[i + h], elements[i])) {
+            for (size_t i = 0; i + h < length; i++)
+            {
+                if (this->less(elements[i + h], elements[i]))
+                {
                     std::swap(elements[i], elements[i + h]);
                     swapped = true;
                 }
             }
+        }
+    }
+};
+
+
+
+// ------------------------------------------------------------------------------------------
+// Classic buble sort algorithm
+// Complexity: average O(n*log(n)), worst O(n*n)
+//
+template <typename T>
+class ShakeSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        size_t length = elements.size();
+        for (int left = 0, right = length - 1; left < right;) {
+
+            for (int j = left; j < right; ++j)
+            {
+                if (elements[j] != elements[j + 1] && this->less(elements[j + 1], elements[j]))
+                {
+                    std::swap(elements[j], elements[j + 1]);
+                }
+            }
+            right--;
+
+            for (int j = right; j > left; --j)
+            {
+                if (elements[j] != elements[j - 1] && this->less(elements[j], elements[j - 1]))
+                {
+                    std::swap(elements[j - 1], elements[j]);
+                }
+            }
+            left++;
         }
     }
 };

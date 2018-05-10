@@ -36,7 +36,7 @@ public:
         while (!isSorted)
         {
             isSorted = true;
-            for (int i = 0; i < length - 1; i++)
+            for (size_t i = 0; i < length - 1; i++)
             {
                 if (elements[i] != elements[i + 1] && !this->less(elements[i], elements[i + 1]))
                 {
@@ -109,7 +109,6 @@ public:
 };
 
 
-
 // ------------------------------------------------------------------------------------------
 // Shake sort algorithm
 // Complexity: O(n*n)
@@ -118,10 +117,9 @@ template <typename T>
 class ShakeSort : public ISortable<T>
 {
 public:
-    // TODO: Test it
     void sort(std::vector<T> & elements) override
     {
-        size_t length = elements.size();
+        int length = elements.size();
         for (int left = 0, right = length - 1; left < right;) {
 
             for (int j = left; j < right; ++j)
@@ -143,7 +141,136 @@ public:
             left++;
         }
     }
-    std::string name() const override { return  "Shake sort"; }
+    std::string name() const override { return "Shake sort"; }
+};
+
+
+// ------------------------------------------------------------------------------------------
+// Quick sort algorithm
+// Complexity: ---
+//
+template <typename T>
+class QuickSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        sort(elements, 0, elements.size() - 1);
+    }
+    std::string name() const override { return "Quick sort"; }
+private:
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int lo, int hi)
+    {
+        if (hi <= lo)
+        {
+            return;
+        }
+        int j = partition(elements, lo, hi);
+        sort(elements, lo, j - 1);
+        sort(elements, j + 1, hi);
+    }
+
+    int partition(std::vector<T> & elements, int lo, int hi)
+    {
+        int i = lo;
+        int j = hi + 1;
+        T v = elements[lo];
+        while (true)
+        {
+            while (this->less(elements[++i], v))
+            {
+                if (i == hi)
+                    break;
+            }
+            while (this->less(v, elements[--j]))
+            {
+                if (j == lo)
+                    break;
+            }
+            if (i >= j)
+                break;
+            std::swap(elements[i], elements[j]);
+        }
+        std::swap(elements[lo], elements[j]);
+        return j;
+    }
+};
+
+
+
+// ------------------------------------------------------------------------------------------
+// Quick sort Median algorithm
+// Complexity: ---
+//
+template <typename T>
+class QuickSortM : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        sort(elements, 0, elements.size() - 1);
+    }
+    std::string name() const override { return "Quick sort median"; }
+private:
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int lo, int hi)
+    {
+        if (hi <= lo)
+        {
+            return;
+        }
+        int j = partition(elements, lo, hi);
+        sort(elements, lo, j - 1);
+        sort(elements, j + 1, hi);
+    }
+
+    int partition(std::vector<T> & elements, int lo, int hi)
+    {
+        int i = lo;
+        int j = hi + 1;
+        int ind = lo;
+
+        if (hi - lo >= 3)
+        {
+            bool a_less_b = this->less(elements[lo], elements[lo + 1]);
+            bool b_less_c = this->less(elements[lo + 1], elements[lo + 2]);
+            bool c_less_a = this->less(elements[lo + 2], elements[lo]);
+
+            if (c_less_a && a_less_b)
+                ind = lo;
+            else
+                if (a_less_b && b_less_c)
+                    ind = lo+1;
+                else
+                    if (b_less_c && c_less_a)
+                        ind = lo+2;
+        }
+
+        if (ind != lo)
+            std::swap(elements[lo], elements[ind]);
+
+        T v = elements[lo];
+
+        while (true)
+        {
+            while (this->less(elements[++i], v))
+            {
+                if (i == hi)
+                    break;
+            }
+            while (this->less(v, elements[--j]))
+            {
+                if (j == lo)
+                    break;
+            }
+            if (i >= j)
+                break;
+            std::swap(elements[i], elements[j]);
+        }
+        std::swap(elements[lo], elements[j]);
+        return j;
+    }
 };
 
 

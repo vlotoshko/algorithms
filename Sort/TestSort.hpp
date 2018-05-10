@@ -27,6 +27,7 @@ enum class SortId : int
     SORT_COMB,
     SORT_SHAKE,
     SORT_QUICK,
+    SORT_QUICKM,
 };
 
 
@@ -47,7 +48,7 @@ public:
         {
             // Generate elements
             std::cout << "generating data... " << std::flush;
-            std::vector<T> elements;
+            std::vector<T> elements{};
             tools::randomData(elements, elementsCount_, 1, 1000);
             std::cout << "Ok" << std::endl;
 
@@ -55,7 +56,7 @@ public:
             timer.start();
             iter->second->sort(elements);
             std::cout << iter->second->name() << std::endl;
-            tools::show(elements);
+//            tools::show(elements);
         }
     }
 private:
@@ -74,7 +75,9 @@ std::map<SortId, typename TestSort<T>::Alg> TestSort<T>::algorithms_ =
     {SortId::SORT_DUMMY, std::make_shared<DummySort<T>>()},
     {SortId::SORT_BUBLE, std::make_shared<BubleSort<T>>()},
     {SortId::SORT_COMB,  std::make_shared<CombSort<T>>()},
-    {SortId::SORT_SHAKE, std::make_shared<ShakeSort<T>>()}
+    {SortId::SORT_SHAKE, std::make_shared<ShakeSort<T>>()},
+    {SortId::SORT_QUICK, std::make_shared<QuickSort<T>>()},
+    {SortId::SORT_QUICKM, std::make_shared<QuickSortM<T>>()}
 };
 
 } // namespace sort

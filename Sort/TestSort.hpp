@@ -28,6 +28,22 @@ enum class SortId : int
     SORT_SHAKE,
     SORT_QUICK,
     SORT_QUICKM,
+    SORT_QUICK3,
+    SORT_GNOME,
+
+    SORT_SELECTION,
+
+    SORT_INSERTION,
+    SORT_SHELL,
+
+    SORT_MERGE,
+    SORT_MERGE_UP,
+
+    SORT_QUICK_INS,
+    SORT_MERGE_INS,
+    SORT_HEAP,
+
+    SORT_INSERTION_BIN,
 };
 
 
@@ -52,11 +68,12 @@ public:
             tools::randomData(elements, elementsCount_, 1, 1000);
             std::cout << "Ok" << std::endl;
 
+            tools::show(elements);
             // Sort
             timer.start();
             iter->second->sort(elements);
             std::cout << iter->second->name() << std::endl;
-//            tools::show(elements);
+            tools::show(elements);
         }
     }
 private:
@@ -77,7 +94,17 @@ std::map<SortId, typename TestSort<T>::Alg> TestSort<T>::algorithms_ =
     {SortId::SORT_COMB,  std::make_shared<CombSort<T>>()},
     {SortId::SORT_SHAKE, std::make_shared<ShakeSort<T>>()},
     {SortId::SORT_QUICK, std::make_shared<QuickSort<T>>()},
-    {SortId::SORT_QUICKM, std::make_shared<QuickSortM<T>>()}
+    {SortId::SORT_QUICKM, std::make_shared<QuickSortM<T>>()},
+    {SortId::SORT_QUICK3, std::make_shared<Quick3Sort<T>>()},
+    {SortId::SORT_GNOME, std::make_shared<GnomeSort<T>>()},
+
+    {SortId::SORT_SELECTION, std::make_shared<SelectionSort<T>>()},
+
+    {SortId::SORT_INSERTION, std::make_shared<InsertionSort<T>>()},
+    {SortId::SORT_SHELL, std::make_shared<ShellSort<T>>()},
+
+    {SortId::SORT_MERGE, std::make_shared<MergeSort<T>>()},
+    {SortId::SORT_MERGE_UP, std::make_shared<MergeUpSort<T>>()}
 };
 
 } // namespace sort

@@ -147,7 +147,7 @@ public:
 
 // ------------------------------------------------------------------------------------------
 // Quick sort algorithm
-// Complexity: ---
+// Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
 class QuickSort : public ISortable<T>
@@ -201,7 +201,7 @@ private:
 
 // ------------------------------------------------------------------------------------------
 // Quick sort Median algorithm
-// Complexity: ---
+// Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
 class QuickSortM : public ISortable<T>
@@ -275,18 +275,289 @@ private:
 
 
 // ------------------------------------------------------------------------------------------
+// Quick sort 3parts algorithm
+// Complexity:
+//
+template <typename T>
+class Quick3Sort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        sort(elements, 0, elements.size() - 1);
+    }
+    std::string name() const override { return "Quick3 sort"; }
+private:
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int lo, int hi)
+    {
+        if (hi <= lo)
+        {
+            return;
+        }
+
+        int lt = lo;
+        int i = lo + 1;
+        int gt = hi;
+        T v = elements[lo];
+
+        while (i <= gt)
+        {
+            if (elements[i] == v)
+            {
+                i++;
+            }
+            else if (this->less(elements[i], v))
+            {
+                std::swap(elements[lt++], elements[i++]);
+            }
+            else
+            {
+                std::swap(elements[i], elements[gt--]);
+            }
+        }
+        sort(elements, lo, lt - 1);
+        sort(elements, gt + 1, hi);
+    }
+};
+
+
+// ------------------------------------------------------------------------------------------
+// Gnome sort algorithm
+// Complexity:
+//
+template <typename T>
+class GnomeSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        size_t length = elements.size();
+        for (size_t i = 1; i < length; i++)
+        {
+            for (size_t j = i; j > 0 && this->less(elements[j], elements[j - 1]); j--)
+            {
+                std::swap(elements[j], elements[j - 1]);
+            }
+        }
+    }
+    std::string name() const override { return  "Gnome sort"; }
+};
+
+
+// ------------------------------------------------------------------------------------------
 // ---------------- Selection sort algorithms -----------------------------------------------
 // ------------------------------------------------------------------------------------------
 
 
 // ------------------------------------------------------------------------------------------
+// Selection sort algorithm
+// Complexity:
+//
+template <typename T>
+class SelectionSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        size_t length = elements.size();
+        for (size_t i = 0; i < length; i++)
+        {
+            size_t min = i;
+            for (size_t j = i; j < length - 1; ++j)
+            {
+                if (elements[min] != elements[j + 1] && !this->less(elements[min], elements[j + 1]))
+                {
+                    min = j + 1;
+                }
+            }
+            std::swap(elements[min], elements[i]);
+        }
+    }
+    std::string name() const override { return  "Selection sort"; }
+};
+
+// ------------------------------------------------------------------------------------------
 // ---------------- Insertion sort algorithms -----------------------------------------------
 // ------------------------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------------------------
+// Insertion sort algorithm
+// Complexity:
+//
+template <typename T>
+class InsertionSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        int length = elements.size();
+        for (int i = 1; i < length; i++)
+        {
+            T key = elements[i];
+            int j = i - 1;
+
+            while (j >= 0 && elements[j] > key)
+            {
+                elements[j + 1] = elements[j];
+                --j;
+            }
+            elements[j + 1] = key;
+        }
+    }
+    std::string name() const override { return  "Insertion sort"; }
+};
+
+
+// ------------------------------------------------------------------------------------------
+// Shell sort algorithm
+// Complexity:
+//
+template <typename T>
+class ShellSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        int length = elements.size();
+        int h = 1;
+        while (h < length / 3)
+            h = 3 * h + 1;
+
+        while (h >= 1)
+        {
+            for (int i = h; i < length; i++)
+            {
+                for (int j = i; j >= h && this->less(elements[j], elements[j - h]); j -= h)
+                {
+                    std::swap(elements[j], elements[j - h]);
+                }
+            }
+            h /= 3;
+        }
+    }
+    std::string name() const override { return  "Shell sort"; }
+};
 
 // ------------------------------------------------------------------------------------------
 // ---------------- Merging sort algorithms -------------------------------------------------
 // ------------------------------------------------------------------------------------------
+
+// ------------------------------------------------------------------------------------------
+// Merge sort algorithm
+// Complexity:
+//
+template <typename T>
+class MergeSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        std::vector<T> aux(elements.size());
+        sort(elements, 0, elements.size() - 1, aux);
+    }
+    std::string name() const override { return  "Merge sort"; }
+private:
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
+    {
+        if (hi <= lo)
+        {
+            return;
+        }
+
+        int mid = lo + (hi - lo) / 2;
+
+        sort(elements, lo, mid, aux);
+        sort(elements, mid + 1, hi, aux);
+        merge(elements, lo, mid, hi, aux);
+    }
+
+    void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
+    {
+        int i = lo;
+        int j = mid + 1;
+
+        // copying array to aux
+        for (int k = lo; k <= hi; k++)
+        {
+           aux[k] = elements[k];
+        }
+
+        // copying array from aux
+        for (int k = lo; k <= hi; k++)
+        {
+            if (i > mid)
+                elements[k] = aux[j++]; // copy from right part
+            else
+                if (j > hi)
+                    elements[k] = aux[i++]; // copy from left part
+                else
+                    if (this->less(aux[j], aux[i]))
+                        elements[k] = aux[j++]; // copy from right part
+                    else
+                        elements[k] = aux[i++]; // copy from left part
+        }
+    }
+};
+
+
+
+// ------------------------------------------------------------------------------------------
+// Merge upward sort algorithm
+// Complexity:
+//
+template <typename T>
+class MergeUpSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        std::vector<T> aux(elements.size());
+        sort(elements, elements.size(), aux);
+    }
+    std::string name() const override { return  "MergeUp sort"; }
+private:
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int length, std::vector<T> & aux)
+    {
+        for (int sz = 1; sz < length; sz += sz)
+        {
+            for (int lo = 0; lo < length - sz; lo += sz+sz)
+            {
+                merge(elements, lo, lo+sz-1, (lo + sz + sz - 1) < (length - 1) ? lo + sz + sz - 1 : length - 1, aux);
+            }
+        }
+    }
+
+    // merge function is the same as in the merge sort algorithm
+    void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
+    {
+        int i = lo;
+        int j = mid + 1;
+
+        // copying array to aux
+        for (int k = lo; k <= hi; k++)
+        {
+           aux[k] = elements[k];
+        }
+
+        // copying array from aux
+        for (int k = lo; k <= hi; k++)
+        {
+            if (i > mid)
+                elements[k] = aux[j++]; // copy from right part
+            else
+                if (j > hi)
+                    elements[k] = aux[i++]; // copy from left part
+                else
+                    if (this->less(aux[j], aux[i]))
+                        elements[k] = aux[j++]; // copy from right part
+                    else
+                        elements[k] = aux[i++]; // copy from left part
+        }
+    }
+};
 
 
 // ------------------------------------------------------------------------------------------

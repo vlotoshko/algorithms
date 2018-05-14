@@ -502,7 +502,6 @@ private:
 };
 
 
-
 // ------------------------------------------------------------------------------------------
 // Merge upward sort algorithm
 // Complexity:
@@ -564,6 +563,56 @@ private:
 // ---------------- Hybrid sort algorithms --------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
+// ------------------------------------------------------------------------------------------
+// ---------------- Other sort algorithms --------------------------------------------------
+// ------------------------------------------------------------------------------------------
+
+
+// ------------------------------------------------------------------------------------------
+// Heap sort algorithm
+// Complexity: O(n*log(n))
+//
+template <typename T>
+class HeapSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        int length = elements.size();
+        {
+            //  1. make sorted tree
+            for (int i = length / 2; i >= 0; i--)
+            {
+                sink(elements, i, length);
+            }
+
+            // 2. sort
+            while(length > 1)
+            {
+                std::swap(elements[0], elements[--length]);
+                sink(elements, 0, length);
+
+            }
+        }
+    }
+    std::string name() const override { return  "Heap sort"; }
+private:
+    void sink(std::vector<T> & elements, int pos, int length)
+    {
+        ++pos;
+        while (2 * pos <= length)
+        {
+            int j = 2 * pos;
+            if(j < length && this->less(elements[j - 1], elements[j]))
+                j++;
+
+            if(this->less(elements[j - 1], elements[pos - 1]))
+                break;
+            std::swap(elements[j - 1], elements[pos - 1]);
+            pos = j;
+        }
+    }
+};
 
 
 } // namespace sort

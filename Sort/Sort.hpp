@@ -198,7 +198,6 @@ private:
 };
 
 
-
 // ------------------------------------------------------------------------------------------
 // Quick sort Median algorithm
 // Complexity: average O(n*log(n)), worst O(n*n)
@@ -349,7 +348,6 @@ public:
 // ---------------- Selection sort algorithms -----------------------------------------------
 // ------------------------------------------------------------------------------------------
 
-
 // ------------------------------------------------------------------------------------------
 // Selection sort algorithm
 // Complexity:
@@ -375,6 +373,53 @@ public:
         }
     }
     std::string name() const override { return  "Selection sort"; }
+};
+
+
+// ------------------------------------------------------------------------------------------
+// Heap sort algorithm
+// Complexity: O(n*log(n))
+//
+template <typename T>
+class HeapSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        int length = elements.size();
+        {
+            //  1. make sorted tree
+            for (int i = length / 2; i >= 0; i--)
+            {
+                sink(elements, i, length);
+            }
+
+            // 2. sort
+            while(length > 1)
+            {
+                std::swap(elements[0], elements[--length]);
+                sink(elements, 0, length);
+
+            }
+        }
+    }
+    std::string name() const override { return  "Heap sort"; }
+private:
+    void sink(std::vector<T> & elements, int pos, int length)
+    {
+        ++pos;
+        while (2 * pos <= length)
+        {
+            int j = 2 * pos;
+            if(j < length && this->less(elements[j - 1], elements[j]))
+                j++;
+
+            if(this->less(elements[j - 1], elements[pos - 1]))
+                break;
+            std::swap(elements[j - 1], elements[pos - 1]);
+            pos = j;
+        }
+    }
 };
 
 // ------------------------------------------------------------------------------------------
@@ -403,6 +448,21 @@ public:
                 --j;
             }
             elements[j + 1] = key;
+        }
+    }
+    void sort(int *array, int length)
+    {
+        for (int i = 1; i < length; i++)
+        {
+            int key = array[i];
+            int j = i - 1;
+
+            while(j >= 0 && array[j] > key)
+            {
+                array[j + 1] = array[j];
+                --j;
+            }
+            array[j + 1] = key;
         }
     }
     std::string name() const override { return  "Insertion sort"; }
@@ -563,56 +623,127 @@ private:
 // ---------------- Hybrid sort algorithms --------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------------------------
-// ---------------- Other sort algorithms --------------------------------------------------
-// ------------------------------------------------------------------------------------------
-
 
 // ------------------------------------------------------------------------------------------
-// Heap sort algorithm
-// Complexity: O(n*log(n))
+// Quick + Insertion sort algorithm
+// Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
-class HeapSort : public ISortable<T>
+class QuickInsSort : public ISortable<T>
 {
 public:
     void sort(std::vector<T> & elements) override
     {
-        int length = elements.size();
-        {
-            //  1. make sorted tree
-            for (int i = length / 2; i >= 0; i--)
-            {
-                sink(elements, i, length);
-            }
-
-            // 2. sort
-            while(length > 1)
-            {
-                std::swap(elements[0], elements[--length]);
-                sink(elements, 0, length);
-
-            }
-        }
+        sort(elements, 0, elements.size() - 1);
     }
-    std::string name() const override { return  "Heap sort"; }
+    std::string name() const override { return "QuickIns sort"; }
 private:
-    void sink(std::vector<T> & elements, int pos, int length)
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int lo, int hi)
     {
-        ++pos;
-        while (2 * pos <= length)
+        if (hi - lo <= 15)
         {
-            int j = 2 * pos;
-            if(j < length && this->less(elements[j - 1], elements[j]))
-                j++;
+            iSort_.sort(&elements[lo], hi - lo + 1);
+            return;
+        }
 
-            if(this->less(elements[j - 1], elements[pos - 1]))
+        int j = partition(elements, lo, hi);
+        sort(elements, lo, j - 1);
+        sort(elements, j + 1, hi);
+    }
+
+    int partition(std::vector<T> & elements, int lo, int hi)
+    {
+        int i = lo;
+        int j = hi + 1;
+        T v = elements[lo];
+        while (true)
+        {
+            while (this->less(elements[++i], v))
+            {
+                if (i == hi)
+                    break;
+            }
+            while (this->less(v, elements[--j]))
+            {
+                if (j == lo)
+                    break;
+            }
+            if (i >= j)
                 break;
-            std::swap(elements[j - 1], elements[pos - 1]);
-            pos = j;
+            std::swap(elements[i], elements[j]);
+        }
+        std::swap(elements[lo], elements[j]);
+        return j;
+    }
+
+    InsertionSort<T> iSort_;
+};
+
+
+// ------------------------------------------------------------------------------------------
+// Merge + Insertion sort algorithm
+// Complexity:
+//
+template <typename T>
+class MergeInsSort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+        std::vector<T> aux(elements.size());
+        sort(elements, 0, elements.size() - 1, aux);
+    }
+    std::string name() const override { return  "MergeIns sort"; }
+private:
+    // NOTE: bounders lo and hi should be signed type
+    void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
+    {
+        if (hi - lo <= 15)
+        {
+            iSort_.sort(&elements[lo], hi - lo + 1);
+            return;
+        }
+
+        int mid = lo + (hi - lo) / 2;
+
+        sort(elements, lo, mid, aux);
+        sort(elements, mid + 1, hi, aux);
+        merge(elements, lo, mid, hi, aux);
+    }
+
+    void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
+    {
+        int i = lo;
+        int j = mid + 1;
+
+        // copying array to aux
+        for (int k = lo; k <= hi; k++)
+        {
+           aux[k] = elements[k];
+        }
+
+        // copying array from aux
+        for (int k = lo; k <= hi; k++)
+        {
+            if (i > mid)
+                elements[k] = aux[j++]; // copy from right part
+            else
+                if (j > hi)
+                    elements[k] = aux[i++]; // copy from left part
+                else
+                    if (this->less(aux[j], aux[i]))
+                        elements[k] = aux[j++]; // copy from right part
+                    else
+                        elements[k] = aux[i++]; // copy from left part
         }
     }
+
+    InsertionSort<T> iSort_;
 };
+
+
+// InsertionBinary
 
 
 } // namespace sort

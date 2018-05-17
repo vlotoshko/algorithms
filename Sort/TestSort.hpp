@@ -22,24 +22,33 @@ namespace sort
 
 enum class SortId : int
 {
+    // Change sorts
     SORT_DUMMY = 0,
     SORT_BUBLE,
     SORT_COMB,
     SORT_SHAKE,
     SORT_QUICK,
-    SORT_QUICKM,
+    SORT_QUICKM, // 5
     SORT_QUICK3,
     SORT_GNOME,
+
+    // Selection sorts
     SORT_SELECTION,
-    SORT_INSERTION,
+    SORT_HEAP,
+
+    // Insertion sorts
+    SORT_INSERTION, //10
     SORT_SHELL,
+
+    // Merge sorts
     SORT_MERGE,
     SORT_MERGE_UP,
 
+    // Hybrid sorts
     SORT_QUICK_INS,
-    SORT_MERGE_INS,
-    SORT_HEAP,
+    SORT_MERGE_INS, // 15
     SORT_INSERTION_BIN,
+
 };
 
 
@@ -94,11 +103,13 @@ std::map<SortId, typename TestSort<T>::Alg> TestSort<T>::algorithms_ =
     {SortId::SORT_QUICK3, std::make_shared<Quick3Sort<T>>()},
     {SortId::SORT_GNOME, std::make_shared<GnomeSort<T>>()},
     {SortId::SORT_SELECTION, std::make_shared<SelectionSort<T>>()},
+    {SortId::SORT_HEAP, std::make_shared<HeapSort<T>>()},
     {SortId::SORT_INSERTION, std::make_shared<InsertionSort<T>>()},
     {SortId::SORT_SHELL, std::make_shared<ShellSort<T>>()},
     {SortId::SORT_MERGE, std::make_shared<MergeSort<T>>()},
     {SortId::SORT_MERGE_UP, std::make_shared<MergeUpSort<T>>()},
-    {SortId::SORT_HEAP, std::make_shared<HeapSort<T>>()}
+    {SortId::SORT_QUICK_INS, std::make_shared<QuickInsSort<T>>()},
+    {SortId::SORT_MERGE_INS, std::make_shared<MergeInsSort<T>>()}
 };
 
 } // namespace sort

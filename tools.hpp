@@ -37,9 +37,8 @@ private:
 template <typename T>
 T random(const T & min, const T & max)
 {
-    // TODO: make static objects that should be initialized once
-    std::random_device rd;
-    std::mt19937 rng(rd());
+    static auto const seed = std::random_device()();
+    static std::mt19937 rng(seed);
     std::uniform_int_distribution<T> uni(min,max);
     auto random_T = uni(rng);
     return random_T;

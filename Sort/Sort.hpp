@@ -275,7 +275,7 @@ private:
 
 // ------------------------------------------------------------------------------------------
 // Quick sort 3parts algorithm
-// Complexity:
+// Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
 class Quick3Sort : public ISortable<T>
@@ -323,7 +323,7 @@ private:
 
 // ------------------------------------------------------------------------------------------
 // Gnome sort algorithm
-// Complexity:
+// Complexity: O(n*n)
 //
 template <typename T>
 class GnomeSort : public ISortable<T>
@@ -350,7 +350,7 @@ public:
 
 // ------------------------------------------------------------------------------------------
 // Selection sort algorithm
-// Complexity:
+// Complexity: O(n*n)
 //
 template <typename T>
 class SelectionSort : public ISortable<T>
@@ -428,7 +428,7 @@ private:
 
 // ------------------------------------------------------------------------------------------
 // Insertion sort algorithm
-// Complexity:
+// Complexity: O(n*n)
 //
 template <typename T>
 class InsertionSort : public ISortable<T>
@@ -471,7 +471,7 @@ public:
 
 // ------------------------------------------------------------------------------------------
 // Shell sort algorithm
-// Complexity:
+// Complexity:  O(n*log(n)*log(n))
 //
 template <typename T>
 class ShellSort : public ISortable<T>
@@ -505,7 +505,7 @@ public:
 
 // ------------------------------------------------------------------------------------------
 // Merge sort algorithm
-// Complexity:
+// Complexity: O(n*log(n))
 //
 template <typename T>
 class MergeSort : public ISortable<T>
@@ -564,7 +564,7 @@ private:
 
 // ------------------------------------------------------------------------------------------
 // Merge upward sort algorithm
-// Complexity:
+// Complexity: O(n*log(n))
 //
 template <typename T>
 class MergeUpSort : public ISortable<T>
@@ -683,7 +683,7 @@ private:
 
 // ------------------------------------------------------------------------------------------
 // Merge + Insertion sort algorithm
-// Complexity:
+// Complexity: O(n*log(n))
 //
 template <typename T>
 class MergeInsSort : public ISortable<T>

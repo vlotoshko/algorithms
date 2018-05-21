@@ -64,25 +64,25 @@ public:
 
     void runTest(tools::Timer & timer) override
     {
-        auto iter = algorithms_.find(algId_);
-        if(iter != algorithms_.end())
+        auto iter = Algorithms.find(algId_);
+        if(iter != Algorithms.end())
         {
             // Generate elements
-            std::cout << "generating data... " << std::flush;
             std::vector<T> elements(elementsCount_);
+//            std::cout << "generating data... " << std::flush;
             tools::randomData(elements, elementsCount_, 1, 1000);
-            std::cout << "Ok" << std::endl;
+//            std::cout << "Ok" << std::endl;
 
-//            tools::show(elements);
             // Sort
+//            tools::show(elements);
             timer.start();
             iter->second->sort(elements);
             std::cout << iter->second->name() << std::endl;
 //            tools::show(elements);
         }
     }
+    static std::map<SortId, Alg> Algorithms;
 private:
-    static std::map<SortId, Alg> algorithms_;
     SortId algId_;
     size_t elementsCount_;
 };
@@ -92,7 +92,7 @@ private:
 // Registry of the sort algorithms
 //
 template <typename T>
-std::map<SortId, typename TestSort<T>::Alg> TestSort<T>::algorithms_ =
+std::map<SortId, typename TestSort<T>::Alg> TestSort<T>::Algorithms =
 {
     {SortId::SORT_DUMMY, std::make_shared<DummySort<T>>()},
     {SortId::SORT_BUBLE, std::make_shared<BubleSort<T>>()},

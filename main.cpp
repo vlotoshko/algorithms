@@ -17,8 +17,26 @@ struct InputParameters
     sort::SortId algId;
     unsigned repeatCount;
     unsigned elementsCount;
-    static void usage() { std::cout << "Hello, World!" << std::endl; }
+    static const char * hello;
+    template<typename T>
+    static void usage()
+    {
+        std::cout << hello << std::endl;
+        for (auto & item: sort::TestSort<T>::Algorithms)
+        {
+            std::cout << std::setw(3) << static_cast<int>(item.first) <<  ":\t"
+                      << item.second->name() << std::endl;
+        }
+    }
 };
+
+const char * InputParameters::hello =
+        "Usage: algorithm X Y Z\n"
+        "Where:\n"
+        "  X - number of the algorithm\n"
+        "  Y - repeat count, algorithm will be invoked Y times, doubling its element count each time\n"
+        "  Z - initial elements count\n"
+        "Sort algorithms:";
 
 
 // ------------------------------------------------------------------------------------------
@@ -70,8 +88,16 @@ void doubleAmountTest(const InputParameters parameters)
 
 int main(int argc, char *argv[])
 {
-    InputParameters::usage();
-    doubleAmountTest(getParameters(argc, argv));
+    auto parameters = getParameters(argc, argv);
+    auto const & sortAlgs = sort::TestSort<int>::Algorithms;
+    if (argc < 4 || sortAlgs.find(parameters.algId) == sortAlgs.end())
+    {
+        InputParameters::usage<int>();
+    }
+    else
+    {
+        doubleAmountTest(parameters);
+    }
     return 0;
 }
 

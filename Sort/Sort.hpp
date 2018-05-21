@@ -743,8 +743,33 @@ private:
 };
 
 
-// InsertionBinary
+// ------------------------------------------------------------------------------------------
+// InsertionBinary sort algorithm
+// Complexity: O(n*n)
+//
+template <typename T>
+class InsertionBinarySort : public ISortable<T>
+{
+public:
+    void sort(std::vector<T> & elements) override
+    {
+         // TODO: implement InsertionBinary sort
+        int length = elements.size();
+        for (int i = 1; i < length; i++)
+        {
+            T key = elements[i];
+            int j = i - 1;
 
+            while (j >= 0 && elements[j] > key)
+            {
+                elements[j + 1] = elements[j];
+                --j;
+            }
+            elements[j + 1] = key;
+        }
+    }
+    std::string name() const override { return  "InsertionBinary sort"; }
+};
 
 } // namespace sort
 

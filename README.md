@@ -1,6 +1,6 @@
-###### Implementations of the variety algorithms and data structures, to feel and test how they work.
+###### **Implementations of the variety algorithms and data structures, to feel and test how they work.**
 
-###### Usage.
+###### **Usage.**
 Usage: `algorithm X Y Z`  
 
 Where:  

@@ -2,12 +2,15 @@
 
 ###### Usage.
 Usage: `algorithm X Y Z`  
-```
+
 Where:  
+```
   X - number of the algorithm  
   Y - repeat count, algorithm will be invoked Y times, doubling its element count each time  
   Z - initial elements count  
+```
 Sort algorithms:  
+```
   0:	Dummy sort  
   1:	Buble sort  
   2:	Comb sort  
@@ -23,4 +26,5 @@ Sort algorithms:
  12:	Merge sort  
  13:	MergeUp sort  
  14:	QuickIns sort  
- 15:	MergeIns sort```  
+ 15:	MergeIns sort  
+```

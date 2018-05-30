@@ -1,11 +1,12 @@
 ###### Implementations of the variety algorithms and data structures, to feel and test how they work.
 
 ###### Usage.
-Usage: algorithm X Y Z  
+Usage: `algorithm X Y Z`  
 Where:  
->  X - number of the algorithm  
->  Y - repeat count, algorithm will be invoked Y times, doubling its element count each time  
->  Z - initial elements count  
+```
+  X - number of the algorithm  
+  Y - repeat count, algorithm will be invoked Y times, doubling its element count each time  
+  Z - initial elements count```  
 Sort algorithms:  
 ```
   0:	Dummy sort  
@@ -23,5 +24,4 @@ Sort algorithms:
  12:	Merge sort  
  13:	MergeUp sort  
  14:	QuickIns sort  
- 15:	MergeIns sort  
-```
+ 15:	MergeIns sort```  

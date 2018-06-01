@@ -11,38 +11,62 @@
 
 //--------------------------------------------------------------------------------------------------
 #include <vector>
+#include <string>
 //--------------------------------------------------------------------------------------------------
 
-// ------------------------------------------------------------------------------------------
-
-template <typename T>
-class UnionFind
+namespace uf
 {
-public:
-    UnionFind(unsigned count) : elements_(count), clasters_(count+1)
+
+template<typename T>
+struct UnionFindInfo
+{
+    UnionFindInfo(unsigned count)
+        : elements(count), clasters(count+1), unionInvokes(0), findInvokes(0)
     {
         int inc = 0;
-        for (auto & item : elements_)
+        for (auto & item : elements)
         {
             item = inc++;
         }
     }
 
-    void unionComponents(T p, T q)
+    std::vector<T>        elements;
+    unsigned              clasters;
+    unsigned              unionInvokes;
+    unsigned              findInvokes;
+    std::vector<unsigned> sizes; // used only by UnionFind_QuickUnion
+};
+
+template<typename T>
+struct UnionFindInfoBalanced : public UnionFindInfo<T>
+{
+    UnionFindInfoBalanced(unsigned count) : UnionFindInfo<T>(), sizes(count, 1) {}
+    std::vector<unsigned> sizes;
+};
+
+template <typename T>
+class UnionFind
+{
+public:
+    void unionComponents(UnionFindInfo<T> & ufData, T p, T q)
     {
-        if (union_(p, q))
+        ufData.unionInvokes++;
+        if (union_(ufData, p, q))
         {
-            clasters_--;
+            ufData.clasters--;
         }
     }
 
-    int find(T p) const { return find_(p); }
-    bool connected(T p, T q) const {return find(p) == find(q); }
+    int find(UnionFindInfo<T> & ufData, T p) const { ufData.findInvokes++; return find_(ufData, p); }
+    bool connected(UnionFindInfo<T> & ufData, T p, T q) const {return find(ufData, p) == find(ufData, q); }
+
+    virtual std::string name() const = 0;
 protected:
-    virtual bool union_(T p, T q) = 0;
-    virtual T find_(T p) const = 0;
-    std::vector<T> elements_;
-    unsigned clasters_;
+    virtual bool union_(UnionFindInfo<T> & ufData, T p, T q) = 0;
+    virtual T find_(UnionFindInfo<T> & ufData, T p) const = 0;
+
+private:
+
 };
 
 
@@ -53,16 +77,16 @@ template <typename T>
 class UnionFind_QuickFind : public UnionFind<T>
 {
 public:
-    UnionFind_QuickFind(unsigned count) : UnionFind<T>(count) {}
+    std::string name() const { return "UnionFind / QiuckFind"; }
 
 private:
-    bool union_(T p, T q) override
+    bool union_(UnionFindInfo<T> & ufData, T p, T q) override
     {
-        auto pId = UnionFind<T>::find(p);
-        auto qId = UnionFind<T>::find(q);
+        auto pId = UnionFind<T>::find(ufData, p);
+        auto qId = UnionFind<T>::find(ufData, q);
         if (pId != qId)
         {
-            for (auto & item : UnionFind<T>::elements_)
+            for (auto & item : ufData.elements)
             {
                 if (item == qId)
                 {
@@ -74,9 +98,9 @@ private:
         return false;
     }
 
-    T find_(T p) const override
+    T find_(UnionFindInfo<T> & ufData, T p) const override
     {
-        return UnionFind<T>::elements_[p];
+        return ufData.elements[p];
     }
 };
 
@@ -87,26 +111,26 @@ template <typename T>
 class UnionFind_QuickUnion : public UnionFind<T>
 {
 public:
-    UnionFind_QuickUnion(unsigned count) : UnionFind<T>(count) {}
+    std::string name() const { return "UnionFind / QiuckUnion"; }
 
 private:
-    bool union_(T p, T q) override
+    bool union_(UnionFindInfo<T> & ufData, T p, T q) override
     {
-        auto pId = UnionFind<T>::find(p);
-        auto qId = UnionFind<T>::find(q);
+        auto pId = UnionFind<T>::find(ufData, p);
+        auto qId = UnionFind<T>::find(ufData, q);
         if (pId != qId)
         {
-            UnionFind<T>::elements_[qId] = pId;
+            ufData.elements[qId] = pId;
             return true;
         }
         return false;
     }
 
-    T find_(T p) const override
+    T find_(UnionFindInfo<T> & ufData, T p) const override
     {
-        while (p != UnionFind<T>::elements_[p])
+        while (p != ufData.elements[p])
         {
-            p = UnionFind<T>::elements_[p];
+            p = ufData.elements[p];
         }
         return p;
     }
@@ -120,47 +144,45 @@ template <typename T>
 class UnionFind_QuickUnion_Balanced : public UnionFind<T>
 {
 public:
-    UnionFind_QuickUnion_Balanced(unsigned count) : UnionFind<T>(count), sizes_(count)
-    {
-        for (auto & item : sizes_)
-        {
-            item = 1;
-        }
-    }
+    std::string name() const { return "UnionFind / QiuckUnion balanced"; }
 
 private:
-    bool union_(T p, T q) override
+    bool union_(UnionFindInfo<T> & ufData, T p, T q) override
     {
-        auto pId = UnionFind<T>::find(p);
-        auto qId = UnionFind<T>::find(q);
+        if (ufData.sizes.size() < ufData.elements.size())
+        {
+            return false;
+        }
+        auto pId = UnionFind<T>::find(ufData, p);
+        auto qId = UnionFind<T>::find(ufData, q);
         if (pId != qId)
         {
-            if (sizes_[pId] < sizes_[qId])
+            if (ufData.sizes[pId] < ufData.sizes[qId])
             {
-                UnionFind<T>::elements_[pId] = qId;
-                sizes_[qId] += sizes_[pId];
+                ufData.elements[pId] = qId;
+                ufData.sizes[qId] += ufData.sizes[pId];
             }
             else
             {
-                UnionFind<T>::elements_[qId] = pId;
-                sizes_[pId] += sizes_[qId];
+                ufData.elements[qId] = pId;
+                ufData.sizes[pId] += ufData.sizes[qId];
             }
             return true;
         }
         return false;
     }
 
-    T find_(T p) const override
+    T find_(UnionFindInfo<T> & ufData, T p) const override
     {
-        while (p != UnionFind<T>::elements_[p])
+        while (p != ufData.elements[p])
         {
-            p = UnionFind<T>::elements_[p];
+            p = ufData.elements[p];
         }
         return p;
     }
-    std::vector<unsigned> sizes_;
 };
 
+} // namespace unionfind
 
 //--------------------------------------------------------------------------------------------------
 #endif // UNIONFIND_HPP

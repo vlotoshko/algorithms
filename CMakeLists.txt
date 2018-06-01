@@ -19,6 +19,7 @@ set(CPP_FILES
 
 set(HPP_FILES
     "ITestable.hpp"
+    "TestFactory.hpp"
     )
 
 set(FILES ${CPP_FILES} ${HPP_FILES})

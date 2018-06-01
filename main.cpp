@@ -10,12 +10,13 @@
 #include "TestFactory.hpp"
 
 #include <iostream>
+#include <iomanip>
 //--------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------------------------
 // Repeatedly invokes test doubling the amount of elements for each iteration
 //
-void doubleAmountTest(const tests::InputParameters parameters)
+void doubleAmountTest(const tools::InputParameters parameters)
 {
     tools::CalcRatio calcRatio;
     auto count = parameters.elementsCount;
@@ -44,16 +45,15 @@ void doubleAmountTest(const tests::InputParameters parameters)
 
 int main(int argc, char *argv[])
 {
-    auto parameters = tests::getParameters(argc, argv);
+    auto parameters = tools::getParameters(argc, argv);
     if (tests::Registry<int>::algorithmExists(parameters.algId))
     {
         doubleAmountTest(parameters);
     }
     else
     {
-        tests::InputParameters::usage<int>();
+        tools::InputParameters::usage();
     }
-
     return 0;
 }
 

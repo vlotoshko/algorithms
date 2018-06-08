@@ -19,6 +19,7 @@ set(CPP_FILES
 
 set(HPP_FILES
     "ITestable.hpp"
+    "TestRegistry.hpp"
     "TestFactory.hpp"
     )
 

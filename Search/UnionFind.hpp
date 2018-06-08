@@ -17,6 +17,10 @@
 namespace uf
 {
 
+// ------------------------------------------------------------------------------------------
+// Union-find algorithms allow to find connections between two elements, connected direclty
+// or indirectly (by some other elements). Connections are set as an array of connected pairs.
+//
 template<typename T>
 struct UnionFindInfo
 {
@@ -34,7 +38,7 @@ struct UnionFindInfo
     unsigned              clasters;
     unsigned              unionInvokes;
     unsigned              findInvokes;
-    std::vector<unsigned> sizes; // used only by UnionFind_QuickUnion
+    std::vector<unsigned> sizes; // used only by UnionFind_QuickUnion_Balanced
 };
 
 template<typename T>
@@ -103,6 +107,7 @@ private:
         return ufData.elements[p];
     }
 };
+
 
 // ------------------------------------------------------------------------------------------
 // Quick union / slow find

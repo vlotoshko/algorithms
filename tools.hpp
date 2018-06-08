@@ -87,25 +87,8 @@ private:
 };
 
 
-// ------------------------------------------------------------------------------------------
-// Hold input application parameters
-//
-struct InputParameters
-{
-    unsigned algId;
-    unsigned repeatCount;
-    unsigned elementsCount;
-    static const char * hello;
-    static void usage();
-};
-
-
-// ------------------------------------------------------------------------------------------
-// Pasres input app parameter to a convinient structure
-//
-InputParameters getParameters(int argc, char *argv[]);
-
 } // namespace tools
+
 
 //--------------------------------------------------------------------------------------------------
 #endif // TOOLS_H

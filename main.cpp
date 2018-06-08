@@ -5,8 +5,6 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "Sort/TestSort.hpp"
-#include "Search/TestUnionFind.hpp"
 #include "TestFactory.hpp"
 
 #include <iostream>
@@ -16,14 +14,14 @@
 // ------------------------------------------------------------------------------------------
 // Repeatedly invokes test doubling the amount of elements for each iteration
 //
-void doubleAmountTest(const tools::InputParameters parameters)
+void doubleAmountTest(const tests::InputParameters parameters)
 {
     tools::CalcRatio calcRatio;
     auto count = parameters.elementsCount;
     for (size_t i = 1; i <= parameters.repeatCount; ++i)
     {
         tools::Timer timer;
-        auto builder = tests::Registry<int>::getBuilder(parameters.algId);
+        auto builder = tests::getTestBuilder<int>(parameters.algId);
 
         if (!builder)
         {
@@ -45,15 +43,16 @@ void doubleAmountTest(const tools::InputParameters parameters)
 
 int main(int argc, char *argv[])
 {
-    auto parameters = tools::getParameters(argc, argv);
-    if (tests::Registry<int>::algorithmExists(parameters.algId))
+    auto parameters = registry::getParameters(argc, argv);
+    if (registry::algorithmExists<int>(parameters.algId))
     {
         doubleAmountTest(parameters);
     }
     else
     {
-        tools::InputParameters::usage();
+        tests::InputParameters::usage();
     }
+
     return 0;
 }
 

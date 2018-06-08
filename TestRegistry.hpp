@@ -18,7 +18,7 @@
 namespace registry
 {
 
-enum class AlgCategoty : int
+enum class AlgCategory : int
 {
     SORT = 0,
     UNION_FIND,
@@ -27,26 +27,26 @@ enum class AlgCategoty : int
     UNKNOWN,
 };
 
-AlgCategoty getAlgCategory(unsigned id)
+AlgCategory getAlgCategory(unsigned id)
 {
     if (id < 100)     // range [0, 100)
     {
-        return AlgCategoty::SORT;
+        return AlgCategory::SORT;
     }
     else if(id < 200) // range [100, 200)
     {
-        return AlgCategoty::UNION_FIND;
+        return AlgCategory::UNION_FIND;
     }
     else if(id < 300) // range [200, 300)
     {
-        return AlgCategoty::BINARY_SEARCH_TREE;
+        return AlgCategory::BINARY_SEARCH_TREE;
     }
     else if(id < 400) // range [300, 400)
     {
-        return AlgCategoty::GRAPH;
+        return AlgCategory::GRAPH;
     }
 
-    return AlgCategoty::UNKNOWN;
+    return AlgCategory::UNKNOWN;
 }
 
 
@@ -56,15 +56,15 @@ bool algorithmExists(unsigned id)
     auto category = getAlgCategory(id);
     switch (category)
     {
-    case AlgCategoty::SORT:
+    case AlgCategory::SORT:
         return sort::TestSort<T>::Algorithms.find(static_cast<sort::AlgId>(id))
                 != sort::TestSort<T>::Algorithms.end();
-    case AlgCategoty::UNION_FIND:
+    case AlgCategory::UNION_FIND:
         return uf::TestUnionFind<T>::Algorithms.find(static_cast<uf::AlgId>(id))
                 != uf::TestUnionFind<T>::Algorithms.end();
-    case AlgCategoty::BINARY_SEARCH_TREE:
-    case AlgCategoty::GRAPH:
-    case AlgCategoty::UNKNOWN:
+    case AlgCategory::BINARY_SEARCH_TREE:
+    case AlgCategory::GRAPH:
+    case AlgCategory::UNKNOWN:
         return false;
     }
 }
@@ -74,7 +74,7 @@ bool algorithmExists(unsigned id)
 //
 struct InputParameters
 {
-    AlgCategoty categoryId;
+    AlgCategory categoryId;
     unsigned algId;
     unsigned repeatCount;
     unsigned elementsCount;
@@ -119,22 +119,22 @@ InputParameters getParameters(int argc, char *argv[])
 
     switch (parameters.categoryId)
     {
-    case AlgCategoty::SORT:
-    case AlgCategoty::UNION_FIND:
+    case AlgCategory::SORT:
+    case AlgCategory::UNION_FIND:
         if (argc > 3)
         {
             parameters.repeatCount = static_cast<unsigned>(atoi(argv[2]));
             parameters.elementsCount = static_cast<unsigned>(atoi(argv[3]));
         }
         break;
-    case AlgCategoty::BINARY_SEARCH_TREE:
+    case AlgCategory::BINARY_SEARCH_TREE:
         if (argc > 2)
         {
             parameters.fileName = argv[2];
         }
         break;
-    case AlgCategoty::GRAPH:
-    case AlgCategoty::UNKNOWN:
+    case AlgCategory::GRAPH:
+    case AlgCategory::UNKNOWN:
         break;
     }
 

@@ -63,6 +63,7 @@ bool algorithmExists(unsigned id)
         return uf::TestUnionFind<T>::Algorithms.find(static_cast<uf::AlgId>(id))
                 != uf::TestUnionFind<T>::Algorithms.end();
     case AlgCategory::BINARY_SEARCH_TREE:
+        return true;
     case AlgCategory::GRAPH:
     case AlgCategory::UNKNOWN:
         return false;
@@ -72,13 +73,15 @@ bool algorithmExists(unsigned id)
 // ------------------------------------------------------------------------------------------
 // Hold input application parameters
 //
-struct InputParameters
+struct TestSettings
 {
     AlgCategory categoryId;
-    unsigned algId;
-    unsigned repeatCount;
-    unsigned elementsCount;
+    unsigned    algId;
+    unsigned    repeatTimes;
+    unsigned    elementsCount;
+
     std::string fileName;
+
     static const char * hello;
     static void usage();
 };
@@ -87,9 +90,9 @@ struct InputParameters
 // ------------------------------------------------------------------------------------------
 // Pasres input app parameter to a convinient structure
 //
-InputParameters getParameters(int argc, char *argv[]);
+TestSettings getParameters(int argc, char *argv[]);
 
-void InputParameters::usage()
+void TestSettings::usage()
 {
     std::cout << hello << std::endl;
 //    for (auto & item: sort::TestSort<T>::Algorithms)
@@ -99,7 +102,7 @@ void InputParameters::usage()
 //    }
 }
 
-const char * InputParameters::hello =
+const char * TestSettings::hello =
         "Usage: algorithm X Y Z\n"
         "Where:\n"
         "  X - number of the algorithm\n"
@@ -107,9 +110,9 @@ const char * InputParameters::hello =
         "  Z - initial elements count\n"
         "Sort algorithms:";
 
-InputParameters getParameters(int argc, char *argv[])
+TestSettings getParameters(int argc, char *argv[])
 {
-    InputParameters parameters{};
+    TestSettings parameters{};
 
     if (argc > 1)
     {
@@ -123,7 +126,7 @@ InputParameters getParameters(int argc, char *argv[])
     case AlgCategory::UNION_FIND:
         if (argc > 3)
         {
-            parameters.repeatCount = static_cast<unsigned>(atoi(argv[2]));
+            parameters.repeatTimes = static_cast<unsigned>(atoi(argv[2]));
             parameters.elementsCount = static_cast<unsigned>(atoi(argv[3]));
         }
         break;

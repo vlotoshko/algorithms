@@ -141,7 +141,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::delet
         n->left = t->left;
     }
 
-    n->count = size(n->left) + size(n->right) + 1;
+    n->size = size_(n->left) + size_(n->right) + 1;
     return n;
 }
 
@@ -181,7 +181,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::max_(
 template<typename Key, typename Value>
 size_t BinarySearchTree<Key, Value>::size_(Node * n) const
 {
-    return n ? n->count : 0;
+    return n ? n->size : 0;
 }
 
 template<typename Key, typename Value>
@@ -191,7 +191,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::forge
         return n->right;
 
     n->left = forgetMin_(n->left);
-    n->count = size(n->left) + size(n->right) + 1;
+    n->size = size_(n->left) + size_(n->right) + 1;
     return n;
 }
 
@@ -250,7 +250,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::selec
     if (n == nullptr)
         return nullptr;
 
-    int t = size(n->left);
+    int t = size_(n->left);
 
     if (t > k)
         return select_(n->left, k);
@@ -282,7 +282,7 @@ void BinarySearchTree<Key, Value>::print_(Node * n) const
     if(n == nullptr)
         return;
 
-    print(n->left);
+    print_(n->left);
     std::cout << n->key << " ";
     print_(n->right);
 }

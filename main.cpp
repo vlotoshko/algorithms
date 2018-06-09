@@ -14,43 +14,59 @@
 // ------------------------------------------------------------------------------------------
 // Repeatedly invokes test doubling the amount of elements for each iteration
 //
-void doubleAmountTest(const tests::InputParameters parameters)
+void runDoubleAmountTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings settings)
 {
     tools::CalcRatio calcRatio;
-    auto count = parameters.elementsCount;
-    for (size_t i = 1; i <= parameters.repeatCount; ++i)
+
+    for (size_t i = 1; i <= settings.repeatTimes; ++i)
     {
         tools::Timer timer;
-        auto builder = tests::getTestBuilder<int>(parameters.algId);
-
-        if (!builder)
-        {
-            return;
-        }
-        auto test = builder->createTest(parameters, count);
+        auto test = builder->createTest(settings);
         test->runTest(timer);
 
         double time = timer.timeSpent();
         std::cout << std::left
-                  << "count: " << std::setw(10) << count << "time eplaced: " << std::setw(10)
+                  << "count: " << std::setw(10) << settings.elementsCount << "time eplaced: " << std::setw(10)
                   << time << "ratio: " << calcRatio.getRatio(time) << std::endl;
 
         // Double elements count before next test
-        count += count;
+        settings.elementsCount += settings.elementsCount;
     }
+}
+
+void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings settings)
+{
+    tools::Timer timer;
+
+    auto test = builder->createTest(settings);
+    test->runTest(timer);
+
+    double time = timer.timeSpent();
+    std::cout << std::left
+//              << "count: " << std::setw(10) << settings.elementsCount
+              << "time eplaced: " << std::setw(10) << time << std::endl;
 }
 
 
 int main(int argc, char *argv[])
 {
-    auto parameters = registry::getParameters(argc, argv);
-    if (registry::algorithmExists<int>(parameters.algId))
+    auto settings = registry::getParameters(argc, argv);
+    auto builder = tests::getTestBuilder<int>(settings.algId);
+
+    if (registry::algorithmExists<int>(settings.algId) && builder)
     {
-        doubleAmountTest(parameters);
+        if (settings.repeatTimes > 0)
+        {
+            runDoubleAmountTest(builder, settings);
+        }
+        else
+        {
+            runTest(builder, settings);
+        }
     }
     else
     {
-        tests::InputParameters::usage();
+        tests::TestSettings::usage();
     }
 
     return 0;

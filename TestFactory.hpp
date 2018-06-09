@@ -12,6 +12,7 @@
 //--------------------------------------------------------------------------------------------------
 #include "Sort/TestSort.hpp"
 #include "Search/TestUnionFind.hpp"
+#include "Search/TestBinarySearchTree.hpp"
 #include "TestRegistry.hpp"
 
 #include <map>
@@ -21,41 +22,41 @@
 namespace tests
 {
 
-using InputParameters = registry::InputParameters;
+using TestSettings = registry::TestSettings;
 using AlgCategory = registry::AlgCategory;
 
 // ------------------------------------------------------------------------------------------
 struct ITestFactory
 {
     using   Test = std::shared_ptr<ITestable>;
-    virtual Test createTest(const InputParameters parameters, unsigned count) = 0;
+    virtual Test createTest(const TestSettings parameters) = 0;
     virtual      ~ITestFactory()                                              = default;
 };
 
 template <typename T>
 struct SortTestBuilder : public ITestFactory
 {
-    Test createTest(const InputParameters parameters, unsigned count) override
+    Test createTest(const TestSettings parameters) override
     {
-        return std::make_shared<sort::TestSort<T>>(static_cast<sort::AlgId>(parameters.algId), count);
+        return std::make_shared<sort::TestSort<T>>(static_cast<sort::AlgId>(parameters.algId), parameters.elementsCount);
     }
 };
 
 template <typename T>
 struct UnionFindTestBuilder : public ITestFactory
 {
-    Test createTest(const InputParameters parameters, unsigned count) override
+    Test createTest(const TestSettings parameters) override
     {
-        return std::make_shared<uf::TestUnionFind<T>>(static_cast<uf::AlgId>(parameters.algId), count);
+        return std::make_shared<uf::TestUnionFind<T>>(static_cast<uf::AlgId>(parameters.algId), parameters.elementsCount);
     }
 };
 
 template <typename T>
 struct BinarySearchTreeTestBuilder : public ITestFactory
 {
-    Test createTest(const InputParameters parameters, unsigned count) override
+    Test createTest(const TestSettings parameters) override
     {
-        return std::make_shared<uf::TestUnionFind<T>>(static_cast<uf::AlgId>(parameters.algId), count);
+        return std::make_shared<bst::TestBST<T>>(parameters.fileName, 0);
     }
 };
 

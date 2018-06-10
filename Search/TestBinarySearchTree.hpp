@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "ITestable.hpp"
-#include "Structures/BinarySearchTree.hpp"
+#include "BinarySearchTree.hpp"
 
 #include <fstream>
 
@@ -27,7 +27,7 @@ template <typename T>
 class TestBST : public ITestable
 {
 public:
-    TestBST(const std::string & fileName, unsigned /*repeats*/) : fileName_(fileName) {}
+    TestBST(const std::string & fileName, size_t /*repeats*/) : fileName_(fileName) {}
 
     void runTest(tools::Timer & timer) override
     {

@@ -14,6 +14,7 @@ include_directories(Structures)
 
 set(CPP_FILES
     "tools.cpp"
+    "Structures/Graph.cpp"
     "main.cpp"
     )
 

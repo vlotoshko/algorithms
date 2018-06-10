@@ -24,7 +24,7 @@ namespace uf
 template<typename T>
 struct UnionFindInfo
 {
-    UnionFindInfo(unsigned count)
+    UnionFindInfo(size_t count)
         : elements(count), clasters(count+1), unionInvokes(0), findInvokes(0)
     {
         int inc = 0;
@@ -34,18 +34,18 @@ struct UnionFindInfo
         }
     }
 
-    std::vector<T>        elements;
-    unsigned              clasters;
-    unsigned              unionInvokes;
-    unsigned              findInvokes;
-    std::vector<unsigned> sizes; // used only by UnionFind_QuickUnion_Balanced
+    std::vector<T>      elements;
+    size_t              clasters;
+    size_t              unionInvokes;
+    size_t              findInvokes;
+    std::vector<size_t> sizes; // used only by UnionFind_QuickUnion_Balanced
 };
 
 template<typename T>
 struct UnionFindInfoBalanced : public UnionFindInfo<T>
 {
-    UnionFindInfoBalanced(unsigned count) : UnionFindInfo<T>(), sizes(count, 1) {}
-    std::vector<unsigned> sizes;
+    UnionFindInfoBalanced(size_t count) : UnionFindInfo<T>(), sizes(count, 1) {}
+    std::vector<size_t> sizes;
 };
 
 template <typename T>

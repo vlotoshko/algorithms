@@ -10,9 +10,9 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "Sort/TestSort.hpp"
-#include "Search/TestUnionFind.hpp"
-#include "Search/TestBinarySearchTree.hpp"
+#include "TestSort.hpp"
+#include "TestUnionFind.hpp"
+#include "TestBinarySearchTree.hpp"
 #include "TestRegistry.hpp"
 
 #include <map>
@@ -69,7 +69,7 @@ static std::map<AlgCategory, std::shared_ptr<ITestFactory>> testBuilders =
 };
 
 template <typename T>
-static std::shared_ptr<ITestFactory> getTestBuilder(unsigned id)
+static std::shared_ptr<ITestFactory> getTestBuilder(size_t id)
 {
     auto iter = testBuilders<T>.find(registry::getAlgCategory(id));
     if(iter != testBuilders<T>.end())

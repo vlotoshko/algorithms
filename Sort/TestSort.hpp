@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "ITestable.hpp"
-#include "Sort/Sort.hpp"
+#include "Sort.hpp"
 
 #include <map>
 #include <memory>

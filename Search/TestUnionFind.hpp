@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "ITestable.hpp"
-#include "Search/UnionFind.hpp"
+#include "UnionFind.hpp"
 
 #include <map>
 #include <memory>
@@ -55,7 +55,7 @@ public:
             }
             if (algId_ == AlgId::QUICK_UNION_BALANCED)
             {
-                uf.sizes = std::vector<unsigned>(elementsCount_, 1);
+                uf.sizes = std::vector<size_t>(elementsCount_, 1);
             }
 //            std::cout << "Ok" << std::endl;
 

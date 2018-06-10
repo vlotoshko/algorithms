@@ -10,8 +10,8 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "Sort/TestSort.hpp"
-#include "Search/TestUnionFind.hpp"
+#include "TestSort.hpp"
+#include "TestUnionFind.hpp"
 
 //--------------------------------------------------------------------------------------------------
 
@@ -27,7 +27,7 @@ enum class AlgCategory : int
     UNKNOWN,
 };
 
-AlgCategory getAlgCategory(unsigned id)
+AlgCategory getAlgCategory(size_t id)
 {
     if (id < 100)     // range [0, 100)
     {
@@ -51,7 +51,7 @@ AlgCategory getAlgCategory(unsigned id)
 
 
 template <typename T>
-bool algorithmExists(unsigned id)
+bool algorithmExists(size_t id)
 {
     auto category = getAlgCategory(id);
     switch (category)
@@ -76,9 +76,9 @@ bool algorithmExists(unsigned id)
 struct TestSettings
 {
     AlgCategory categoryId;
-    unsigned    algId;
-    unsigned    repeatTimes;
-    unsigned    elementsCount;
+    size_t      algId;
+    size_t      repeatTimes;
+    size_t      elementsCount;
 
     std::string fileName;
 
@@ -116,7 +116,7 @@ TestSettings getSettings(int argc, char *argv[])
 
     if (argc > 1)
     {
-        parameters.algId = static_cast<unsigned>(atoi(argv[1]));
+        parameters.algId = static_cast<size_t>(atoi(argv[1]));
         parameters.categoryId = getAlgCategory(parameters.algId);
     }
 
@@ -126,8 +126,8 @@ TestSettings getSettings(int argc, char *argv[])
     case AlgCategory::UNION_FIND:
         if (argc > 3)
         {
-            parameters.repeatTimes = static_cast<unsigned>(atoi(argv[2]));
-            parameters.elementsCount = static_cast<unsigned>(atoi(argv[3]));
+            parameters.repeatTimes = static_cast<size_t>(atoi(argv[2]));
+            parameters.elementsCount = static_cast<size_t>(atoi(argv[3]));
         }
         break;
     case AlgCategory::BINARY_SEARCH_TREE:

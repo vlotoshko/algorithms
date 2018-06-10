@@ -11,7 +11,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "ITestable.hpp"
-#include "Search/BinarySearchTree.hpp"
+#include "Structures/BinarySearchTree.hpp"
 
 #include <fstream>
 
@@ -21,7 +21,7 @@ namespace bst // binary search tree
 {
 
 // ------------------------------------------------------------------------------------------
-// Runs union-find algorithm specified by the algorithm's id
+// Fills binary search tree with words from the text file
 //
 template <typename T>
 class TestBST : public ITestable
@@ -42,7 +42,6 @@ public:
             std::string word;
             while (file >> word)
             {
-//                std::cout << word << std::endl;
                 bst.put(word, 0);
             }
 

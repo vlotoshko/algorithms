@@ -90,7 +90,7 @@ struct TestSettings
 // ------------------------------------------------------------------------------------------
 // Pasres input app parameter to a convinient structure
 //
-TestSettings getParameters(int argc, char *argv[]);
+TestSettings getSettings(int argc, char *argv[]);
 
 void TestSettings::usage()
 {
@@ -110,7 +110,7 @@ const char * TestSettings::hello =
         "  Z - initial elements count\n"
         "Sort algorithms:";
 
-TestSettings getParameters(int argc, char *argv[])
+TestSettings getSettings(int argc, char *argv[])
 {
     TestSettings parameters{};
 

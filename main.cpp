@@ -50,7 +50,7 @@ void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings s
 
 int main(int argc, char *argv[])
 {
-    auto settings = registry::getParameters(argc, argv);
+    auto settings = registry::getSettings(argc, argv);
     auto builder = tests::getTestBuilder<int>(settings.algId);
 
     if (registry::algorithmExists<int>(settings.algId) && builder)

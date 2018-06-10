@@ -14,29 +14,34 @@
 #include <map>
 
 //--------------------------------------------------------------------------------------------------
-
+// Graph structure. Containes array of vertexes, where vertex V is a node and the value of the node
+// is an index of vertex connected with V. All other vertexes connected with V adds to the node
+// as linked list.
+//
 class Graph
 {
 public:
+    using GNode = Node<size_t>;
+
     Graph(size_t v);
     Graph (std::string fileName);
     ~Graph();
 
-    size_t vortexes() { return v_; }
+    size_t vertexes() { return v_; }
     size_t edges() { return e_; }
-    void addEdge(int v, int w);
-    Node<int>* adj(size_t v);
+    void addEdge(size_t v, size_t w);
+    GNode *adj(size_t v);
     void toString();
 
     static size_t degree(Graph* g, size_t v);
     static size_t maxDegree(Graph* g);
     static size_t avgDegree(Graph* g);
-    static int selfLoops(Graph* g);
+    static int getLoops(Graph* g);
 
 private:
     size_t v_;
     size_t e_;
-    Node<int>* adj_;
+    GNode* adj_;
 };
 
 //--------------------------------------------------------------------------------------------------

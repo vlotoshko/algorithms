@@ -14,9 +14,9 @@
 //--------------------------------------------------------------------------------------------------
 
 
-Graph::Graph(size_t v) : v_(v), e_(0), adj_(new Node<int>[v])
+Graph::Graph(size_t v) : v_(v), e_(0), adj_(new GNode[v])
 {
-    for (int i = 0; i < static_cast<int>(v_); ++i)
+    for (size_t i = 0; i < v_; ++i)
     {
         adj_[i].value = i;
     }
@@ -28,14 +28,14 @@ Graph::Graph(std::string fileName) : e_(0)
     file.open (fileName);
     file >> v_;
 
-    adj_ = new Node<int>[v_];
-    for (int i = 0; i < static_cast<int>(v_); ++i)
+    adj_ = new GNode[v_];
+    for (size_t i = 0; i < v_; ++i)
     {
         adj_[i].value = i;
     }
 
-    int v;
-    int w;
+    size_t v;
+    size_t w;
     while (file >> v && file >> w)
     {
         addEdge(v, w);
@@ -47,14 +47,14 @@ Graph::~Graph()
     delete[] adj_;
 }
 
-void Graph::addEdge(int v, int w)
+void Graph::addEdge(size_t v, size_t w)
 {
-    adj_[v].add(new Node<int>(w));
-    adj_[w].add(new Node<int>(v));
+    adj_[v].add(new GNode(w));
+    adj_[w].add(new GNode(v));
     ++e_;
 }
 
-Node<int>* Graph::adj(size_t v)
+Graph::GNode * Graph::adj(size_t v)
 {
     return &adj_[v];
 }
@@ -64,10 +64,10 @@ void Graph::toString()
     std::string s;
 
     std::cout << "vertex: " << v_ << "; edges: " << e_ << std::endl;
-    for (size_t var = 0; var < vortexes(); ++var)
+    for (size_t var = 0; var < vertexes(); ++var)
     {
         std::cout << adj(var)->value << ": ";
-        Node<int>* n = adj(var)->next;
+        GNode* n = adj(var)->next;
         while (n) {
             std::cout << n->value << " ";
             n = n->next;
@@ -80,7 +80,7 @@ void Graph::toString()
 size_t Graph::degree(Graph *g, size_t v)
 {
     size_t degree = 0;
-    Node<int> * n = g->adj(v);
+    GNode * n = g->adj(v);
     while(n->next)
     {
         ++degree;
@@ -92,7 +92,7 @@ size_t Graph::degree(Graph *g, size_t v)
 size_t Graph::maxDegree(Graph *g)
 {
     size_t max = 0;
-    for (size_t i = 0; i < g->vortexes(); ++i)
+    for (size_t i = 0; i < g->vertexes(); ++i)
     {
         size_t d = degree(g, i);
         if (d > max)
@@ -103,15 +103,15 @@ size_t Graph::maxDegree(Graph *g)
 
 size_t Graph::avgDegree(Graph *g)
 {
-    return 2 * g->edges() / g->vortexes();
+    return 2 * g->edges() / g->vertexes();
 }
 
-int Graph::selfLoops(Graph *g)
+int Graph::getLoops(Graph *g)
 {
     int count = 0;
-    for (size_t v = 0; v < g->vortexes(); ++v)
+    for (size_t v = 0; v < g->vertexes(); ++v)
     {
-        Node<int>* n = g->adj(v)->next;
+        GNode* n = g->adj(v)->next;
         while(n)
         {
             if (n->value == v)

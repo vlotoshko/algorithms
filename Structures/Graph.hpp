@@ -13,6 +13,9 @@
 #include<iostream>
 #include <map>
 
+namespace graph
+{
+
 //--------------------------------------------------------------------------------------------------
 // Graph structure. Containes array of vertexes, where vertex V is a node and the value of the node
 // is an index of vertex connected with V. All other vertexes connected with V adds to the node
@@ -43,6 +46,8 @@ private:
     size_t e_;
     GNode* adj_;
 };
+
+} //namespace graph
 
 //--------------------------------------------------------------------------------------------------
 #endif // GRAPH_HPP

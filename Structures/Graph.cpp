@@ -12,7 +12,8 @@
 #include <queue>
 
 //--------------------------------------------------------------------------------------------------
-
+namespace graph
+{
 
 Graph::Graph(size_t v) : v_(v), e_(0), adj_(new GNode[v])
 {
@@ -121,3 +122,5 @@ int Graph::getLoops(Graph *g)
     }
     return count / 2;
 }
+
+} // namespace graph

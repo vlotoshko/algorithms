@@ -15,7 +15,7 @@
 namespace graph
 {
 
-Graph::Graph(size_t v) : v_(v), e_(0), adj_(new GNode[v])
+Graph::Graph(size_t v) : v_(v), e_(0), adj_(v)
 {
     for (size_t i = 0; i < v_; ++i)
     {
@@ -29,10 +29,11 @@ Graph::Graph(std::string fileName) : e_(0)
     file.open (fileName);
     file >> v_;
 
-    adj_ = new GNode[v_];
-    for (size_t i = 0; i < v_; ++i)
+    adj_ = std::vector<GNode>(v_);
+    size_t i = 0;
+    for (auto & item : adj_)
     {
-        adj_[i].value = i;
+        item.value = ++i;
     }
 
     size_t v;
@@ -41,11 +42,6 @@ Graph::Graph(std::string fileName) : e_(0)
     {
         addEdge(v, w);
     }
-}
-
-Graph::~Graph()
-{
-    delete[] adj_;
 }
 
 void Graph::addEdge(size_t v, size_t w)

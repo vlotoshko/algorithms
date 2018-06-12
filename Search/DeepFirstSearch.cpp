@@ -8,7 +8,6 @@
 #include "DeepFirstSearch.hpp"
 #include <sstream>
 #include <stack>
-
 //--------------------------------------------------------------------------------------------------
 
 namespace graph
@@ -63,7 +62,7 @@ void DeepFirstPaths::dfs(Graph *g, size_t v)
     }
 }
 
-std::string DeepFirstPaths::pathTo(size_t v)
+std::string DeepFirstPaths::pathTo(size_t v) const
 {
     std::stringstream pathStr;
     if(!hasPathTo(v))
@@ -89,4 +88,4 @@ std::string DeepFirstPaths::pathTo(size_t v)
     return pathStr.str();
 }
 
-}
+} // namespace graph

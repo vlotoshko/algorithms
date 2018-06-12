@@ -11,7 +11,7 @@
 #include "Node.hpp"
 
 #include<iostream>
-#include <map>
+#include <vector>
 
 namespace graph
 {
@@ -28,7 +28,6 @@ public:
 
     Graph(size_t v);
     Graph (std::string fileName);
-    ~Graph();
 
     size_t vertexes() { return v_; }
     size_t edges() { return e_; }
@@ -44,7 +43,7 @@ public:
 private:
     size_t v_;
     size_t e_;
-    GNode* adj_;
+    std::vector<GNode> adj_;
 };
 
 } //namespace graph

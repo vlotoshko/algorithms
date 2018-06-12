@@ -13,8 +13,10 @@ include_directories(Sort)
 include_directories(Structures)
 
 set(CPP_FILES
-    "tools.cpp"
+    "Search/DeepFirstSearch.cpp"
+    "Search/BreadthFirstSearch.cpp"
     "Structures/Graph.cpp"
+    "tools.cpp"
     "main.cpp"
     )
 

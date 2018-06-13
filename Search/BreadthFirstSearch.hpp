@@ -78,7 +78,6 @@ class TwoColored
 {
 public:
     TwoColored(Graph* g);
-    ~TwoColored();
     bool isBipartite() { return isTwoColors_; }
 private:
     bool isTwoColors_;

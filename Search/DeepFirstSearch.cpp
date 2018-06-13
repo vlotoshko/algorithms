@@ -29,7 +29,7 @@ void DeepFirstSearch::dfs(Graph *g, size_t v)
     {
         if (!marked_[n->value])
         {
-            std::cout << v << " - " << n->value << std::endl;
+//            std::cout << v << " - " << n->value << std::endl;
             dfs(g, n->value);
         }
         n = n->next;
@@ -54,7 +54,7 @@ void DeepFirstPaths::dfs(Graph *g, size_t v)
     {
         if (!marked_[n->value])
         {
-            std::cout << v << " - " << n->value << std::endl;
+//            std::cout << v << " - " << n->value << std::endl;
             edgeTo_[n->value] = v;
             dfs(g, n->value);
         }

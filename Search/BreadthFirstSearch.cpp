@@ -43,7 +43,7 @@ void BreadthFirstPaths::bfs(Graph *g, size_t v)
         {
             if (!marked_[n->value])
             {
-                std::cout << x << " - " << n->value << std::endl;
+//                std::cout << x << " - " << n->value << std::endl;
                 edgeTo_[n->value] = x;
                 marked_[n->value] = true;
                 queue.push(n->value);

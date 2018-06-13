@@ -61,11 +61,12 @@ void Graph::toString()
     std::string s;
 
     std::cout << "vertex: " << v_ << "; edges: " << e_ << std::endl;
-    for (size_t var = 0; var < vertexes(); ++var)
+    for (size_t var = 0; var < vertexes(); var++)
     {
         std::cout << adj(var)->value << ": ";
         GNode* n = adj(var)->next;
-        while (n) {
+        while (n)
+        {
             std::cout << n->value << " ";
             n = n->next;
         }

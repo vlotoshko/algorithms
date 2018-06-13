@@ -63,8 +63,8 @@ bool algorithmExists(size_t id)
         return uf::TestUnionFind<T>::Algorithms.find(static_cast<uf::AlgId>(id))
                 != uf::TestUnionFind<T>::Algorithms.end();
     case AlgCategory::BINARY_SEARCH_TREE:
-        return true;
     case AlgCategory::GRAPH:
+        return true;
     case AlgCategory::UNKNOWN:
         return false;
     }
@@ -131,12 +131,12 @@ TestSettings getSettings(int argc, char *argv[])
         }
         break;
     case AlgCategory::BINARY_SEARCH_TREE:
+    case AlgCategory::GRAPH:
         if (argc > 2)
         {
             parameters.fileName = argv[2];
         }
         break;
-    case AlgCategory::GRAPH:
     case AlgCategory::UNKNOWN:
         break;
     }

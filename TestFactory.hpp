@@ -13,6 +13,7 @@
 #include "TestSort.hpp"
 #include "TestUnionFind.hpp"
 #include "TestBinarySearchTree.hpp"
+#include "TestGraph.hpp"
 #include "TestRegistry.hpp"
 
 #include <map>
@@ -51,12 +52,19 @@ struct UnionFindTestBuilder : public ITestFactory
     }
 };
 
-template <typename T>
 struct BinarySearchTreeTestBuilder : public ITestFactory
 {
     Test createTest(const TestSettings parameters) override
     {
-        return std::make_shared<bst::TestBST<T>>(parameters.fileName, 0);
+        return std::make_shared<bst::TestBST>(parameters.fileName, 0);
+    }
+};
+
+struct GraphTestBuilder : public ITestFactory
+{
+    Test createTest(const TestSettings parameters) override
+    {
+        return std::make_shared<graph::TestGraph>(parameters.fileName, 0);
     }
 };
 
@@ -65,7 +73,8 @@ static std::map<AlgCategory, std::shared_ptr<ITestFactory>> testBuilders =
 {
     {AlgCategory::SORT,               std::make_shared<SortTestBuilder<T>>()}
   , {AlgCategory::UNION_FIND,         std::make_shared<UnionFindTestBuilder<T>>()}
-  , {AlgCategory::BINARY_SEARCH_TREE, std::make_shared<BinarySearchTreeTestBuilder<T>>()}
+  , {AlgCategory::BINARY_SEARCH_TREE, std::make_shared<BinarySearchTreeTestBuilder>()}
+  , {AlgCategory::GRAPH,              std::make_shared<GraphTestBuilder>()}
 };
 
 template <typename T>

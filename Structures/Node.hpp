@@ -9,9 +9,23 @@
 #define NODE_HPP
 //--------------------------------------------------------------------------------------------------
 
+#include <iostream>
+
+template <typename T>
+struct ObjectCounter
+{
+    ObjectCounter()  { std::cout << "{=} <<< exists " << ++count << std::endl; }
+    ~ObjectCounter() { std::cout << "{=} >>> left "   << --count << std::endl; }
+    static size_t count;
+};
+
+template <typename T>
+size_t ObjectCounter<T>::count = 0;
 
 template<typename Value>
-class Node {
+//class Node : public ObjectCounter<Node<Value>>
+class Node
+{
 public:
     Node() : value(), next(nullptr), marked_(false) {}
     explicit Node(Value v) : value(v), next(nullptr), marked_(false) {}
@@ -55,6 +69,7 @@ void Node<Value>::clear()
         {
             next->clear();
             delete next;
+            next = nullptr;
         }
 
     }

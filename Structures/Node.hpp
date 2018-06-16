@@ -30,6 +30,15 @@ public:
     Node() : value(), next(nullptr), marked_(false) {}
     explicit Node(Value v) : value(v), next(nullptr), marked_(false) {}
     ~Node();
+
+    // Moveable
+    Node(Node&&);
+    Node& operator= (Node&&);
+
+    // Not copyable
+    Node(const Node&)             = delete;
+    Node& operator= (const Node&) = delete;
+
     Value value;
     Node* next;
 
@@ -83,7 +92,34 @@ Node<Value>::~Node<Value>()
 }
 
 template<typename Value>
-Node<Value>* Node<Value>::add(Node *n)
+Node<Value>::Node(Node && that) : value(0), next(nullptr)
+{
+    value = that.value;
+    next = that.next;
+
+    that.value = -1;
+    that.next = nullptr;
+}
+
+template<typename Value>
+Node<Value>& Node<Value>::operator=(Node&& that)
+{
+    if (this != &that)
+    {
+        clear();
+
+        value = that.value;
+        next = that.next;
+
+        that.value = -1;
+        that.next = nullptr;
+    }
+
+    return *this;
+}
+
+template<typename Value>
+Node<Value>* Node<Value>::add(Node* n)
 {
     last()->next = n;
     return this;

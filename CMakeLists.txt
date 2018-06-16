@@ -16,6 +16,7 @@ set(CPP_FILES
     "Search/DeepFirstSearch.cpp"
     "Search/BreadthFirstSearch.cpp"
     "Structures/Graph.cpp"
+    "Structures/TestGraph.cpp"
     "tools.cpp"
     "main.cpp"
     )

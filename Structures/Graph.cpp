@@ -51,20 +51,15 @@ void Graph::addEdge(size_t v, size_t w)
     ++e_;
 }
 
-//const Graph::GNode *Graph::adj(size_t v) const
-//{
-//    return &vertexes_[v];
-//}
-
 void Graph::toString() const
 {
     std::string s;
 
     std::cout << "vertex: " << v_ << "; edges: " << e_ << std::endl;
-    for (size_t var = 0; var < vertexCount(); var++)
+    for (auto const & vertex : vertexes_)
     {
-        std::cout << operator[](var).value << ": ";
-        GNode* n = operator[](var).next;
+        std::cout << vertex.value << ": ";
+        GNode* n = vertex.next;
         while (n)
         {
             std::cout << n->value << " ";

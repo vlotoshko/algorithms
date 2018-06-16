@@ -32,10 +32,9 @@ public:
     size_t vertexCount() const { return v_; }
     size_t edgeCount() const { return e_; }
     void addEdge(size_t v, size_t w);
-//    const GNode *adj(size_t v) const;
+    const GNode& operator[] (size_t index) const;
     void toString() const;
 
-    const GNode & operator[] (size_t index) const;
     static size_t degree(const Graph& g, size_t v);
     static size_t maxDegree(const Graph& g);
     static size_t avgDegree(const Graph& g);

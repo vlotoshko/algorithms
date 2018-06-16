@@ -64,7 +64,7 @@ struct GraphTestBuilder : public ITestFactory
 {
     Test createTest(const TestSettings parameters) override
     {
-        return std::make_shared<graph::TestGraph>(parameters.fileName, 0);
+        return std::make_shared<graph::TestGraph>(parameters.algId, parameters.fileName);
     }
 };
 

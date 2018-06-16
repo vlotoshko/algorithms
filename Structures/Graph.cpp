@@ -23,25 +23,31 @@ Graph::Graph(size_t v) : v_(v), e_(0), vertexes_(v)
     }
 }
 
-Graph::Graph(std::string fileName) : e_(0)
+Graph::Graph(std::string fileName) : e_(0), vertexes_()
 {
     std::ifstream file;
     file.open (fileName);
-    file >> v_;
 
-    vertexes_ = std::vector<GNode>(v_);
+    size_t max = 0;
+    size_t v = 0;
+    size_t w = 0;
+    while (file >> v && file >> w)
+    {
+        auto maxNew = std::max(std::max(v, w), max);
+        if (maxNew > max)
+        {
+            max = maxNew;
+            vertexes_.resize(max + 1);
+        }
+        addEdge(v, w);
+    }
+
     size_t i = 0;
     for (auto & item : vertexes_)
     {
         item.value = i++;
     }
-
-    size_t v;
-    size_t w;
-    while (file >> v && file >> w)
-    {
-        addEdge(v, w);
-    }
+    v_ = vertexes_.size();
 }
 
 void Graph::addEdge(size_t v, size_t w)

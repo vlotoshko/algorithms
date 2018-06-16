@@ -33,7 +33,7 @@ Graph::Graph(std::string fileName) : e_(0)
     size_t i = 0;
     for (auto & item : adj_)
     {
-        item.value = ++i;
+        item.value = i++;
     }
 
     size_t v;

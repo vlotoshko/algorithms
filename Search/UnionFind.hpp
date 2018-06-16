@@ -41,13 +41,6 @@ struct UnionFindInfo
     std::vector<size_t> sizes; // used only by UnionFind_QuickUnion_Balanced
 };
 
-template<typename T>
-struct UnionFindInfoBalanced : public UnionFindInfo<T>
-{
-    UnionFindInfoBalanced(size_t count) : UnionFindInfo<T>(), sizes(count, 1) {}
-    std::vector<size_t> sizes;
-};
-
 template <typename T>
 class UnionFind
 {

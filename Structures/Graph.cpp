@@ -61,7 +61,7 @@ void Graph::toString() const
 {
     std::string s;
 
-    std::cout << "vertex: " << v_ << "; edges: " << e_ << std::endl;
+    std::cout << "vertexes: " << v_ << "; edges: " << e_ << std::endl;
     for (auto const & vertex : vertexes_)
     {
         std::cout << vertex.value << ": ";

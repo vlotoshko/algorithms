@@ -96,9 +96,10 @@ public:
     SymbolGraph (std::string fileName);
     ~SymbolGraph();
     Graph& G() const { return *g_; }
-    bool contains(std::string key);
-    int index(std::string key);
-    std::string name(int index);
+    bool contains(std::string key) const;
+    int index(std::string key) const;
+    std::string name(size_t index) const;
+    std::string lexical(size_t index) const;
 private:
     std::map<std::string, size_t> st_;
     std::vector<std::string> keys_;

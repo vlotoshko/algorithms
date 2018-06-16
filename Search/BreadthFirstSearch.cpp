@@ -196,7 +196,6 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
     std::string line;
     std::string delimiter = " ";
 
-
     // Generating map
     while (std::getline(file, line))
     {
@@ -283,7 +282,7 @@ SymbolGraph::~SymbolGraph()
     delete g_;
 }
 
-int SymbolGraph::index(std::string key)
+int SymbolGraph::index(std::string key) const
 {
     auto it = st_.find(key);
     if (it == st_.end())
@@ -292,6 +291,32 @@ int SymbolGraph::index(std::string key)
     }
     else
         return static_cast<int>(it->second);
+}
+
+std::string SymbolGraph::name(size_t index) const
+{
+    if (index < keys_.size())
+    {
+        return keys_[index];
+    }
+    return  std::string();
+}
+
+std::string SymbolGraph::lexical(size_t index) const
+{
+    std::stringstream pathStr;
+    if (index < keys_.size())
+    {
+        pathStr << name(index) << std::endl;
+
+        GNode * n = (*g_)[index].next;
+        while(n)
+        {
+            pathStr << "  " << name(n->value) << std::endl;
+            n = n->next;
+        }
+    }
+    return pathStr.str();
 }
 
 

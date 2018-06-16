@@ -31,6 +31,7 @@ void TestGraph::runTest(tools::Timer & timer)
     else if (algId_ == 301)
     {
         SymbolGraph sgr(fileName_);
+        std::cout << "vertex #2:\n" << sgr.lexical(2);
         showGraphProperties(sgr.G());
     }
 }

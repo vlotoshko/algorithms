@@ -29,21 +29,22 @@ public:
     Graph(size_t v);
     Graph (std::string fileName);
 
-    size_t vertexes() const { return v_; }
-    size_t edges() const { return e_; }
+    size_t vertexCount() const { return v_; }
+    size_t edgeCount() const { return e_; }
     void addEdge(size_t v, size_t w);
-    const GNode *adj(size_t v) const;
+//    const GNode *adj(size_t v) const;
     void toString() const;
 
-    static size_t degree(const Graph* g, size_t v);
-    static size_t maxDegree(const Graph* g);
-    static size_t avgDegree(const Graph* g);
-    static int selfLoops(const Graph* g);
+    const GNode & operator[] (size_t index) const;
+    static size_t degree(const Graph& g, size_t v);
+    static size_t maxDegree(const Graph& g);
+    static size_t avgDegree(const Graph& g);
+    static int selfLoops(const Graph& g);
 
 private:
     size_t v_;
     size_t e_;
-    std::vector<GNode> adj_;
+    std::vector<GNode> vertexes_;
 };
 
 } //namespace graph

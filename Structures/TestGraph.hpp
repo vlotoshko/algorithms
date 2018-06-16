@@ -49,10 +49,10 @@ private:
     {
         gr.toString();
 
-        std::cout << "degree 5: " << Graph::degree(&gr, 5) << std::endl;
-        std::cout << "max degree: " << Graph::maxDegree(&gr) << std::endl;
-        std::cout << "avg degree: " << Graph::avgDegree(&gr) << std::endl;
-        std::cout << "self loops: " << Graph::selfLoops(&gr) << std::endl;
+        std::cout << "degree 5: " << Graph::degree(gr, 5) << std::endl;
+        std::cout << "max degree: " << Graph::maxDegree(gr) << std::endl;
+        std::cout << "avg degree: " << Graph::avgDegree(gr) << std::endl;
+        std::cout << "self loops: " << Graph::selfLoops(gr) << std::endl;
 
         DeepFirstSearch dfs(gr, 0);
         DeepFirstPaths dfp(gr, 0);

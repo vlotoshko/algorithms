@@ -48,7 +48,7 @@ private:
     std::vector<bool> marked_;
     std::vector<size_t> edgeTo_;
     size_t s_;
-    void dfs(const Graph & g, size_t v);
+    void dfs(const Graph& g, size_t v);
 };
 
 } // namespace graph

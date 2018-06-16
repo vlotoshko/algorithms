@@ -51,12 +51,12 @@ void Graph::addEdge(size_t v, size_t w)
     ++e_;
 }
 
-Graph::GNode * Graph::adj(size_t v)
+const Graph::GNode *Graph::adj(size_t v) const
 {
     return &adj_[v];
 }
 
-void Graph::toString()
+void Graph::toString() const
 {
     std::string s;
 
@@ -75,10 +75,10 @@ void Graph::toString()
 }
 
 
-size_t Graph::degree(Graph *g, size_t v)
+size_t Graph::degree(const Graph *g, size_t v)
 {
     size_t degree = 0;
-    GNode * n = g->adj(v);
+    const GNode * n = g->adj(v);
     while(n->next)
     {
         ++degree;
@@ -87,7 +87,7 @@ size_t Graph::degree(Graph *g, size_t v)
     return degree;
 }
 
-size_t Graph::maxDegree(Graph *g)
+size_t Graph::maxDegree(const Graph *g)
 {
     size_t max = 0;
     for (size_t i = 0; i < g->vertexes(); ++i)
@@ -99,12 +99,12 @@ size_t Graph::maxDegree(Graph *g)
     return max;
 }
 
-size_t Graph::avgDegree(Graph *g)
+size_t Graph::avgDegree(const Graph *g)
 {
     return 2 * g->edges() / g->vertexes();
 }
 
-int Graph::getLoops(Graph *g)
+int Graph::selfLoops(const Graph *g)
 {
     int count = 0;
     for (size_t v = 0; v < g->vertexes(); ++v)

@@ -15,16 +15,16 @@ namespace graph
 
 using GNode = Graph::GNode;
 
-DeepFirstSearch::DeepFirstSearch(Graph* g, size_t s) : marked_(g->vertexes(), false)
+DeepFirstSearch::DeepFirstSearch(const Graph &g, size_t s) : marked_(g.vertexes(), false)
 {
     dfs(g ,s);
 }
 
-void DeepFirstSearch::dfs(Graph *g, size_t v)
+void DeepFirstSearch::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
     ++count_;
-    GNode* n = g->adj(v)->next;
+    GNode* n = g.adj(v)->next;
     while(n)
     {
         if (!marked_[n->value])
@@ -39,17 +39,17 @@ void DeepFirstSearch::dfs(Graph *g, size_t v)
 
 //--------------------------------------------------------------------------------------------------
 
-DeepFirstPaths::DeepFirstPaths(Graph* g, size_t s)
-    : marked_(g->vertexes(), false), edgeTo_(g->vertexes()), s_(s)
+DeepFirstPaths::DeepFirstPaths(const Graph &g, size_t s)
+    : marked_(g.vertexes(), false), edgeTo_(g.vertexes()), s_(s)
 {
     dfs(g ,s);
 }
 
-void DeepFirstPaths::dfs(Graph *g, size_t v)
+void DeepFirstPaths::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
 
-    GNode* n = g->adj(v)->next;
+    GNode* n = g.adj(v)->next;
     while(n)
     {
         if (!marked_[n->value])

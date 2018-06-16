@@ -23,14 +23,14 @@ namespace graph
 class DeepFirstSearch
 {
 public:
-    DeepFirstSearch(Graph* g, size_t s);
+    DeepFirstSearch(const Graph & g, size_t s);
     bool marked(size_t v) const { return marked_[v]; }
     int count() const { return count_; }
 
 private:
     std::vector<bool> marked_;
     int count_;
-    void dfs(Graph* g, size_t v);
+    void dfs(const Graph & g, size_t v);
 };
 
 
@@ -40,7 +40,7 @@ private:
 class DeepFirstPaths
 {
 public:
-    DeepFirstPaths(Graph* g, size_t s);
+    DeepFirstPaths(const Graph & g, size_t s);
     bool hasPathTo(size_t v) const { return marked_[v]; }
     std::string pathTo(size_t v) const;
 
@@ -48,7 +48,7 @@ private:
     std::vector<bool> marked_;
     std::vector<size_t> edgeTo_;
     size_t s_;
-    void dfs(Graph* g, size_t v);
+    void dfs(const Graph & g, size_t v);
 };
 
 } // namespace graph

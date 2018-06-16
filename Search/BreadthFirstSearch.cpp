@@ -21,13 +21,13 @@ using GNode = Graph::GNode;
 // ------- BreadthFirstPaths -----------------------------------------------
 //
 
-BreadthFirstPaths::BreadthFirstPaths(Graph* g, size_t s)
-    : marked_(g->vertexes(), false), edgeTo_(g->vertexes()), s_(s)
+BreadthFirstPaths::BreadthFirstPaths(const Graph & g, size_t s)
+    : marked_(g.vertexes(), false), edgeTo_(g.vertexes()), s_(s)
 {
     bfs(g ,s);
 }
 
-void BreadthFirstPaths::bfs(Graph *g, size_t v)
+void BreadthFirstPaths::bfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
     std::queue<size_t> queue;
@@ -37,7 +37,7 @@ void BreadthFirstPaths::bfs(Graph *g, size_t v)
     {
         size_t x = queue.front();
         queue.pop();
-        GNode* n = g->adj(x)->next;
+        GNode* n = g.adj(x)->next;
 
         while(n)
         {
@@ -84,10 +84,10 @@ std::string BreadthFirstPaths::pathTo(size_t v) const
 // ------- CoupledComponents -------------------------------------------------------
 //
 
-CoupledComponents::CoupledComponents(Graph* g)
-    : count_(0),  marked_(g->vertexes(), false), id_(g->vertexes())
+CoupledComponents::CoupledComponents(const Graph & g)
+    : count_(0),  marked_(g.vertexes(), false), id_(g.vertexes())
 {
-    for (size_t i = 0; i < g->vertexes(); ++i)
+    for (size_t i = 0; i < g.vertexes(); ++i)
     {
         if(!marked_[i])
         {
@@ -97,12 +97,12 @@ CoupledComponents::CoupledComponents(Graph* g)
     }
 }
 
-void CoupledComponents::dfs(Graph *g, size_t v)
+void CoupledComponents::dfs(const Graph &g, size_t v)
 {
     marked_[v] = true;
     id_[v] = count_;
 
-    GNode * n = g->adj(v)->next;
+    GNode * n = g.adj(v)->next;
     while(n)
     {
         if (!marked_[n->value])
@@ -118,20 +118,20 @@ void CoupledComponents::dfs(Graph *g, size_t v)
 // ------- Cycle --------------------------------------------------------------------
 //
 
-Cyclic::Cyclic(Graph *g) : hasCycle_(false), marked_(g->vertexes(), false)
+Cyclic::Cyclic(const Graph & g) : hasCycle_(false), marked_(g.vertexes(), false)
 {
-    for (size_t s = 0; s < g->vertexes(); ++s)
+    for (size_t s = 0; s < g.vertexes(); ++s)
     {
        if(!marked_[s])
            dfs(g ,s, s);
     }
 }
 
-void Cyclic::dfs(Graph *g, size_t v, size_t u)
+void Cyclic::dfs(const Graph & g, size_t v, size_t u)
 {
     marked_[v] = true;
 
-    GNode* n = g->adj(v)->next;
+    GNode* n = g.adj(v)->next;
     while(n)
     {
         if (!marked_[n->value])
@@ -151,11 +151,11 @@ void Cyclic::dfs(Graph *g, size_t v, size_t u)
 // ------- TwoColored ----------------------------------------------------------------
 //
 
-TwoColored::TwoColored(Graph* g)
-  : isTwoColors_(true), marked_(g->vertexes(), false), colors_(g->vertexes(), false)
+TwoColored::TwoColored(const Graph & g)
+  : isTwoColors_(true), marked_(g.vertexes(), false), colors_(g.vertexes(), false)
 {
 
-    for (size_t i = 0; i < g->vertexes(); ++i)
+    for (size_t i = 0; i < g.vertexes(); ++i)
     {
         if(!marked_[i])
         {
@@ -164,11 +164,11 @@ TwoColored::TwoColored(Graph* g)
     }
 }
 
-void TwoColored::dfs(Graph *g, size_t v)
+void TwoColored::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
 
-    GNode* n = g->adj(v)->next;
+    GNode* n = g.adj(v)->next;
     while(n)
     {
         if (!marked_[n->value])

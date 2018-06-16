@@ -29,16 +29,16 @@ public:
     Graph(size_t v);
     Graph (std::string fileName);
 
-    size_t vertexes() { return v_; }
-    size_t edges() { return e_; }
+    size_t vertexes() const { return v_; }
+    size_t edges() const { return e_; }
     void addEdge(size_t v, size_t w);
-    GNode *adj(size_t v);
-    void toString();
+    const GNode *adj(size_t v) const;
+    void toString() const;
 
-    static size_t degree(Graph* g, size_t v);
-    static size_t maxDegree(Graph* g);
-    static size_t avgDegree(Graph* g);
-    static int getLoops(Graph* g);
+    static size_t degree(const Graph* g, size_t v);
+    static size_t maxDegree(const Graph* g);
+    static size_t avgDegree(const Graph* g);
+    static int selfLoops(const Graph* g);
 
 private:
     size_t v_;

@@ -18,21 +18,39 @@
 namespace graph
 {
 
+enum class AlgId : int
+{
+    GRAPH = 300,
+    GRAPH_DIRECTED,
+    GRAPH_SYMBOL,
+};
+
 TestGraph::TestGraph(size_t algId, const std::string & fileName) : algId_(algId), fileName_(fileName) {}
 
 void TestGraph::runTest(tools::Timer & timer)
 {
     timer.start();
-    if (algId_ == 300)
+    switch (static_cast<AlgId>(algId_))
     {
-        Graph gr(fileName_);
-        showGraphProperties(gr);
-    }
-    else if (algId_ == 301)
-    {
-        SymbolGraph sgr(fileName_);
-        std::cout << "vertex #2:\n" << sgr.lexical(2);
-        showGraphProperties(sgr.G());
+        case AlgId::GRAPH:
+        {
+            Graph gr(fileName_, std::make_unique<NonDirectedGraphStrategy>());
+            showGraphProperties(gr);
+            break;
+        }
+        case AlgId::GRAPH_DIRECTED:
+        {
+            Graph gr(fileName_, std::make_unique<DirectedGraphStrategy>());
+            showGraphProperties(gr);
+            break;
+        }
+        case AlgId::GRAPH_SYMBOL:
+        {
+            SymbolGraph sgr(fileName_);
+            std::cout << "vertex #2:\n" << sgr.lexical(2);
+            showGraphProperties(sgr.G());
+            break;
+        }
     }
 }
 
@@ -47,11 +65,11 @@ void TestGraph::showGraphProperties(const Graph & gr) const
     std::cout << "self loops: " << Graph::selfLoops(gr) << std::endl;
 
     DeepFirstSearch dfs(gr, 0);
-    DeepFirstPaths dfp(gr, 0);
-    std::cout << "deep to 5:\t" << dfp.pathTo(5) << std::endl;
+    DeepFirstPaths dfp(gr, 5);
+    std::cout << "deep to 5:\t" << dfp.pathTo(0) << std::endl;
 
-    BreadthFirstPaths bfp(gr, 0);
-    std::cout << "breadth to 5:\t" <<  bfp.pathTo(5) << std::endl;
+    BreadthFirstPaths bfp(gr, 5);
+    std::cout << "breadth to 5:\t" <<  bfp.pathTo(0) << std::endl;
 
     CoupledComponents ccg(gr);
     std::cout << "components: " << ccg.componentsCount() << std::endl;

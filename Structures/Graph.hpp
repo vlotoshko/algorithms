@@ -12,9 +12,17 @@
 
 #include<iostream>
 #include <vector>
+#include <memory>
 
 namespace graph
 {
+
+class Graph;
+struct IAddEdgeStrategy
+{
+    virtual void addEdge(Graph & gr, size_t v, size_t w) = 0;
+    virtual ~IAddEdgeStrategy() = default;
+};
 
 //--------------------------------------------------------------------------------------------------
 // Graph structure. Containes array of vertexes, where vertex V is a node and the value of the node
@@ -27,7 +35,7 @@ public:
     using GNode = Node<size_t>;
 
     Graph(size_t v);
-    Graph (std::string fileName);
+    Graph (std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy);
 
     size_t vertexCount() const { return v_; }
     size_t edgeCount() const { return e_; }
@@ -40,10 +48,32 @@ public:
     static size_t avgDegree(const Graph& g);
     static int selfLoops(const Graph& g);
 
-private:
+protected:
+    friend struct NonDirectedGraphStrategy;
+    friend struct DirectedGraphStrategy;
     size_t v_;
     size_t e_;
     std::vector<GNode> vertexes_;
+    std::unique_ptr<IAddEdgeStrategy> addEdge_;
+};
+
+struct NonDirectedGraphStrategy : public IAddEdgeStrategy
+{
+    void addEdge(Graph & gr, size_t v, size_t w) override
+    {
+        gr.vertexes_[v].add(new Graph::GNode(w));
+        gr.vertexes_[w].add(new Graph::GNode(v));
+        ++gr.e_;
+    }
+};
+
+struct DirectedGraphStrategy : public IAddEdgeStrategy
+{
+    void addEdge(Graph & gr, size_t v, size_t w) override
+    {
+        gr.vertexes_[v].add(new Graph::GNode(w));
+        ++gr.e_;
+    }
 };
 
 } //namespace graph

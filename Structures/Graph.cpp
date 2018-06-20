@@ -23,7 +23,8 @@ Graph::Graph(size_t v) : v_(v), e_(0), vertexes_(v)
     }
 }
 
-Graph::Graph(std::string fileName) : e_(0), vertexes_()
+Graph::Graph(std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy)
+    : e_(0), vertexes_(), addEdge_(std::move(strategy))
 {
     std::ifstream file;
     file.open (fileName);

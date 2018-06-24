@@ -53,9 +53,7 @@ Graph::Graph(std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy)
 
 void Graph::addEdge(size_t v, size_t w)
 {
-    vertexes_[v].add(new GNode(w));
-    vertexes_[w].add(new GNode(v));
-    ++e_;
+    addEdge_->addEdge(*this, v, w);
 }
 
 void Graph::toString() const

@@ -5,7 +5,7 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "BreadthFirstSearch.hpp"
+#include "GraphAlgorithms.hpp"
 
 #include <fstream>
 #include <sstream>
@@ -15,7 +15,88 @@
 
 namespace graph
 {
+
 using GNode = Graph::GNode;
+
+
+//--------------------------------------------------------------------------------------------------
+// ------- DeepFirstSearch -----------------------------------------------
+//
+DeepFirstSearch::DeepFirstSearch(const Graph &g, size_t s) : marked_(g.vertexCount(), false)
+{
+    dfs(g ,s);
+}
+
+void DeepFirstSearch::dfs(const Graph & g, size_t v)
+{
+    marked_[v] = true;
+    ++count_;
+    GNode* n = g[v].next;
+    while(n)
+    {
+        if (!marked_[n->value])
+        {
+//            std::cout << v << " - " << n->value << std::endl;
+            dfs(g, n->value);
+        }
+        n = n->next;
+    }
+}
+
+
+//--------------------------------------------------------------------------------------------------
+// ------- DeepFirstPaths -----------------------------------------------
+//
+
+DeepFirstPaths::DeepFirstPaths(const Graph &g, size_t s)
+    : marked_(g.vertexCount(), false), edgeTo_(g.vertexCount()), s_(s)
+{
+    dfs(g ,s);
+}
+
+void DeepFirstPaths::dfs(const Graph & g, size_t v)
+{
+    marked_[v] = true;
+
+    GNode* n = g[v].next;
+    while(n)
+    {
+        if (!marked_[n->value])
+        {
+//            std::cout << v << " - " << n->value << std::endl;
+            edgeTo_[n->value] = v;
+            dfs(g, n->value);
+        }
+        n = n->next;
+    }
+}
+
+std::string DeepFirstPaths::pathTo(size_t v) const
+{
+    std::stringstream pathStr;
+    if(!hasPathTo(v))
+    {
+        pathStr << "none";
+        return pathStr.str();
+    }
+
+    std::stack<size_t> path;
+
+    for (size_t i = v; i != s_; i = edgeTo_[i])
+    {
+        path.push(i);
+    }
+    path.push(s_);
+
+    while (!path.empty())
+    {
+       pathStr << path.top();
+       path.pop();
+       pathStr << (!path.empty() ? " - " : "");
+    }
+    return pathStr.str();
+}
+
 
 //--------------------------------------------------------------------------------------------------
 // ------- BreadthFirstPaths -----------------------------------------------

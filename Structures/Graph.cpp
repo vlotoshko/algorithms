@@ -106,6 +106,7 @@ size_t Graph::maxDegree(const Graph& g)
 
 size_t Graph::avgDegree(const Graph & g)
 {
+    // FIXME: do not multiply by 2 for the directed graph
     return 2 * g.edgeCount() / g.vertexCount();
 }
 
@@ -122,6 +123,7 @@ int Graph::selfLoops(const Graph& g)
             n = n->next;
         }
     }
+    // FIXME: do not divide by 2 for the directed graph
     return count / 2;
 }
 

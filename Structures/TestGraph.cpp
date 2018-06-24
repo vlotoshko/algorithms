@@ -6,8 +6,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "TestGraph.hpp"
-#include "DeepFirstSearch.hpp"
-#include "BreadthFirstSearch.hpp"
+#include "GraphAlgorithms.hpp"
 
 #include <fstream>
 #include <memory>

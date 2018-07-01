@@ -13,6 +13,8 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <stack>
+#include <queue>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph
@@ -51,6 +53,40 @@ private:
     std::vector<size_t> edgeTo_;
     size_t s_;
     void dfs(const Graph& g, size_t v);
+};
+
+
+//--------------------------------------------------------------------------------------------------
+// Sorts vertexes by pre, post and reversed post orders while performing dfs algorithm
+//
+class DepthFirstOrder
+{
+public:
+    DepthFirstOrder(const Graph & g);
+    const std::stack<size_t> & reversePost() const { return reversePost_; }
+    const std::queue<size_t> & pre() const { return pre_; }
+    const std::queue<size_t> & post() const { return post_; }
+private:
+    std::vector<bool> marked_;
+    std::stack<size_t> reversePost_;
+    std::queue<size_t> pre_;
+    std::queue<size_t> post_;
+    void dfs(const Graph & g, size_t v);
+};
+
+
+//--------------------------------------------------------------------------------------------------
+// Topological sort. Applies only with directed acyclic graphs
+//
+class Topological
+{
+public:
+    Topological(const Graph & g);
+    const std::stack<size_t> & order() const { return dfo_.reversePost(); }
+    bool isDAG() { return isDAG_; }
+private:
+    DepthFirstOrder dfo_;
+    bool isDAG_;
 };
 
 

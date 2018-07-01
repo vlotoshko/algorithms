@@ -98,6 +98,50 @@ std::string DeepFirstPaths::pathTo(size_t v) const
 }
 
 
+
+
+DepthFirstOrder::DepthFirstOrder(const Graph & g)
+  : marked_(g.vertexCount(), false)
+  , reversePost_(), pre_(), post_()
+{
+
+    for (size_t v = 0; v < g.vertexCount(); ++v)
+    {
+        if (!marked_[v])
+            dfs(g, v);
+    }
+}
+
+
+void DepthFirstOrder::dfs(const Graph & g, size_t v)
+{
+    marked_[v] = true;
+    pre_.push(v);
+
+    Node<size_t>* n = g[v].next;
+    while(n)
+    {
+        if (!marked_[n->value])
+        {
+            dfs(g, n->value);
+        }
+        n = n->next;
+    }
+    post_.push(v);
+    reversePost_.push(v);
+}
+
+
+Topological::Topological(const Graph & g) : dfo_(Graph(0)), isDAG_(false)
+{
+    isDAG_ = !Cyclic(g).isCyclic();
+    if(isDAG_)
+    {
+        dfo_ = DepthFirstOrder(g);
+    }
+}
+
+
 //--------------------------------------------------------------------------------------------------
 // ------- BreadthFirstPaths -----------------------------------------------
 //

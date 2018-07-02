@@ -63,9 +63,9 @@ class DepthFirstOrder
 {
 public:
     DepthFirstOrder(const Graph & g);
-    const std::stack<size_t> & reversePost() const { return reversePost_; }
-    const std::queue<size_t> & pre() const { return pre_; }
-    const std::queue<size_t> & post() const { return post_; }
+    std::stack<size_t> & reversePost() { return reversePost_; }
+    std::queue<size_t> & pre() { return pre_; }
+    std::queue<size_t> & post() { return post_; }
 private:
     std::vector<bool> marked_;
     std::stack<size_t> reversePost_;
@@ -82,13 +82,30 @@ class Topological
 {
 public:
     Topological(const Graph & g);
-    const std::stack<size_t> & order() const { return dfo_.reversePost(); }
+    std::stack<size_t> & order() { return dfo_.reversePost(); }
     bool isDAG() { return isDAG_; }
 private:
     DepthFirstOrder dfo_;
     bool isDAG_;
 };
 
+
+//--------------------------------------------------------------------------------------------------
+// Kosaraju algorithm for Strong Coupled Components - SCC.
+//
+class KosarajuSCC
+{
+public:
+    KosarajuSCC(const Graph & g);
+    bool stronglyConnected(size_t v, size_t w) { return id_[v] == id_[w]; }
+    size_t count() { return count_; }
+    size_t id(size_t v) { return id_[v]; }
+private:
+    size_t count_;
+    std::vector<bool> marked_;
+    std::vector<size_t> id_;
+    void dfs(const Graph & g, size_t v);
+};
 
 //--------------------------------------------------------------------------------------------------
 // Finds all pathes to the concrete vertex using breadth first search algorithm
@@ -109,8 +126,7 @@ private:
 
 
 //--------------------------------------------------------------------------------------------------
-// Analizes graph for coupled components. Uncoupled components can be processing simultaneously
-// in the different threads.
+// Analizes graph for coupled components.
 //
 class CoupledComponents
 {

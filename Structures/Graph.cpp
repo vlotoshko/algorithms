@@ -127,4 +127,21 @@ int Graph::selfLoops(const Graph& g)
     return count / 2;
 }
 
+std::unique_ptr<Graph> Graph::reverse(const Graph & g)
+{
+    auto reversed = std::make_unique<Graph>(g.vertexCount());
+    for (size_t var = 0; var < g.vertexCount(); ++var)
+    {
+
+        size_t v = g[var].value;
+        GNode* n = g[v].next;
+        while(n)
+        {
+            reversed->addEdge(n->value, v);
+            n = n->next;
+        }
+    }
+    return reversed;
+}
+
 } // namespace graph

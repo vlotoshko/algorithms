@@ -99,6 +99,9 @@ std::string DeepFirstPaths::pathTo(size_t v) const
 
 
 
+//--------------------------------------------------------------------------------------------------
+// ------- DepthFirstOrder ----------------------------------------------------
+//
 
 DepthFirstOrder::DepthFirstOrder(const Graph & g)
   : marked_(g.vertexCount(), false)
@@ -132,6 +135,10 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
 }
 
 
+//--------------------------------------------------------------------------------------------------
+// ------- Topological ----------------------------------------------------
+//
+
 Topological::Topological(const Graph & g) : dfo_(Graph(0)), isDAG_(false)
 {
     isDAG_ = !Cyclic(g).isCyclic();
@@ -141,6 +148,46 @@ Topological::Topological(const Graph & g) : dfo_(Graph(0)), isDAG_(false)
     }
 }
 
+
+//--------------------------------------------------------------------------------------------------
+// ------- KosarajuSCC ----------------------------------------------------
+//
+
+KosarajuSCC::KosarajuSCC(const Graph & g)
+    : count_(0), marked_(g.vertexCount(), false), id_(g.vertexCount())
+{
+    auto r = Graph::reverse(g);
+    DepthFirstOrder order(*r);
+
+    while(order.reversePost().size() > 0)
+    {
+        size_t i = order.reversePost().top();
+        if(!marked_[i])
+        {
+            dfs(g, i);
+            ++count_;
+        }
+        order.reversePost().pop();
+    }
+}
+
+
+void KosarajuSCC::dfs(const Graph & g, size_t v)
+{
+    marked_[v] = true;
+    id_[v] = count_;
+
+//    std::cout << v << std::endl;
+    GNode* n = g[v].next;
+    while(n)
+    {
+        if (!marked_[n->value])
+        {
+            dfs(g, n->value);
+        }
+        n = n->next;
+    }
+}
 
 //--------------------------------------------------------------------------------------------------
 // ------- BreadthFirstPaths -----------------------------------------------

@@ -47,6 +47,7 @@ public:
     static size_t maxDegree(const Graph& g);
     static size_t avgDegree(const Graph& g);
     static int selfLoops(const Graph& g);
+    static std::unique_ptr<Graph> reverse(const Graph& g);
 
 protected:
     friend struct NonDirectedGraphStrategy;

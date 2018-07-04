@@ -148,7 +148,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::delet
 template< typename Key, typename Value >
 void BinarySearchTree<Key, Value>::clear_(Node* n)
 {
-    if(n == nullptr)
+    if (n == nullptr)
         return;
 
     if (n->left)
@@ -187,7 +187,7 @@ size_t BinarySearchTree<Key, Value>::size_(Node * n) const
 template<typename Key, typename Value>
 typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::forgetMin_(Node * n) \
 {
-    if(n->left == nullptr)
+    if (n->left == nullptr)
         return n->right;
 
     n->left = forgetMin_(n->left);
@@ -198,7 +198,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::forge
 template<typename Key, typename Value>
 Value BinarySearchTree<Key, Value>::valueSum_(Node * n) const
 {
-    if(n == nullptr)
+    if (n == nullptr)
         return 0;
 
     Value i = 0;
@@ -264,7 +264,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::selec
 template<typename Key, typename Value>
 size_t BinarySearchTree<Key, Value>::rank_(Node * n,  Key k) const
 {
-    if(n == nullptr)
+    if (n == nullptr)
         return 0;
 
     if (k < n->key)
@@ -279,7 +279,7 @@ size_t BinarySearchTree<Key, Value>::rank_(Node * n,  Key k) const
 template<typename Key, typename Value>
 void BinarySearchTree<Key, Value>::print_(Node * n) const
 {
-    if(n == nullptr)
+    if (n == nullptr)
         return;
 
     print_(n->left);

@@ -41,7 +41,7 @@ public:
     void runTest(tools::Timer & timer) override
     {
         auto iter = Algorithms.find(algId_);
-        if(iter != Algorithms.end())
+        if (iter != Algorithms.end())
         {
             UnionFindInfo<T> uf(elementsCount_);
 

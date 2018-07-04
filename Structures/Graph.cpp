@@ -84,7 +84,7 @@ size_t Graph::degree(const Graph& g, size_t v)
 {
     size_t degree = 0;
     const GNode * n = &g[v];
-    while(n->next)
+    while (n->next)
     {
         ++degree;
         n = n->next;
@@ -116,7 +116,7 @@ int Graph::selfLoops(const Graph& g)
     for (size_t v = 0; v < g.vertexCount(); ++v)
     {
         GNode * n = g[v].next;
-        while(n)
+        while (n)
         {
             if (n->value == v)
                 ++count;
@@ -135,7 +135,7 @@ std::unique_ptr<Graph> Graph::reverse(const Graph & g)
 
         size_t v = g[var].value;
         GNode* n = g[v].next;
-        while(n)
+        while (n)
         {
             reversed->addEdge(n->value, v);
             n = n->next;

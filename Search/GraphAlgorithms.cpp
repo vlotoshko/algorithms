@@ -32,7 +32,7 @@ void DeepFirstSearch::dfs(const Graph & g, size_t v)
     marked_[v] = true;
     ++count_;
     GNode* n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
@@ -59,7 +59,7 @@ void DeepFirstPaths::dfs(const Graph & g, size_t v)
     marked_[v] = true;
 
     GNode* n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
@@ -74,7 +74,7 @@ void DeepFirstPaths::dfs(const Graph & g, size_t v)
 std::string DeepFirstPaths::pathTo(size_t v) const
 {
     std::stringstream pathStr;
-    if(!hasPathTo(v))
+    if (!hasPathTo(v))
     {
         pathStr << "none";
         return pathStr.str();
@@ -122,7 +122,7 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
     pre_.push(v);
 
     Node<size_t>* n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
@@ -142,7 +142,7 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
 Topological::Topological(const Graph & g) : dfo_(Graph(0)), isDAG_(false)
 {
     isDAG_ = !Cyclic(g).isCyclic();
-    if(isDAG_)
+    if (isDAG_)
     {
         dfo_ = DepthFirstOrder(g);
     }
@@ -159,10 +159,10 @@ KosarajuSCC::KosarajuSCC(const Graph & g)
     auto r = Graph::reverse(g);
     DepthFirstOrder order(*r);
 
-    while(order.reversePost().size() > 0)
+    while (order.reversePost().size() > 0)
     {
         size_t i = order.reversePost().top();
-        if(!marked_[i])
+        if (!marked_[i])
         {
             dfs(g, i);
             ++count_;
@@ -177,7 +177,7 @@ void KosarajuSCC::dfs(const Graph & g, size_t v)
     id_[v] = count_;
 
     GNode* n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
@@ -236,7 +236,7 @@ void BreadthFirstPaths::bfs(const Graph & g, size_t v)
         queue.pop();
         GNode* n = g[x].next;
 
-        while(n)
+        while (n)
         {
             if (!marked_[n->value])
             {
@@ -253,7 +253,7 @@ void BreadthFirstPaths::bfs(const Graph & g, size_t v)
 std::string BreadthFirstPaths::pathTo(size_t v) const
 {
     std::stringstream pathStr;
-    if(!hasPathTo(v))
+    if (!hasPathTo(v))
     {
         pathStr << "none";
         return pathStr.str();
@@ -300,7 +300,7 @@ void CoupledComponents::dfs(const Graph &g, size_t v)
     id_[v] = count_;
 
     GNode * n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
@@ -329,7 +329,7 @@ void Cyclic::dfs(const Graph & g, size_t v, size_t u)
     marked_[v] = true;
 
     GNode* n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
@@ -366,14 +366,14 @@ void TwoColored::dfs(const Graph & g, size_t v)
     marked_[v] = true;
 
     GNode* n = g[v].next;
-    while(n)
+    while (n)
     {
         if (!marked_[n->value])
         {
             colors_[n->value] = !colors_[v];
             dfs(g, n->value);
         }
-        else if(colors_[n->value] == colors_[v])
+        else if (colors_[n->value] == colors_[v])
         {
             std::cout << "color: " << n->value << " - " << v << std::endl;
             isTwoColors_ = false;
@@ -507,7 +507,7 @@ std::string SymbolGraph::lexical(size_t index) const
         pathStr << name(index) << std::endl;
 
         GNode * n = (*g_)[index].next;
-        while(n)
+        while (n)
         {
             pathStr << "  " << name(n->value) << std::endl;
             n = n->next;

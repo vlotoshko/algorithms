@@ -33,15 +33,15 @@ AlgCategory getAlgCategory(size_t id)
     {
         return AlgCategory::SORT;
     }
-    else if(id < 200) // range [100, 200)
+    else if (id < 200) // range [100, 200)
     {
         return AlgCategory::UNION_FIND;
     }
-    else if(id < 300) // range [200, 300)
+    else if (id < 300) // range [200, 300)
     {
         return AlgCategory::BINARY_SEARCH_TREE;
     }
-    else if(id < 400) // range [300, 400)
+    else if (id < 400) // range [300, 400)
     {
         return AlgCategory::GRAPH;
     }

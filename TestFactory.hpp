@@ -81,7 +81,7 @@ template <typename T>
 static std::shared_ptr<ITestFactory> getTestBuilder(size_t id)
 {
     auto iter = testBuilders<T>.find(registry::getAlgCategory(id));
-    if(iter != testBuilders<T>.end())
+    if (iter != testBuilders<T>.end())
     {
         return iter->second;
     }

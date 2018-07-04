@@ -395,7 +395,7 @@ public:
             }
 
             // 2. sort
-            while(length > 1)
+            while (length > 1)
             {
                 std::swap(elements[0], elements[--length]);
                 sink(elements, 0, length);
@@ -411,10 +411,10 @@ private:
         while (2 * pos <= length)
         {
             int j = 2 * pos;
-            if(j < length && this->less(elements[j - 1], elements[j]))
+            if (j < length && this->less(elements[j - 1], elements[j]))
                 j++;
 
-            if(this->less(elements[j - 1], elements[pos - 1]))
+            if (this->less(elements[j - 1], elements[pos - 1]))
                 break;
             std::swap(elements[j - 1], elements[pos - 1]);
             pos = j;
@@ -457,7 +457,7 @@ public:
             int key = array[i];
             int j = i - 1;
 
-            while(j >= 0 && array[j] > key)
+            while (j >= 0 && array[j] > key)
             {
                 array[j + 1] = array[j];
                 --j;

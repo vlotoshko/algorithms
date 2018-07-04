@@ -107,6 +107,21 @@ private:
     void dfs(const Graph & g, size_t v);
 };
 
+
+//--------------------------------------------------------------------------------------------------
+// TransitiveClosure
+//
+class TransitiveClosure
+{
+public:
+    TransitiveClosure(const Graph & g);
+    ~TransitiveClosure();
+    bool reachable(size_t v, size_t w);
+private:
+    std::vector<DeepFirstSearch *> vDFS_;
+};
+
+
 //--------------------------------------------------------------------------------------------------
 // Finds all pathes to the concrete vertex using breadth first search algorithm
 //

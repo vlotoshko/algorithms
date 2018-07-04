@@ -171,13 +171,11 @@ KosarajuSCC::KosarajuSCC(const Graph & g)
     }
 }
 
-
 void KosarajuSCC::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
     id_[v] = count_;
 
-//    std::cout << v << std::endl;
     GNode* n = g[v].next;
     while(n)
     {
@@ -188,6 +186,33 @@ void KosarajuSCC::dfs(const Graph & g, size_t v)
         n = n->next;
     }
 }
+
+
+//--------------------------------------------------------------------------------------------------
+// ------- TransitiveClosure ----------------------------------------------------
+//
+
+TransitiveClosure::TransitiveClosure(const Graph & g)
+{
+    for (size_t v = 0; v < g.vertexCount(); ++v)
+    {
+        vDFS_.push_back(new DeepFirstSearch(g, v));
+    }
+}
+
+TransitiveClosure::~TransitiveClosure()
+{
+    for (auto it = vDFS_.begin();  it != vDFS_.end(); ++it)
+    {
+        delete *it;
+    }
+}
+
+bool TransitiveClosure::reachable(size_t v, size_t w)
+{
+    return vDFS_[v]->marked(w);
+}
+
 
 //--------------------------------------------------------------------------------------------------
 // ------- BreadthFirstPaths -----------------------------------------------

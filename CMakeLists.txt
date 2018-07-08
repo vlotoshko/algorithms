@@ -14,6 +14,7 @@ include_directories(Structures)
 
 set(CPP_FILES
     "Search/GraphAlgorithms.cpp"
+    "Structures/EdgeWeightedGraph.cpp"
     "Structures/Graph.cpp"
     "Structures/TestGraph.cpp"
     "tools.cpp"

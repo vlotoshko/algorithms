@@ -26,9 +26,7 @@ struct IAddEdgeWeightedStrategy
 };
 
 //--------------------------------------------------------------------------------------------------
-// Graph structure. Containes array of vertexes, where vertex V is a node and the value of the node
-// is an index of vertex connected with V. All other vertexes connected with V adds to the node
-// as linked list.
+//
 //
 class EdgeWeightedGraph
 {

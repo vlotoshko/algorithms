@@ -26,7 +26,7 @@ public:
         else if (v == w_) return v_;
         else throw("Invalid edge");
     }
-    bool operator< (const Edge& e) const { return weight_ > e.weight_; } // TODO: chekc operator
+    bool operator< (const Edge& e) const { return weight_ < e.weight_; }
 private:
     size_t v_;
     size_t w_;

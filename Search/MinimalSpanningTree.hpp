@@ -17,6 +17,11 @@
 namespace graph
 {
 
+class EdgeCmp
+{
+public:
+    bool operator() (const Edge & l, const Edge & r) const { return r < l; }
+};
 
 class LazyPrimMST
 {
@@ -28,7 +33,7 @@ public:
 private:
     std::vector<bool> marked_;
     EdgeContainer mst_;
-    std::priority_queue<Edge> pq_;
+    std::priority_queue<Edge, std::vector<Edge>, EdgeCmp> pq_;
     void visit(const EdgeWeightedGraph & gr, size_t v);
 };
 

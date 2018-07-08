@@ -13,7 +13,7 @@ namespace graph
 {
 
 LazyPrimMST::LazyPrimMST(const EdgeWeightedGraph & gr)
-    : marked_(gr.vertexCount())
+    : marked_(gr.vertexCount()), pq_(EdgeCmp{})
 {
     visit(gr, 0); // Suppose graph is coupled
 
@@ -59,7 +59,5 @@ void LazyPrimMST::visit(const EdgeWeightedGraph &gr, size_t v)
         }
     }
 }
-
-
 
 } // namespace graph

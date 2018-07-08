@@ -15,12 +15,12 @@
 namespace graph
 {
 
-EdgeWeightedGraph::EdgeWeightedGraph(size_t v) : v_(v), e_(0), edges_(v)
+EdgeWeightedGraph::EdgeWeightedGraph(size_t v) : v_(v), e_(0), vertexes_(v)
 {
 }
 
-EdgeWeightedGraph::EdgeWeightedGraph(std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy)
-    : e_(0), edges_(), addEdge_(std::move(strategy))
+EdgeWeightedGraph::EdgeWeightedGraph(std::string fileName, std::shared_ptr<IAddEdgeWeightedStrategy> strategy)
+    : e_(0), vertexes_(), addEdge_(std::move(strategy))
 {
     std::ifstream file;
     file.open (fileName);
@@ -35,10 +35,11 @@ EdgeWeightedGraph::EdgeWeightedGraph(std::string fileName, std::unique_ptr<IAddE
         if (maxNew > max)
         {
             max = maxNew;
-            edges_.resize(max + 1);
+            vertexes_.resize(max + 1);
         }
         addEdge(Edge(v, w, weight));
     }
+    v_ = vertexes_.size();
 }
 
 void EdgeWeightedGraph::addEdge(Edge e)
@@ -48,7 +49,7 @@ void EdgeWeightedGraph::addEdge(Edge e)
 
 const EdgeWeightedGraph::EdgeContainer &EdgeWeightedGraph::operator[](size_t index) const
 {
-    return edges_[index];
+    return vertexes_[index];
 }
 
 EdgeWeightedGraph::EdgeContainer EdgeWeightedGraph::edges() const
@@ -56,7 +57,7 @@ EdgeWeightedGraph::EdgeContainer EdgeWeightedGraph::edges() const
     EdgeContainer ec;
     for (size_t v = 0; v < v_; ++v)
     {
-        for(auto e: edges_[v])
+        for(auto e: vertexes_[v])
         {
             if(e.other(v) > v)
                 ec.push_back(e);
@@ -71,15 +72,22 @@ void EdgeWeightedGraph::toString() const
     std::string s;
 
     std::cout << "vertexes: " << v_ << "; edges: " << e_ << std::endl;
-    for (auto const & edgelist : edges_)
+    auto ec = edges();
+    for (auto const & edge : ec)
     {
-        for (auto const & edge: edgelist)
-        {
-            auto v = edge.either();
-            std::cout << v << " - " << edge.other(v) << edge.weight() << std::endl;
-        }
-        std::cout << std::endl;
+        auto v = edge.either();
+        std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
     }
+
+//    for (auto const & edgelist : vertexes_)
+//    {
+//        for (auto const & edge: edgelist)
+//        {
+//            auto v = edge.either();
+//            std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
+//        }
+//        std::cout << std::endl;
+//    }
 }
 
 

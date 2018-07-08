@@ -1,42 +1,41 @@
 //--------------------------------------------------------------------------------------------------
 // Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
 // skype:  vlotoshko
-// Date:   04-Jul-2018
+// Date:   08-Jul-2018
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#ifndef EDGE_HPP
-#define EDGE_HPP
+#ifndef MINIMAL_SPANNING_TREE_HPP
+#define MINIMAL_SPANNING_TREE_HPP
 //--------------------------------------------------------------------------------------------------
-#include <iostream>
+#include "EdgeWeightedGraph.hpp"
+
+#include <vector>
+#include <queue>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph
 {
 
-class Edge
+
+class LazyPrimMST
 {
 public:
-    Edge(size_t v, size_t w, double weight) : v_(v), w_(w), weight_(weight) {}
-    double weight() const { return weight_; }
-    size_t either() const { return v_; }
-    size_t other(size_t v) const
-    {
-        if (v == v_) return w_;
-        else if (v == w_) return v_;
-        else throw("Invalid edge");
-    }
-    bool operator< (const Edge& e) const { return weight_ > e.weight_; } // TODO: chekc operator
+    using EdgeContainer = EdgeWeightedGraph::EdgeContainer;
+
+    LazyPrimMST(const EdgeWeightedGraph & gr);
+    EdgeContainer edges() const;
 private:
-    size_t v_;
-    size_t w_;
-    double weight_;
+    std::vector<bool> marked_;
+    EdgeContainer mst_;
+    std::priority_queue<Edge> pq_;
+    void visit(const EdgeWeightedGraph & gr, size_t v);
 };
 
-}
+
+} // namespace graph
 
 //--------------------------------------------------------------------------------------------------
-#endif // EDGE_HPP
+#endif // MINIMAL_SPANNING_TREE_HPP
 //--------------------------------------------------------------------------------------------------
-
 

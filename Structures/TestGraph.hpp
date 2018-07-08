@@ -12,6 +12,8 @@
 //--------------------------------------------------------------------------------------------------
 #include "ITestable.hpp"
 #include "Graph.hpp"
+#include "EdgeWeightedGraph.hpp"
+
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
@@ -28,6 +30,7 @@ public:
 private:
     void showGraphCommonProperties(const Graph & gr) const;
     void showDirectedGraphProperties(const Graph & gr) const;
+    void showEWGraphProperties(const EdgeWeightedGraph &gr) const;
     size_t algId_;
     std::string fileName_;
 };

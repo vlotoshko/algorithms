@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------------------------------------
 #include "TestGraph.hpp"
 #include "GraphAlgorithms.hpp"
+#include "MinimalSpanningTree.hpp"
 
 #include <fstream>
 #include <memory>
@@ -23,6 +24,7 @@ enum class AlgId : int
     GRAPH_DIRECTED,
     GRAPH_SYMBOL,
     GRAPH_EDGEWEIGHTED,
+    GRAPH_MST,
 };
 
 TestGraph::TestGraph(size_t algId, const std::string & fileName) : algId_(algId), fileName_(fileName) {}
@@ -54,6 +56,14 @@ void TestGraph::runTest(tools::Timer & timer)
         }
         case AlgId::GRAPH_EDGEWEIGHTED:
         {
+            EdgeWeightedGraph gr(fileName_, std::make_shared<NonDirectedEWGraphStrategy>());
+            showEWGraphProperties(gr);
+            break;
+        }
+        case AlgId::GRAPH_MST:
+        {
+            EdgeWeightedGraph gr(fileName_, std::make_shared<NonDirectedEWGraphStrategy>());
+            showEWGraphProperties(gr);
             break;
         }
     }
@@ -141,6 +151,20 @@ void TestGraph::showDirectedGraphProperties(const Graph &gr) const
     std::cout << "1, 5 reachable: " << std::boolalpha << tc.reachable(1, 5) << std::endl;
     std::cout << "3, 9 reachable: " << std::boolalpha << tc.reachable(3, 9) << std::endl;
     std::cout << "9, 4 reachable: " << std::boolalpha << tc.reachable(9, 4) << std::endl;
+}
+
+void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
+{
+    gr.toString();
+
+    LazyPrimMST lazyMST(gr);
+    std::cout << "Lazy Prim MST: " << std::endl;
+    auto ec = lazyMST.edges();
+    for (auto const & edge : ec)
+    {
+        auto v = edge.either();
+        std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
+    }
 }
 
 } // namespace graph

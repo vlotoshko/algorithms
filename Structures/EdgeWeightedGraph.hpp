@@ -8,7 +8,6 @@
 #ifndef EDGEWEIGHTEDGRAPH_HPP
 #define EDGEWEIGHTEDGRAPH_HPP
 //--------------------------------------------------------------------------------------------------
-#include "Node.hpp"
 #include "Edge.hpp"
 
 #include <iostream>
@@ -20,10 +19,10 @@ namespace graph
 {
 
 class EdgeWeightedGraph;
-struct IAddEdgeStrategy
+struct IAddEdgeWeightedStrategy
 {
     virtual void addEdge(EdgeWeightedGraph & gr, Edge e) = 0;
-    virtual ~IAddEdgeStrategy() = default;
+    virtual ~IAddEdgeWeightedStrategy() = default;
 };
 
 //--------------------------------------------------------------------------------------------------
@@ -36,7 +35,7 @@ class EdgeWeightedGraph
 public:
     using EdgeContainer = std::list<Edge>;
     EdgeWeightedGraph(size_t v);
-    EdgeWeightedGraph(std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy);
+    EdgeWeightedGraph(std::string fileName, std::shared_ptr<IAddEdgeWeightedStrategy> strategy);
 
     size_t vertexCount() const { return v_; }
     size_t edgeCount() const { return e_; }
@@ -47,31 +46,31 @@ public:
     void toString() const;
 
 protected:
-    friend struct NonDirectedGraphStrategy;
-    friend struct DirectedGraphStrategy;
+    friend struct NonDirectedEWGraphStrategy;
+    friend struct DirectedEWGraphStrategy;
     size_t v_;
     size_t e_;
-    std::vector<EdgeContainer> edges_;
-    std::unique_ptr<IAddEdgeStrategy> addEdge_;
+    std::vector<EdgeContainer> vertexes_;
+    std::shared_ptr<IAddEdgeWeightedStrategy> addEdge_;
 };
 
-struct NonDirectedGraphStrategy : public IAddEdgeStrategy
+struct NonDirectedEWGraphStrategy : public IAddEdgeWeightedStrategy
 {
     void addEdge(EdgeWeightedGraph & gr, Edge e) override
     {
         size_t v = e.either();
         size_t w = e.other(v);
-        gr.edges_[v].push_back(e);
-        gr.edges_[w].push_back(e);
+        gr.vertexes_[v].push_back(e);
+        gr.vertexes_[w].push_back(e);
         ++gr.e_;
     }
 };
 
-struct DirectedGraphStrategy : public IAddEdgeStrategy
+struct DirectedEWGraphStrategy : public IAddEdgeWeightedStrategy
 {
     void addEdge(EdgeWeightedGraph & gr, Edge e) override
     {
-        gr.edges_[e.either()].push_back(e);
+        gr.vertexes_[e.either()].push_back(e);
         ++gr.e_;
     }
 };

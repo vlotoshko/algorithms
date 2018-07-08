@@ -139,7 +139,8 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
 // ------- Topological ----------------------------------------------------
 //
 
-Topological::Topological(const Graph & g) : dfo_(Graph(0)), isDAG_(false)
+Topological::Topological(const Graph & g)
+    : dfo_(Graph(0, std::make_shared<DirectedGraphStrategy>())), isDAG_(false)
 {
     isDAG_ = !Cyclic(g).isCyclic();
     if (isDAG_)
@@ -426,7 +427,7 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
     }
 
     // Generating graph
-    g_ = new Graph(st_.size());
+    g_ = new Graph(st_.size(), std::make_shared<NonDirectedGraphStrategy>());
 
     file.clear();
     file.seekg(0, std::ios::beg);

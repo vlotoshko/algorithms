@@ -34,8 +34,8 @@ class Graph
 public:
     using GNode = Node<size_t>;
 
-    Graph(size_t v);
-    Graph (std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy);
+    Graph(size_t v, std::shared_ptr<IAddEdgeStrategy> strategy);
+    Graph (std::string fileName, std::shared_ptr<IAddEdgeStrategy> strategy);
 
     size_t vertexCount() const { return v_; }
     size_t edgeCount() const { return e_; }
@@ -55,7 +55,7 @@ protected:
     size_t v_;
     size_t e_;
     std::vector<GNode> vertexes_;
-    std::unique_ptr<IAddEdgeStrategy> addEdge_;
+    std::shared_ptr<IAddEdgeStrategy> addEdge_;
 };
 
 struct NonDirectedGraphStrategy : public IAddEdgeStrategy

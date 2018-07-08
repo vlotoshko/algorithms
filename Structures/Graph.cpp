@@ -15,7 +15,8 @@
 namespace graph
 {
 
-Graph::Graph(size_t v) : v_(v), e_(0), vertexes_(v)
+Graph::Graph(size_t v, std::shared_ptr<IAddEdgeStrategy> strategy)
+    : v_(v), e_(0), vertexes_(v), addEdge_(strategy)
 {
     for (size_t i = 0; i < v_; ++i)
     {
@@ -23,8 +24,8 @@ Graph::Graph(size_t v) : v_(v), e_(0), vertexes_(v)
     }
 }
 
-Graph::Graph(std::string fileName, std::unique_ptr<IAddEdgeStrategy> strategy)
-    : e_(0), vertexes_(), addEdge_(std::move(strategy))
+Graph::Graph(std::string fileName, std::shared_ptr<IAddEdgeStrategy> strategy)
+    : e_(0), vertexes_(), addEdge_(strategy)
 {
     std::ifstream file;
     file.open (fileName);
@@ -129,7 +130,7 @@ int Graph::selfLoops(const Graph& g)
 
 std::unique_ptr<Graph> Graph::reverse(const Graph & g)
 {
-    auto reversed = std::make_unique<Graph>(g.vertexCount());
+    auto reversed = std::make_unique<Graph>(g.vertexCount(), g.addEdge_);
     for (size_t var = 0; var < g.vertexCount(); ++var)
     {
 

@@ -26,7 +26,8 @@ public:
     void runTest(tools::Timer & timer) override;
 
 private:
-    void showGraphProperties(const Graph & gr) const;
+    void showGraphCommonProperties(const Graph & gr) const;
+    void showDirectedGraphProperties(const Graph & gr) const;
     size_t algId_;
     std::string fileName_;
 };

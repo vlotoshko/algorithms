@@ -71,7 +71,6 @@ PrimMST_Energy::PrimMST_Energy(const EdgeWeightedGraph & gr)
     pq_.push(0, 0);
     while (!pq_.empty())
     {
-//        std::cout << "weight = " << pq_.top() << std::endl;
         visit(gr, pq_.pop());
     }
 }
@@ -84,7 +83,6 @@ PrimMST_Energy::EdgeContainer PrimMST_Energy::edges() const
 void PrimMST_Energy::visit(const EdgeWeightedGraph &gr, size_t v)
 {
     marked_[v] = true;
-    std::cout << "v = " << v << std::endl;
     for (auto e : gr[v])
     {
         size_t w = e.other(v);
@@ -92,12 +90,8 @@ void PrimMST_Energy::visit(const EdgeWeightedGraph &gr, size_t v)
         {
             continue;
         }
-
-        std::cout << "w = " << w << "; distTo_[w] = " << distTo_[w] << std::endl;
         if (e.weight() < distTo_[w])
         {
-            std::cout << "  w = " << w << "; weight  = " << e.weight() << std::endl;
-
             edgeTo_[w] = e;
             distTo_[w] = e.weight();
             pq_.push(w, distTo_[w]);

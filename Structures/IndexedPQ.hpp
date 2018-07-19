@@ -10,7 +10,6 @@
 //--------------------------------------------------------------------------------------------------
 #include <vector>
 #include <algorithm>
-#include <iostream>
 //--------------------------------------------------------------------------------------------------
 
 namespace data_structs
@@ -93,13 +92,6 @@ public:
         delete byIndex_[index];
         byIndex_[index] = nullptr;
 
-        std::cout << "after pop: ";
-        for (auto const & item: byOrder_)
-        {
-            std::cout << *item.element << " ";
-        }
-        std::cout << std::endl;
-
         return index;
     }
 
@@ -115,18 +107,10 @@ public:
         }
         else
         {
-            std::cout << "changed: " << v <<std::endl;
             auto item = byIndex_[v];
             *item = t;
             std::make_heap(byOrder_.begin(), byOrder_.end(), IndexedItem::cmp);
         }
-
-        std::cout << "after push: ";
-        for (auto const & item: byOrder_)
-        {
-            std::cout << *item.element << " ";
-        }
-        std::cout << std::endl;
         return newElement;
     }
 private:

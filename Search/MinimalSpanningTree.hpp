@@ -43,7 +43,7 @@ private:
     std::vector<bool> marked_;
     std::vector<double> distTo_;
     EdgeContainer edgeTo_;
-    data_structs::IndexedPriorityQueue<double, std::greater<Edge>> pq_;
+    data_structs::IndexedPriorityQueue<double, std::greater<double>> pq_;
     void visit(const EdgeWeightedGraph & gr, size_t v);
 };
 

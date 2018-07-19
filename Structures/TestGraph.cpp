@@ -159,6 +159,7 @@ void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
 {
     gr.toString();
 
+    std::cout << std::endl;
     PrimMST_Lazy lazyMST(gr);
     std::cout << "Lazy Prim MST: " << std::endl;
     auto edges = lazyMST.edges();
@@ -177,59 +178,6 @@ void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
         auto v = edge.either();
         std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
     }
-
-    std::cout << std::endl;
-    data_structs::IndexedPriorityQueue<double, std::greater<double>> ipq(10);
-
-    ipq.push(7, 0.16);
-    ipq.push(4, 0.38);
-    ipq.push(2, 0.26);
-    ipq.push(6, 0.58);
-
-    std::cout << "top: " << ipq.top() << std::endl;
-    ipq.pop();
-
-    ipq.push(4, 0.37);
-    ipq.push(5, 0.28);
-    ipq.push(1, 0.19);
-
-    for (size_t i = 0; i < 10; ++i)
-    {
-        std::cout << "element[" << i << "]: ";
-        if (ipq.containes(i))
-        {
-            std::cout << ipq[i] << std::endl;
-        }
-        else
-        {
-            std::cout << "element does not exist." << std::endl;
-        }
-
-    }
-    while (!ipq.empty())
-    {
-        std::cout << "top: " << ipq.top() << std::endl;
-        ipq.pop();
-
-//        for (size_t i = 0; i < 10; ++i)
-//        {
-//            std::cout << "element[" << i << "]: ";
-//            if (ipq.containes(i))
-//            {
-//                std::cout << ipq[i] << std::endl;
-//            }
-//            else
-//            {
-//                std::cout << "element does not exist." << std::endl;
-//            }
-//        }
-
-    }
-
-
-
-
-
 }
 
 } // namespace graph

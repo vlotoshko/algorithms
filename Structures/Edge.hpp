@@ -8,7 +8,7 @@
 #ifndef EDGE_HPP
 #define EDGE_HPP
 //--------------------------------------------------------------------------------------------------
-#include <iostream>
+#include <cstddef>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph
@@ -17,7 +17,9 @@ namespace graph
 class Edge
 {
 public:
-    Edge(size_t v, size_t w, double weight) : v_(v), w_(w), weight_(weight) {}
+    Edge(size_t v = 0, size_t w = 0, double weight = 0) : v_(v), w_(w), weight_(weight) {}
+    Edge(const Edge & other) : v_(other.v_), w_(other.w_), weight_(other.weight_) {}
+
     double weight() const { return weight_; }
     size_t either() const { return v_; }
     size_t other(size_t v) const
@@ -27,6 +29,7 @@ public:
         else throw("Invalid edge");
     }
     bool operator< (const Edge& e) const { return weight_ < e.weight_; }
+    bool operator> (const Edge& e) const { return weight_ > e.weight_; }
 private:
     size_t v_;
     size_t w_;

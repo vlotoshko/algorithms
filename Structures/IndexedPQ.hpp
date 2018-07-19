@@ -10,6 +10,7 @@
 //--------------------------------------------------------------------------------------------------
 #include <vector>
 #include <algorithm>
+#include <iostream>
 //--------------------------------------------------------------------------------------------------
 
 namespace data_structs
@@ -50,6 +51,7 @@ bool IndexedItem<T, Compare>::cmp(const IndexedItem & lsh, const IndexedItem & r
 // Indexed priority queue. Holds vector of pointers to T to get T by index
 // Holds container of Sequence type to store sorted elemets
 // Indexed priority queue has fixed size(capasity) passed into the constructor
+// Does not check any size overflow or emty
 //
 template<typename T, typename Compare  = std::less<T>,
          typename IndexedItem = IndexedItem<T, Compare>,
@@ -78,17 +80,27 @@ public:
     const_reference operator[] (size_t i) const { return *byIndex_[i]; }
     bool containes(size_t v) const { return byIndex_[v] != nullptr; }
 
-    bool      empty()    const { return byOrder_.empty(); }
-    size_type size()     const { return byOrder_.size(); }
     size_type capasity() const { return byIndex_.size(); }
+    size_type size()     const { return byOrder_.size(); }
+    bool      empty()    const { return byOrder_.empty(); }
 
-    void pop()
+    // Removes top element and returns its index
+    size_t pop()
     {
         size_t index = byOrder_.front().index;
         std::pop_heap(byOrder_.begin(), byOrder_.end(), IndexedItem::cmp);
         byOrder_.pop_back();
         delete byIndex_[index];
         byIndex_[index] = nullptr;
+
+        std::cout << "after pop: ";
+        for (auto const & item: byOrder_)
+        {
+            std::cout << *item.element << " ";
+        }
+        std::cout << std::endl;
+
+        return index;
     }
 
     bool push(size_type v, value_type t)
@@ -103,10 +115,18 @@ public:
         }
         else
         {
+            std::cout << "changed: " << v <<std::endl;
             auto item = byIndex_[v];
             *item = t;
             std::make_heap(byOrder_.begin(), byOrder_.end(), IndexedItem::cmp);
         }
+
+        std::cout << "after push: ";
+        for (auto const & item: byOrder_)
+        {
+            std::cout << *item.element << " ";
+        }
+        std::cout << std::endl;
         return newElement;
     }
 private:

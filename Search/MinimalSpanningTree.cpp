@@ -6,6 +6,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "MinimalSpanningTree.hpp"
+#include "UnionFind.hpp"
 
 #include <limits>
 //--------------------------------------------------------------------------------------------------
@@ -99,5 +100,36 @@ void PrimMST_Energy::visit(const EdgeWeightedGraph &gr, size_t v)
     }
 }
 
+KruskalMST::KruskalMST(const EdgeWeightedGraph & gr)
+{
+    uf::UnionFindInfo<size_t> unionFindInfo(gr.edges().size());
+    uf::UnionFind_QuickFind<size_t> uf;
+
+    std::priority_queue<Edge, std::vector<Edge>, std::greater<Edge>> edgePQ;
+    for (const auto & item : gr.edges())
+    {
+        edgePQ.push(item);
+    }
+
+    while (!edgePQ.empty() && mst_.size() < gr.vertexCount() - 1)
+    {
+        Edge e = edgePQ.top();
+        edgePQ.pop();
+
+        auto v = e.either();
+        auto w = e.other(v);
+        if (uf.connected(unionFindInfo, v, w))
+        {
+            continue;
+        }
+        uf.unionComponents(unionFindInfo, v, w);
+        mst_.push_back(e);
+    }
+}
+
+KruskalMST::EdgeContainer KruskalMST::edges() const
+{
+    return mst_;
+}
 
 } // namespace graph

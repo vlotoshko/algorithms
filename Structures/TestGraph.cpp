@@ -162,8 +162,7 @@ void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
     std::cout << std::endl;
     PrimMST_Lazy lazyMST(gr);
     std::cout << "Lazy Prim MST: " << std::endl;
-    auto edges = lazyMST.edges();
-    for (auto const & edge : edges)
+    for (auto const & edge : lazyMST.edges())
     {
         auto v = edge.either();
         std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
@@ -172,8 +171,16 @@ void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
     std::cout << std::endl;
     PrimMST_Energy energyMST(gr);
     std::cout << "Energy Prim MST: " << std::endl;
-    auto ec = energyMST.edges();
-    for (auto const & edge : ec)
+    for (auto const & edge : energyMST.edges())
+    {
+        auto v = edge.either();
+        std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
+    }
+
+    std::cout << std::endl;
+    KruskalMST kruskalMST(gr);
+    std::cout << "Kruskal MST: " << std::endl;
+    for (auto const & edge : kruskalMST.edges())
     {
         auto v = edge.either();
         std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;

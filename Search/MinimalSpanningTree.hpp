@@ -47,6 +47,18 @@ private:
     void visit(const EdgeWeightedGraph & gr, size_t v);
 };
 
+
+class KruskalMST
+{
+public:
+    using EdgeContainer = EdgeWeightedGraph::EdgeContainer;
+
+    KruskalMST(const EdgeWeightedGraph & gr);
+    EdgeContainer edges() const;
+private:
+    EdgeContainer mst_;
+};
+
 } // namespace graph
 
 //--------------------------------------------------------------------------------------------------

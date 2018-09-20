@@ -69,8 +69,6 @@ EdgeWeightedGraph::EdgeContainer EdgeWeightedGraph::edges() const
 
 void EdgeWeightedGraph::toString() const
 {
-    std::string s;
-
     std::cout << "vertexes: " << v_ << "; edges: " << e_ << std::endl;
     auto ec = edges();
     for (auto const & edge : ec)

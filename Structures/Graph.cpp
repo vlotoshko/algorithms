@@ -59,8 +59,6 @@ void Graph::addEdge(size_t v, size_t w)
 
 void Graph::toString() const
 {
-    std::string s;
-
     std::cout << "vertexes: " << v_ << "; edges: " << e_ << std::endl;
     for (auto const & vertex : vertexes_)
     {

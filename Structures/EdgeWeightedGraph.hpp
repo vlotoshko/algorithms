@@ -32,7 +32,7 @@ class EdgeWeightedGraph
 {
 public:
     using EdgeContainer = std::list<Edge>;
-    EdgeWeightedGraph(size_t v);
+    explicit EdgeWeightedGraph(size_t v);
     EdgeWeightedGraph(std::string fileName, std::shared_ptr<IAddEdgeWeightedStrategy> strategy);
 
     size_t vertexCount() const { return v_; }

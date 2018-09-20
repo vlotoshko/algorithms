@@ -62,7 +62,7 @@ private:
 class DepthFirstOrder
 {
 public:
-    DepthFirstOrder(const Graph & g);
+    explicit DepthFirstOrder(const Graph & g);
     std::stack<size_t> & reversePost() { return reversePost_; }
     std::queue<size_t> & pre() { return pre_; }
     std::queue<size_t> & post() { return post_; }
@@ -81,9 +81,9 @@ private:
 class Topological
 {
 public:
-    Topological(const Graph & g);
+    explicit Topological(const Graph & g);
     std::stack<size_t> & order() { return dfo_.reversePost(); }
-    bool isDAG() { return isDAG_; }
+    bool isDAG() const { return isDAG_; }
 private:
     DepthFirstOrder dfo_;
     bool isDAG_;
@@ -96,10 +96,10 @@ private:
 class KosarajuSCC
 {
 public:
-    KosarajuSCC(const Graph & g);
-    bool stronglyConnected(size_t v, size_t w) { return id_[v] == id_[w]; }
-    size_t count() { return count_; }
-    size_t id(size_t v) { return id_[v]; }
+    explicit KosarajuSCC(const Graph & g);
+    bool stronglyConnected(size_t v, size_t w) const { return id_[v] == id_[w]; }
+    size_t count() const { return count_; }
+    size_t id(size_t v) const { return id_[v]; }
 private:
     size_t count_;
     std::vector<bool> marked_;
@@ -114,7 +114,7 @@ private:
 class TransitiveClosure
 {
 public:
-    TransitiveClosure(const Graph & g);
+    explicit TransitiveClosure(const Graph & g);
     ~TransitiveClosure();
     bool reachable(size_t v, size_t w);
 private:
@@ -146,7 +146,7 @@ private:
 class CoupledComponents
 {
 public:
-    CoupledComponents(const Graph & g);
+    explicit CoupledComponents(const Graph & g);
     bool connected(size_t v, size_t w) const { return id_[v] == id_[w]; }
     size_t componentsCount() const { return count_; }
     size_t id(size_t v) const { return id_[v]; }
@@ -165,8 +165,8 @@ private:
 class Cyclic
 {
 public:
-    Cyclic(const Graph & g);
-    bool isCyclic() { return hasCycle_; }
+    explicit Cyclic(const Graph & g);
+    bool isCyclic() const { return hasCycle_; }
 private:
     bool hasCycle_;
     std::vector<bool> marked_;
@@ -180,8 +180,8 @@ private:
 class TwoColored
 {
 public:
-    TwoColored(const Graph& g);
-    bool isBipartite() { return isTwoColors_; }
+    explicit TwoColored(const Graph& g);
+    bool isBipartite() const { return isTwoColors_; }
 private:
     bool isTwoColors_;
     std::vector<bool> marked_;
@@ -196,8 +196,12 @@ private:
 class SymbolGraph
 {
 public:
-    SymbolGraph (std::string fileName);
+    explicit SymbolGraph(std::string fileName);
     ~SymbolGraph();
+
+    SymbolGraph(const SymbolGraph&) = delete;
+    SymbolGraph& operator= (const SymbolGraph&) = delete;
+
     Graph& G() const { return *g_; }
     bool contains(std::string key) const;
     int index(std::string key) const;

@@ -24,7 +24,7 @@ namespace uf
 template<typename T>
 struct UnionFindInfo
 {
-    UnionFindInfo(size_t count)
+    explicit UnionFindInfo(size_t count)
         : elements(count), clasters(count+1), unionInvokes(0), findInvokes(0)
     {
         int inc = 0;

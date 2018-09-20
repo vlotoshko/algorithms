@@ -66,7 +66,7 @@ public:
     typedef          IndexedItem                            container_type;
 
 public:
-    IndexedPriorityQueue(size_t size) : byIndex_(size, nullptr) {}
+    explicit IndexedPriorityQueue(size_t size) : byIndex_(size, nullptr) {}
     ~IndexedPriorityQueue()
     {
         for(auto & item : byOrder_)

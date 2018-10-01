@@ -9,8 +9,6 @@
 #include "GraphAlgorithms.hpp"
 #include "MinimalSpanningTree.hpp"
 
-#include "IndexedPQ.hpp"
-
 #include <fstream>
 #include <memory>
 //--------------------------------------------------------------------------------------------------

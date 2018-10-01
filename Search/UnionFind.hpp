@@ -47,23 +47,21 @@ class UnionFind
 public:
     void unionComponents(UnionFindInfo<T> & ufData, T p, T q)
     {
-        ufData.unionInvokes++;
+        ++ufData.unionInvokes;
         if (union_(ufData, p, q))
         {
-            ufData.clasters--;
+            --ufData.clasters;
         }
     }
 
-    int find(UnionFindInfo<T> & ufData, T p) const { ufData.findInvokes++; return find_(ufData, p); }
+    T find(UnionFindInfo<T> & ufData, T p) const { ufData.findInvokes++; return find_(ufData, p); }
     bool connected(UnionFindInfo<T> & ufData, T p, T q) const {return find(ufData, p) == find(ufData, q); }
 
+    virtual ~UnionFind()             = default;
     virtual std::string name() const = 0;
-protected:
-    virtual bool union_(UnionFindInfo<T> & ufData, T p, T q) = 0;
-    virtual T find_(UnionFindInfo<T> & ufData, T p) const = 0;
-
 private:
-
+    virtual bool union_(UnionFindInfo<T> & ufData, T p, T q) = 0;
+    virtual T find_(UnionFindInfo<T> & ufData, T p) const    = 0;
 };
 
 

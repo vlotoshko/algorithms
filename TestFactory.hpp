@@ -31,7 +31,7 @@ struct ITestFactory
 {
     using   Test = std::shared_ptr<ITestable>;
     virtual Test createTest(const TestSettings parameters) = 0;
-    virtual      ~ITestFactory()                                              = default;
+    virtual ~ITestFactory()                                = default;
 };
 
 template <typename T>

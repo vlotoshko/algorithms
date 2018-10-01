@@ -18,13 +18,6 @@
 namespace bst // binary search tree
 {
 
-enum class AlgId : int
-{
-    QUICK_FIND = 100,
-    QUICK_UNION,
-    QUICK_UNION_BALANCED,
-};
-
 
 template<typename Key, typename Value>
 class BinarySearchTree
@@ -310,17 +303,6 @@ void BinarySearchTree<Key, Value>::keys_(Node * n, std::vector<Key>& v, Key lo, 
     if (n->key <= hi)
         keys_(n->right, v, lo, hi);
 }
-
-//// ------------------------------------------------------------------------------------------
-//// Registry of the union-find algorithms
-////
-//template <typename T>
-//std::map<AlgId, typename TestUnionFind<T>::Alg> TestUnionFind<T>::Algorithms =
-//{
-//      {AlgId::QUICK_FIND,           std::make_shared<UnionFind_QuickFind<T>>()}
-//    , {AlgId::QUICK_UNION,          std::make_shared<UnionFind_QuickUnion<T>>()}
-//    , {AlgId::QUICK_UNION_BALANCED, std::make_shared<UnionFind_QuickUnion_Balanced<T>>()}
-//};
 
 } // namespace bst
 

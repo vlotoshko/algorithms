@@ -18,7 +18,7 @@
 namespace registry
 {
 
-enum class AlgCategory : int
+enum class AlgCategory : size_t
 {
     SORT = 0,
     UNION_FIND,

@@ -81,7 +81,7 @@ PrimMST_Energy::EdgeContainer PrimMST_Energy::edges() const
     return edgeTo_;
 }
 
-void PrimMST_Energy::visit(const EdgeWeightedGraph &gr, size_t v)
+void PrimMST_Energy::visit(const EdgeWeightedGraph & gr, size_t v)
 {
     marked_[v] = true;
     for (auto e : gr[v])

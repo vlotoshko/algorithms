@@ -8,6 +8,7 @@
 #include "TestGraph.hpp"
 #include "GraphAlgorithms.hpp"
 #include "MinimalSpanningTree.hpp"
+#include "ShortPathes.hpp"
 
 #include <fstream>
 #include <memory>
@@ -25,6 +26,7 @@ enum class AlgId : int
     GRAPH_SYMBOL,
     GRAPH_EDGEWEIGHTED,
     GRAPH_MST,
+    GRAPH_SHORT_PATHES,
 };
 
 TestGraph::TestGraph(size_t algId, const std::string & fileName) : algId_(algId), fileName_(fileName) {}
@@ -64,6 +66,12 @@ void TestGraph::runTest(tools::Timer & timer)
         {
             EdgeWeightedGraph gr(fileName_, std::make_shared<NonDirectedEWGraphStrategy>());
             showEWGraphProperties(gr);
+            break;
+        }
+        case AlgId::GRAPH_SHORT_PATHES:
+        {
+            EdgeWeightedGraph gr(fileName_, std::make_shared<DirectedEWGraphStrategy>());
+            getShortPathes(gr);
             break;
         }
     }
@@ -179,6 +187,20 @@ void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
     KruskalMST kruskalMST(gr);
     std::cout << "Kruskal MST: " << std::endl;
     for (auto const & edge : kruskalMST.edges())
+    {
+        auto v = edge.either();
+        std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;
+    }
+}
+
+void TestGraph::getShortPathes(const EdgeWeightedGraph & gr) const
+{
+    gr.toString();
+
+    std::cout << std::endl;
+    DijkstraSP dijkstraSP(gr, 3);
+    std::cout << "Dijkstra short pathes from 0 to 6: " << std::endl;
+    for (auto const & edge : dijkstraSP.pathTo(5))
     {
         auto v = edge.either();
         std::cout << v << "-" << edge.other(v) << " cost: " << edge.weight() << std::endl;

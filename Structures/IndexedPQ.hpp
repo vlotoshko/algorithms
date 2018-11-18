@@ -50,7 +50,7 @@ bool IndexedItem<T, Compare>::cmp(const IndexedItem & lsh, const IndexedItem & r
 // Indexed priority queue. Holds vector of pointers to T to get T by index
 // Holds container of Sequence type to store sorted elemets
 // Indexed priority queue has fixed size(capasity) passed into the constructor
-// Does not check any size overflow or emty
+// Does not check any size overflow or empty
 //
 template<typename T, typename Compare  = std::less<T>,
          typename IndexedItem = IndexedItem<T, Compare>,

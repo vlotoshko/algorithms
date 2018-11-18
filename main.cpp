@@ -20,11 +20,12 @@ void runDoubleAmountTest(std::shared_ptr<tests::ITestFactory> builder, tests::Te
 
     for (size_t i = 1; i <= settings.repeatTimes; ++i)
     {
-        tools::Timer timer;
         auto test = builder->createTest(settings);
-        test->runTest(timer);
 
+        tools::Timer timer;
+        test->runTest(timer);
         double time = timer.timeSpent();
+
         std::cout << std::left
                   << "count: " << std::setw(10) << settings.elementsCount << "time eplaced: " << std::setw(10)
                   << time << "ratio: " << calcRatio.getRatio(time) << std::endl;
@@ -36,9 +37,9 @@ void runDoubleAmountTest(std::shared_ptr<tests::ITestFactory> builder, tests::Te
 
 void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings settings)
 {
-    tools::Timer timer;
-
     auto test = builder->createTest(settings);
+
+    tools::Timer timer;
     test->runTest(timer);
 
     double time = timer.timeSpent();

@@ -8,6 +8,8 @@
 #ifndef EDGE_HPP
 #define EDGE_HPP
 //--------------------------------------------------------------------------------------------------
+//#include <limits>
+#include <math.h>
 #include <cstddef>
 //--------------------------------------------------------------------------------------------------
 
@@ -30,6 +32,13 @@ public:
     }
     bool operator< (const Edge& e) const { return weight_ < e.weight_; }
     bool operator> (const Edge& e) const { return weight_ > e.weight_; }
+    bool operator== (const Edge& e) const
+    {
+        return  v_ == e.v_ && w_ == e.w_ && // TODO: check double comparsion
+                std::abs(weight_ - e.weight_) < 0.0001;
+
+    }
+    bool operator!= (const Edge& e) const { return !(*this == e); }
 private:
     size_t v_;
     size_t w_;

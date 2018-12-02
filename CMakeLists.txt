@@ -27,6 +27,23 @@ set(HPP_FILES
     "ITestable.hpp"
     "TestRegistry.hpp"
     "TestFactory.hpp"
+    "tools.hpp"
+    "Search/GraphAlgorithms.hpp"
+    "Search/MinimalSpanningTree.hpp"
+    "Search/TestBinarySearchTree.hpp"
+    "Search/TestUnionFind.hpp"
+    "Search/UnionFind.hpp"
+    "Search/ShortPathes.hpp"
+    "Sort/ISortable.hpp"
+    "Sort/Sort.hpp"
+    "Sort/TestSort.hpp"
+    "Structures/BinarySearchTree.hpp"
+    "Structures/Edge.hpp"
+    "Structures/EdgeWeightedGraph.hpp"
+    "Structures/Graph.hpp"
+    "Structures/IndexedPQ.hpp"
+    "Structures/Node.hpp"
+    "Structures/TestGraph.hpp"
     )
 
 set(FILES ${CPP_FILES} ${HPP_FILES})

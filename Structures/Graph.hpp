@@ -17,12 +17,7 @@
 namespace graph
 {
 
-class Graph;
-struct IAddEdgeStrategy
-{
-    virtual void addEdge(Graph & gr, size_t v, size_t w) = 0;
-    virtual ~IAddEdgeStrategy() = default;
-};
+struct IDirectionStrategy;
 
 //--------------------------------------------------------------------------------------------------
 // Graph structure. Containes array of vertexes, where vertex V is a node and the value of the node
@@ -34,8 +29,8 @@ class Graph
 public:
     using GNode = Node<size_t>;
 
-    Graph(size_t v, std::shared_ptr<IAddEdgeStrategy> strategy);
-    Graph (std::string fileName, std::shared_ptr<IAddEdgeStrategy> strategy);
+    Graph(size_t v, std::shared_ptr<IDirectionStrategy> strategy);
+    Graph (std::string fileName, std::shared_ptr<IDirectionStrategy> strategy);
 
     size_t vertexCount() const { return v_; }
     size_t edgeCount() const { return e_; }
@@ -46,7 +41,7 @@ public:
     static size_t degree(const Graph& g, size_t v);
     static size_t maxDegree(const Graph& g);
     static size_t avgDegree(const Graph& g);
-    static int selfLoops(const Graph& g);
+    static size_t selfLoops(const Graph& g);
     static std::unique_ptr<Graph> reverse(const Graph& g);
 
 protected:
@@ -55,10 +50,17 @@ protected:
     size_t v_;
     size_t e_;
     std::vector<GNode> vertexes_;
-    std::shared_ptr<IAddEdgeStrategy> addEdge_;
+    std::shared_ptr<IDirectionStrategy> directionStrategy_;
 };
 
-struct NonDirectedGraphStrategy : public IAddEdgeStrategy
+struct IDirectionStrategy
+{
+    virtual void addEdge(Graph & gr, size_t v, size_t w) = 0;
+    virtual size_t factor() const = 0;
+    virtual ~IDirectionStrategy() = default;
+};
+
+struct NonDirectedGraphStrategy : public IDirectionStrategy
 {
     void addEdge(Graph & gr, size_t v, size_t w) override
     {
@@ -66,15 +68,17 @@ struct NonDirectedGraphStrategy : public IAddEdgeStrategy
         gr.vertexes_[w].add(new Graph::GNode(v));
         ++gr.e_;
     }
+    size_t factor() const override { return 2; }
 };
 
-struct DirectedGraphStrategy : public IAddEdgeStrategy
+struct DirectedGraphStrategy : public IDirectionStrategy
 {
     void addEdge(Graph & gr, size_t v, size_t w) override
     {
         gr.vertexes_[v].add(new Graph::GNode(w));
         ++gr.e_;
     }
+    size_t factor() const override { return 1; }
 };
 
 } //namespace graph

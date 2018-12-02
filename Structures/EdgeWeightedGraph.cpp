@@ -19,7 +19,7 @@ EdgeWeightedGraph::EdgeWeightedGraph(size_t v) : v_(v), e_(0), vertexes_(v)
 {
 }
 
-EdgeWeightedGraph::EdgeWeightedGraph(std::string fileName, std::shared_ptr<IDirectionStrategy> strategy)
+EdgeWeightedGraph::EdgeWeightedGraph(std::string fileName, std::shared_ptr<IDirectionEWGStrategy> strategy)
     : e_(0), vertexes_(), directionStrategy_(std::move(strategy))
 {
     std::ifstream file;

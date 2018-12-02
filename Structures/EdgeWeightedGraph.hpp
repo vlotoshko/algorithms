@@ -18,7 +18,7 @@
 namespace graph
 {
 
-struct IDirectionStrategy;
+struct IDirectionEWGStrategy;
 
 //--------------------------------------------------------------------------------------------------
 //
@@ -28,7 +28,7 @@ class EdgeWeightedGraph
 public:
     using EdgeContainer = std::list<Edge>;
     explicit EdgeWeightedGraph(size_t v);
-    EdgeWeightedGraph(std::string fileName, std::shared_ptr<IDirectionStrategy> strategy);
+    EdgeWeightedGraph(std::string fileName, std::shared_ptr<IDirectionEWGStrategy> strategy);
 
     size_t vertexCount() const { return v_; }
     size_t edgeCount() const { return e_; }
@@ -44,27 +44,27 @@ protected:
     size_t v_;
     size_t e_;
     std::vector<EdgeContainer> vertexes_;
-    std::shared_ptr<IDirectionStrategy> directionStrategy_;
+    std::shared_ptr<IDirectionEWGStrategy> directionStrategy_;
 };
 
 
 //--------------------------------------------------------------------------------------------------
 //
 //
-struct IDirectionStrategy
+struct IDirectionEWGStrategy
 {
     virtual void addEdge(EdgeWeightedGraph & gr, Edge e) = 0;
     virtual void edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & ec) = 0;
-    virtual ~IDirectionStrategy() = default;
+    virtual ~IDirectionEWGStrategy() = default;
 };
 
-struct NonDirectedEWGraphStrategy : public IDirectionStrategy
+struct NonDirectedEWGraphStrategy : public IDirectionEWGStrategy
 {
     void addEdge(EdgeWeightedGraph & gr, Edge e) override;
     void edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & ec) override;
 };
 
-struct DirectedEWGraphStrategy : public IDirectionStrategy
+struct DirectedEWGraphStrategy : public IDirectionEWGStrategy
 {
     void addEdge(EdgeWeightedGraph & gr, Edge e) override;
     void edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & ec) override;

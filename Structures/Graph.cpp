@@ -15,8 +15,8 @@
 namespace graph
 {
 
-Graph::Graph(size_t v, std::shared_ptr<IAddEdgeStrategy> strategy)
-    : v_(v), e_(0), vertexes_(v), addEdge_(strategy)
+Graph::Graph(size_t v, std::shared_ptr<IDirectionStrategy> strategy)
+    : v_(v), e_(0), vertexes_(v), directionStrategy_(strategy)
 {
     for (size_t i = 0; i < v_; ++i)
     {
@@ -24,8 +24,8 @@ Graph::Graph(size_t v, std::shared_ptr<IAddEdgeStrategy> strategy)
     }
 }
 
-Graph::Graph(std::string fileName, std::shared_ptr<IAddEdgeStrategy> strategy)
-    : e_(0), vertexes_(), addEdge_(strategy)
+Graph::Graph(std::string fileName, std::shared_ptr<IDirectionStrategy> strategy)
+    : e_(0), vertexes_(), directionStrategy_(strategy)
 {
     std::ifstream file;
     file.open (fileName);
@@ -54,7 +54,7 @@ Graph::Graph(std::string fileName, std::shared_ptr<IAddEdgeStrategy> strategy)
 
 void Graph::addEdge(size_t v, size_t w)
 {
-    addEdge_->addEdge(*this, v, w);
+    directionStrategy_->addEdge(*this, v, w);
 }
 
 void Graph::toString() const
@@ -105,13 +105,12 @@ size_t Graph::maxDegree(const Graph& g)
 
 size_t Graph::avgDegree(const Graph & g)
 {
-    // FIXME: do not multiply by 2 for the directed graph
-    return 2 * g.edgeCount() / g.vertexCount();
+    return g.directionStrategy_->factor() * g.edgeCount() / g.vertexCount();
 }
 
-int Graph::selfLoops(const Graph& g)
+size_t Graph::selfLoops(const Graph& g)
 {
-    int count = 0;
+    size_t count = 0;
     for (size_t v = 0; v < g.vertexCount(); ++v)
     {
         GNode * n = g[v].next;
@@ -122,13 +121,12 @@ int Graph::selfLoops(const Graph& g)
             n = n->next;
         }
     }
-    // FIXME: do not divide by 2 for the directed graph
-    return count / 2;
+    return count / g.directionStrategy_->factor();
 }
 
 std::unique_ptr<Graph> Graph::reverse(const Graph & g)
 {
-    auto reversed = std::make_unique<Graph>(g.vertexCount(), g.addEdge_);
+    auto reversed = std::make_unique<Graph>(g.vertexCount(), g.directionStrategy_);
     for (size_t var = 0; var < g.vertexCount(); ++var)
     {
 

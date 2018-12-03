@@ -83,5 +83,23 @@ void DijkstraSP::relax(const EdgeWeightedGraph & gr, size_t v)
     }
 }
 
+DijkstraAllPairsSP::DijkstraAllPairsSP(const EdgeWeightedGraph & gr)
+{
+    all_.reserve(gr.vertexCount());
+    for (size_t v = 0; v < gr.vertexCount(); ++v)
+    {
+        all_.push_back(DijkstraSP{gr, v});
+    }
+}
+double DijkstraAllPairsSP:: distTo(size_t s, size_t t)    const
+{
+    return all_[s].distTo(t);
+}
+
+DijkstraAllPairsSP::EdgeContainer DijkstraAllPairsSP::pathTo(size_t s, size_t t) const
+{
+    return all_[s].pathTo(t);
+}
+
 
 } // namespace graph

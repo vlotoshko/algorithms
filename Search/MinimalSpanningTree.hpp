@@ -13,6 +13,7 @@
 
 #include <vector>
 #include <queue>
+#include <functional>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph

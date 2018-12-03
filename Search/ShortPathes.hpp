@@ -12,6 +12,7 @@
 #include "IndexedPQ.hpp"
 
 #include <vector>
+#include <functional>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph

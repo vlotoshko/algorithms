@@ -86,7 +86,7 @@ void Node<Value>::clear()
 }
 
 template<typename Value>
-Node<Value>::~Node<Value>()
+Node<Value>::~Node()
 {
     clear();
 }

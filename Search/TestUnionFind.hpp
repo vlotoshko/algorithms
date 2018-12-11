@@ -50,8 +50,8 @@ public:
             std::vector<std::pair<T, T>> pairs(elementsCount_);
             for (auto & item : pairs)
             {
-                item.first  = tools::random<T>(0, elementsCount_);
-                item.second = tools::random<T>(0, elementsCount_);
+                item.first  = tools::random<T>(0, static_cast<int>(elementsCount_));
+                item.second = tools::random<T>(0, static_cast<int>(elementsCount_));
             }
             if (algId_ == AlgId::QUICK_UNION_BALANCED)
             {

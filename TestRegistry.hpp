@@ -68,6 +68,7 @@ bool algorithmExists(size_t id)
     case AlgCategory::UNKNOWN:
         return false;
     }
+    return false;
 }
 
 // ------------------------------------------------------------------------------------------

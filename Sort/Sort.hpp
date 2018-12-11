@@ -92,7 +92,7 @@ public:
         while (h > 1 || swapped)
         {
             if (h > 1)
-                h /= 1.24733;
+                h = static_cast<size_t>(h / 1.24733);
 
             swapped = false;
             for (size_t i = 0; i + h < length; i++)
@@ -119,7 +119,7 @@ class ShakeSort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        int length = elements.size();
+        int length = static_cast<int>(elements.size());
         for (int left = 0, right = length - 1; left < right;) {
 
             for (int j = left; j < right; ++j)
@@ -155,7 +155,7 @@ class QuickSort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        sort(elements, 0, elements.size() - 1);
+        sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
     std::string name() const override { return "Quick sort"; }
 private:
@@ -208,7 +208,7 @@ class QuickSortM : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        sort(elements, 0, elements.size() - 1);
+        sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
     std::string name() const override { return "Quick sort median"; }
 private:
@@ -283,7 +283,7 @@ class Quick3Sort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        sort(elements, 0, elements.size() - 1);
+        sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
     std::string name() const override { return "Quick3 sort"; }
 private:
@@ -386,7 +386,7 @@ class HeapSort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        int length = elements.size();
+        int length = static_cast<int>(elements.size());
         {
             //  1. make sorted tree
             for (int i = length / 2; i >= 0; i--)
@@ -436,7 +436,7 @@ class InsertionSort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        int length = elements.size();
+        int length = static_cast<int>(elements.size());
         for (int i = 1; i < length; i++)
         {
             T key = elements[i];
@@ -479,7 +479,7 @@ class ShellSort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        int length = elements.size();
+        int length = static_cast<int>(elements.size());
         int h = 1;
         while (h < length / 3)
             h = 3 * h + 1;
@@ -514,7 +514,7 @@ public:
     void sort(std::vector<T> & elements) override
     {
         std::vector<T> aux(elements.size());
-        sort(elements, 0, elements.size() - 1, aux);
+        sort(elements, 0, static_cast<int>(elements.size()) - 1, aux);
     }
     std::string name() const override { return  "Merge sort"; }
 private:
@@ -573,7 +573,7 @@ public:
     void sort(std::vector<T> & elements) override
     {
         std::vector<T> aux(elements.size());
-        sort(elements, elements.size(), aux);
+        sort(elements, static_cast<int>(elements.size()), aux);
     }
     std::string name() const override { return  "MergeUp sort"; }
 private:
@@ -634,7 +634,7 @@ class QuickInsSort : public ISortable<T>
 public:
     void sort(std::vector<T> & elements) override
     {
-        sort(elements, 0, elements.size() - 1);
+        sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
     std::string name() const override { return "QuickIns sort"; }
 private:
@@ -692,7 +692,7 @@ public:
     void sort(std::vector<T> & elements) override
     {
         std::vector<T> aux(elements.size());
-        sort(elements, 0, elements.size() - 1, aux);
+        sort(elements, 0, static_cast<int>(elements.size()) - 1, aux);
     }
     std::string name() const override { return  "MergeIns sort"; }
 private:

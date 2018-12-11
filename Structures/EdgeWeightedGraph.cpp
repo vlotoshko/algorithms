@@ -37,12 +37,12 @@ EdgeWeightedGraph::EdgeWeightedGraph(std::string fileName, std::shared_ptr<IDire
             max = maxNew;
             vertexes_.resize(max + 1);
         }
-        addEdge(Edge(v, w, weight));
+        addEdge(EdgeWeigthed(v, w, weight));
     }
     v_ = vertexes_.size();
 }
 
-void EdgeWeightedGraph::addEdge(Edge e)
+void EdgeWeightedGraph::addEdge(EdgeWeigthed e)
 {
     directionStrategy_->addEdge(*this, e);
 }
@@ -71,7 +71,7 @@ void EdgeWeightedGraph::toString() const
 }
 
 
-void NonDirectedEWGraphStrategy::addEdge(EdgeWeightedGraph & gr, Edge e)
+void NonDirectedEWGraphStrategy::addEdge(EdgeWeightedGraph & gr, EdgeWeigthed e)
 {
     size_t v = e.either();
     size_t w = e.other(v);
@@ -92,7 +92,7 @@ void NonDirectedEWGraphStrategy::edges(const EdgeWeightedGraph & gr, EdgeWeighte
     }
 }
 
-void DirectedEWGraphStrategy::addEdge(EdgeWeightedGraph & gr, Edge e)
+void DirectedEWGraphStrategy::addEdge(EdgeWeightedGraph & gr, EdgeWeigthed e)
 {
     gr.vertexes_[e.either()].push_back(e);
     ++gr.e_;

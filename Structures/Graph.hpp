@@ -9,8 +9,10 @@
 #define GRAPH_HPP
 //--------------------------------------------------------------------------------------------------
 #include "Node.hpp"
+#include "Edge.hpp"
 
-#include<iostream>
+// #include<iostream>
+#include <list>
 #include <vector>
 #include <memory>
 
@@ -28,15 +30,17 @@ class Graph
 {
 public:
     using GNode = Node<size_t>;
+    using EdgeContainer = std::list<Edge>;
 
     Graph(size_t v, std::shared_ptr<IDirectionStrategy> strategy);
     Graph (std::string fileName, std::shared_ptr<IDirectionStrategy> strategy);
 
     size_t vertexCount() const { return v_; }
-    size_t edgeCount() const { return e_; }
-    void addEdge(size_t v, size_t w);
-    const GNode& operator[] (size_t index) const;
-    void toString() const;
+    size_t edgeCount()   const { return e_; }
+    void   toString()    const;
+
+    void   addEdge(size_t v, size_t w);
+    const EdgeContainer& operator[] (size_t index) const;
 
     static size_t degree(const Graph& g, size_t v);
     static size_t maxDegree(const Graph& g);
@@ -49,7 +53,7 @@ protected:
     friend struct DirectedGraphStrategy;
     size_t v_;
     size_t e_;
-    std::vector<GNode> vertexes_;
+    std::vector<EdgeContainer> vertexes_;
     std::shared_ptr<IDirectionStrategy> directionStrategy_;
 };
 
@@ -64,8 +68,8 @@ struct NonDirectedGraphStrategy : public IDirectionStrategy
 {
     void addEdge(Graph & gr, size_t v, size_t w) override
     {
-        gr.vertexes_[v].add(new Graph::GNode(w));
-        gr.vertexes_[w].add(new Graph::GNode(v));
+        gr.vertexes_[v].emplace_back(v, w);
+        gr.vertexes_[w].emplace_back(w, v);
         ++gr.e_;
     }
     size_t factor() const override { return 2; }
@@ -75,7 +79,7 @@ struct DirectedGraphStrategy : public IDirectionStrategy
 {
     void addEdge(Graph & gr, size_t v, size_t w) override
     {
-        gr.vertexes_[v].add(new Graph::GNode(w));
+        gr.vertexes_[v].emplace_back(v, w);
         ++gr.e_;
     }
     size_t factor() const override { return 1; }

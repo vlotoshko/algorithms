@@ -121,7 +121,7 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
     marked_[v] = true;
     pre_.push(v);
 
-    Node<size_t>* n = g[v].next;
+    Graph::GNode* n = g[v].next;
     while (n)
     {
         if (!marked_[n->value])

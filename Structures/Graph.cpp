@@ -18,10 +18,6 @@ namespace graph
 Graph::Graph(size_t v, std::shared_ptr<IDirectionStrategy> strategy)
     : v_(v), e_(0), vertexes_(v), directionStrategy_(strategy)
 {
-    for (size_t i = 0; i < v_; ++i)
-    {
-        vertexes_[i].value = i;
-    }
 }
 
 Graph::Graph(std::string fileName, std::shared_ptr<IDirectionStrategy> strategy)
@@ -43,12 +39,6 @@ Graph::Graph(std::string fileName, std::shared_ptr<IDirectionStrategy> strategy)
         }
         addEdge(v, w);
     }
-
-    size_t i = 0;
-    for (auto & item : vertexes_)
-    {
-        item.value = i++;
-    }
     v_ = vertexes_.size();
 }
 
@@ -60,35 +50,26 @@ void Graph::addEdge(size_t v, size_t w)
 void Graph::toString() const
 {
     std::cout << "vertexes: " << v_ << "; edges: " << e_ << std::endl;
-    for (auto const & vertex : vertexes_)
+    for (size_t v = 0; v < vertexCount(); ++v)
     {
-        std::cout << vertex.value << ": ";
-        GNode* n = vertex.next;
-        while (n)
+        auto const & ec = vertexes_[v];
+        std::cout << v << ": ";
+        for (auto const & edge : ec)
         {
-            std::cout << n->value << " ";
-            n = n->next;
+            std::cout << edge.other(v) << " ";
         }
         std::cout << std::endl;
     }
 }
 
-const Graph::GNode & Graph::operator[](size_t index) const
+const Graph::EdgeContainer & Graph::operator[](size_t index) const
 {
     return vertexes_[index];
 }
 
-
 size_t Graph::degree(const Graph& g, size_t v)
 {
-    size_t degree = 0;
-    const GNode * n = &g[v];
-    while (n->next)
-    {
-        ++degree;
-        n = n->next;
-    }
-    return degree;
+    return g[v].size();
 }
 
 size_t Graph::maxDegree(const Graph& g)
@@ -111,6 +92,20 @@ size_t Graph::avgDegree(const Graph & g)
 size_t Graph::selfLoops(const Graph& g)
 {
     size_t count = 0;
+
+    for (size_t v = 0; v < g.vertexCount(); ++v)
+    {
+        auto const & ec = g[v];
+        for (auto const & edge : ec)
+        {
+            if (edge.other(edge.either()) == v)
+            {
+                ++count;
+            }
+
+        }
+    }
+
     for (size_t v = 0; v < g.vertexCount(); ++v)
     {
         GNode * n = g[v].next;

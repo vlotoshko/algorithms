@@ -20,7 +20,7 @@ namespace graph
 class ShortPathes
 {
 public:
-    using EdgeContainer = std::vector<Edge>;
+    using EdgeContainer = std::vector<EdgeWeigthed>;
 
     ShortPathes(const EdgeWeightedGraph & gr, size_t s);
     double        distTo(size_t v)    const;
@@ -56,6 +56,19 @@ private:
     std::vector<DijkstraSP> all_;
 };
 
+class AcyclicSP : public ShortPathes
+{
+public:
+    using EdgeContainer = ShortPathes::EdgeContainer;
+
+    AcyclicSP(const EdgeWeightedGraph & gr, size_t s);
+//    double        distTo(size_t v)    const;
+//    bool          hasPathTo(size_t v) const;
+//    EdgeContainer pathTo(size_t v)    const;
+private:
+//    std::vector<double> distTo_;
+//    EdgeContainer edgeTo_;
+};
 
 } // namespace graph
 

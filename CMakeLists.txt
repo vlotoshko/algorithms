@@ -41,8 +41,7 @@ set(HPP_FILES
     "Structures/Edge.hpp"
     "Structures/EdgeWeightedGraph.hpp"
     "Structures/Graph.hpp"
-    "Structures/IndexedPQ.hpp"
-    "Structures/Node.hpp"
+	"Structures/IndexedPQ.hpp"
     "Structures/TestGraph.hpp"
     )
 

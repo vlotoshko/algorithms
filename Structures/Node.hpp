@@ -24,37 +24,37 @@ size_t ObjectCounter<T>::count = 0;
 
 template<typename Value>
 //class Node : public ObjectCounter<Node<Value>>
-class Node
+class Node11
 {
 public:
-    Node() : value(), next(nullptr), marked_(false) {}
-    explicit Node(Value v) : value(v), next(nullptr), marked_(false) {}
-    ~Node();
+    Node11() : value(), next(nullptr), marked_(false) {}
+    explicit Node11(Value v) : value(v), next(nullptr), marked_(false) {}
+    ~Node11();
 
     // Moveable
-    Node(Node&&);
-    Node& operator= (Node&&);
+    Node11(Node11&&);
+    Node11& operator= (Node11&&);
 
     // Not copyable
-    Node(const Node&)             = delete;
-    Node& operator= (const Node&) = delete;
+    Node11(const Node11&)             = delete;
+    Node11& operator= (const Node11&) = delete;
 
     Value value;
-    Node* next;
+    Node11* next;
 
-    Node* last();
-    Node* add(Node* n);
+    Node11* last();
+    Node11* add(Node11* n);
     void  clear();
 private:
      bool marked_;
 };
 
 template<typename Value>
-Node<Value>* Node<Value>::last()
+Node11<Value>* Node11<Value>::last()
 {
     marked_ = true;
 
-    Node* n;
+    Node11* n;
     if (next != nullptr && !next->marked_)
     {
         n = next->last();
@@ -69,7 +69,7 @@ Node<Value>* Node<Value>::last()
 }
 
 template<typename Value>
-void Node<Value>::clear()
+void Node11<Value>::clear()
 {
     marked_ = true;
     if (next != nullptr)
@@ -86,13 +86,13 @@ void Node<Value>::clear()
 }
 
 template<typename Value>
-Node<Value>::~Node()
+Node11<Value>::~Node11()
 {
     clear();
 }
 
 template<typename Value>
-Node<Value>::Node(Node && that) : value(0), next(nullptr)
+Node11<Value>::Node11(Node11 && that) : value(0), next(nullptr)
 {
     value = that.value;
     next = that.next;
@@ -102,7 +102,7 @@ Node<Value>::Node(Node && that) : value(0), next(nullptr)
 }
 
 template<typename Value>
-Node<Value>& Node<Value>::operator=(Node&& that)
+Node11<Value>& Node11<Value>::operator=(Node11&& that)
 {
     if (this != &that)
     {
@@ -119,7 +119,7 @@ Node<Value>& Node<Value>::operator=(Node&& that)
 }
 
 template<typename Value>
-Node<Value>* Node<Value>::add(Node* n)
+Node11<Value>* Node11<Value>::add(Node11* n)
 {
     last()->next = n;
     return this;

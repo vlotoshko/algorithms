@@ -8,10 +8,8 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 //--------------------------------------------------------------------------------------------------
-#include "Node.hpp"
 #include "Edge.hpp"
 
-// #include<iostream>
 #include <list>
 #include <vector>
 #include <memory>

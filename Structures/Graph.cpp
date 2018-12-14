@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------------------------------------
 #include "Graph.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <stack>
 #include <queue>

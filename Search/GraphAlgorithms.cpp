@@ -7,10 +7,9 @@
 //--------------------------------------------------------------------------------------------------
 #include "GraphAlgorithms.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <sstream>
-#include <queue>
-#include <stack>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph
@@ -44,7 +43,6 @@ void DeepFirstSearch::dfs(const Graph & g, size_t v)
 //--------------------------------------------------------------------------------------------------
 // ------- DeepFirstPaths -----------------------------------------------
 //
-
 DeepFirstPaths::DeepFirstPaths(const Graph &g, size_t s)
     : marked_(g.vertexCount(), false), edgeTo_(g.vertexCount()), s_(s)
 {

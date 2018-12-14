@@ -7,6 +7,7 @@
 //--------------------------------------------------------------------------------------------------
 #include "EdgeWeightedGraph.hpp"
 
+#include <iostream>
 #include <fstream>
 #include <stack>
 #include <queue>

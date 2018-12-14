@@ -11,6 +11,7 @@
 #include "EdgeWeightedGraph.hpp"
 #include "IndexedPQ.hpp"
 
+#include <functional>
 #include <vector>
 //--------------------------------------------------------------------------------------------------
 

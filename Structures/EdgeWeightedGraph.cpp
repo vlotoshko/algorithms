@@ -54,9 +54,9 @@ const EdgeWeightedGraph::EdgeContainer &EdgeWeightedGraph::operator[](size_t ind
 
 EdgeWeightedGraph::EdgeContainer EdgeWeightedGraph::edges() const
 {
-    EdgeContainer ec;
-    directionStrategy_->edges(*this, ec);
-    return ec;
+    EdgeContainer edges;
+    directionStrategy_->edges(*this, edges);
+    return edges;
 }
 
 void EdgeWeightedGraph::toString() const
@@ -80,14 +80,14 @@ void NonDirectedEWGraphStrategy::addEdge(EdgeWeightedGraph & gr, EdgeWeigthed e)
     ++gr.e_;
 }
 
-void NonDirectedEWGraphStrategy::edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & ec)
+void NonDirectedEWGraphStrategy::edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & edges)
 {
     for (size_t v = 0; v < gr.vertexCount(); ++v)
     {
         for (auto e: gr.vertexes_[v])
         {
             if(e.other(v) > v)
-                ec.push_back(e);
+                edges.push_back(e);
         }
     }
 }
@@ -98,13 +98,13 @@ void DirectedEWGraphStrategy::addEdge(EdgeWeightedGraph & gr, EdgeWeigthed e)
     ++gr.e_;
 }
 
-void DirectedEWGraphStrategy::edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & ec)
+void DirectedEWGraphStrategy::edges(const EdgeWeightedGraph & gr, EdgeWeightedGraph::EdgeContainer & edges)
 {
     for (size_t v = 0; v < gr.vertexCount(); ++v)
     {
         for (auto e: gr.vertexes_[v])
         {
-            ec.push_back(e);
+            edges.push_back(e);
         }
     }
 }

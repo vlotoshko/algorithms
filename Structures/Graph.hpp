@@ -21,6 +21,7 @@ namespace graph
 
 struct IDirectionStrategy;
 
+// FIXME: description is not actual
 //--------------------------------------------------------------------------------------------------
 // Graph structure. Containes array of vertexes, where vertex V is a node and the value of the node
 // is an index of vertex connected with V. All other vertexes connected with V adds to the node
@@ -29,7 +30,6 @@ struct IDirectionStrategy;
 class Graph
 {
 public:
-    using GNode = Node<size_t>;
     using EdgeContainer = std::list<Edge>;
 
     Graph(size_t v, std::shared_ptr<IDirectionStrategy> strategy);

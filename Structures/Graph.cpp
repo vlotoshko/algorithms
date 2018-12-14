@@ -52,9 +52,9 @@ void Graph::toString() const
     std::cout << "vertexes: " << v_ << "; edges: " << e_ << std::endl;
     for (size_t v = 0; v < vertexCount(); ++v)
     {
-        auto const & ec = vertexes_[v];
+        auto const & edges = vertexes_[v];
         std::cout << v << ": ";
-        for (auto const & edge : ec)
+        for (auto const & edge : edges)
         {
             std::cout << edge.other(v) << " ";
         }
@@ -95,25 +95,13 @@ size_t Graph::selfLoops(const Graph& g)
 
     for (size_t v = 0; v < g.vertexCount(); ++v)
     {
-        auto const & ec = g[v];
-        for (auto const & edge : ec)
+        auto const & edges = g[v];
+        for (auto const & edge : edges)
         {
-            if (edge.other(edge.either()) == v)
+            if (edge.other(v) == v)
             {
                 ++count;
             }
-
-        }
-    }
-
-    for (size_t v = 0; v < g.vertexCount(); ++v)
-    {
-        GNode * n = g[v].next;
-        while (n)
-        {
-            if (n->value == v)
-                ++count;
-            n = n->next;
         }
     }
     return count / g.directionStrategy_->factor();
@@ -122,15 +110,12 @@ size_t Graph::selfLoops(const Graph& g)
 std::unique_ptr<Graph> Graph::reverse(const Graph & g)
 {
     auto reversed = std::make_unique<Graph>(g.vertexCount(), g.directionStrategy_);
-    for (size_t var = 0; var < g.vertexCount(); ++var)
+    for (size_t v = 0; v < g.vertexCount(); ++v)
     {
-
-        size_t v = g[var].value;
-        GNode* n = g[v].next;
-        while (n)
+        auto const & edges = g[v];
+        for (auto const & edge : edges)
         {
-            reversed->addEdge(n->value, v);
-            n = n->next;
+            reversed->addEdge(edge.other(v), v);
         }
     }
     return reversed;

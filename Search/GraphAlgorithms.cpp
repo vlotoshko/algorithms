@@ -16,9 +16,6 @@
 namespace graph
 {
 
-using GNode = Graph::GNode;
-
-
 //--------------------------------------------------------------------------------------------------
 // ------- DeepFirstSearch -----------------------------------------------
 //
@@ -31,15 +28,15 @@ void DeepFirstSearch::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
     ++count_;
-    GNode* n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-//            std::cout << v << " - " << n->value << std::endl;
-            dfs(g, n->value);
+//            std::cout << v << " - " << w << std::endl;
+            dfs(g, w);
         }
-        n = n->next;
     }
 }
 
@@ -58,16 +55,16 @@ void DeepFirstPaths::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
 
-    GNode* n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-//            std::cout << v << " - " << n->value << std::endl;
-            edgeTo_[n->value] = v;
-            dfs(g, n->value);
+//            std::cout << v << " - " <<w << std::endl;
+            edgeTo_[w] = v;
+            dfs(g, w);
         }
-        n = n->next;
     }
 }
 
@@ -121,15 +118,16 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
     marked_[v] = true;
     pre_.push(v);
 
-    Graph::GNode* n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-            dfs(g, n->value);
+            dfs(g, w);
         }
-        n = n->next;
     }
+
     post_.push(v);
     reversePost_.push(v);
 }
@@ -177,14 +175,14 @@ void KosarajuSCC::dfs(const Graph & g, size_t v)
     marked_[v] = true;
     id_[v] = count_;
 
-    GNode* n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-            dfs(g, n->value);
+            dfs(g, w);
         }
-        n = n->next;
     }
 }
 
@@ -235,18 +233,18 @@ void BreadthFirstPaths::bfs(const Graph & g, size_t v)
     {
         size_t x = queue.front();
         queue.pop();
-        GNode* n = g[x].next;
 
-        while (n)
+        auto const & edges = g[x];
+        for (auto const & edge : edges)
         {
-            if (!marked_[n->value])
+            auto w = edge.other(v);
+            if (!marked_[w])
             {
-//                std::cout << x << " - " << n->value << std::endl;
-                edgeTo_[n->value] = x;
-                marked_[n->value] = true;
-                queue.push(n->value);
+//                std::cout << x << " - " << w << std::endl;
+                edgeTo_[w] = x;
+                marked_[w] = true;
+                queue.push(w);
             }
-            n = n->next;
         }
     }
 }
@@ -299,15 +297,14 @@ void CoupledComponents::dfs(const Graph &g, size_t v)
 {
     marked_[v] = true;
     id_[v] = count_;
-
-    GNode * n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-            dfs(g, n->value);
+            dfs(g, w);
         }
-        n = n->next;
     }
 }
 
@@ -328,19 +325,18 @@ Cyclic::Cyclic(const Graph & g) : hasCycle_(false), marked_(g.vertexCount(), fal
 void Cyclic::dfs(const Graph & g, size_t v, size_t u)
 {
     marked_[v] = true;
-
-    GNode* n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-            dfs(g, n->value, v);
+            dfs(g, w, v);
         }
-        else if (n->value != u)
+        else if (w != u)
         {
             hasCycle_ = true;
         }
-        n = n->next;
     }
 }
 
@@ -365,21 +361,20 @@ TwoColored::TwoColored(const Graph & g)
 void TwoColored::dfs(const Graph & g, size_t v)
 {
     marked_[v] = true;
-
-    GNode* n = g[v].next;
-    while (n)
+    auto const & edges = g[v];
+    for (auto const & edge : edges)
     {
-        if (!marked_[n->value])
+        auto w = edge.other(v);
+        if (!marked_[w])
         {
-            colors_[n->value] = !colors_[v];
-            dfs(g, n->value);
+            colors_[w] = !colors_[v];
+            dfs(g, w);
         }
-        else if (colors_[n->value] == colors_[v])
+        else if (colors_[w] == colors_[v])
         {
-            std::cout << "color: " << n->value << " - " << v << std::endl;
+            std::cout << "color: " << w << " - " << v << std::endl;
             isTwoColors_ = false;
         }
-        n = n->next;
     }
 }
 
@@ -507,11 +502,10 @@ std::string SymbolGraph::lexical(size_t index) const
     {
         pathStr << name(index) << std::endl;
 
-        GNode * n = (*g_)[index].next;
-        while (n)
+        auto const & edges = (*g_)[index];
+        for (auto const & edge : edges)
         {
-            pathStr << "  " << name(n->value) << std::endl;
-            n = n->next;
+            pathStr << "  " << name(edge.other(index)) << std::endl;
         }
     }
     return pathStr.str();

@@ -16,11 +16,11 @@
 namespace graph
 {
 
-class Edge
+class EdgeNonWeighted
 {
 public:
-    Edge(size_t v = 0, size_t w = 0) : v_(v), w_(w) {}
-    Edge(const Edge & other) : v_(other.v_), w_(other.w_) {}
+    EdgeNonWeighted(size_t v = 0, size_t w = 0) : v_(v), w_(w) {}
+    EdgeNonWeighted(const EdgeNonWeighted & other) : v_(other.v_), w_(other.w_) {}
 
     size_t either() const { return v_; }
     size_t other(size_t v) const
@@ -29,8 +29,8 @@ public:
         else if (v == w_) return v_;
         else throw("Invalid edge");
     }
-    bool operator== (const Edge& e) const { return  v_ == e.v_ && w_ == e.w_; }
-    bool operator!= (const Edge& e) const { return !(*this == e); }
+    bool operator== (const EdgeNonWeighted& e) const { return  v_ == e.v_ && w_ == e.w_; }
+    bool operator!= (const EdgeNonWeighted& e) const { return !(*this == e); }
 private:
     size_t v_;
     size_t w_;

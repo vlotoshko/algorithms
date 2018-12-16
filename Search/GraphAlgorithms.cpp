@@ -10,15 +10,87 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <functional>
 //--------------------------------------------------------------------------------------------------
 
 namespace graph
 {
 
+void toString(const Graph & g)
+{
+    std::cout << "vertexes: " << g.vertexCount() << "; edges: " << g.edgeCount() << std::endl;
+    for (size_t v = 0; v < g.vertexCount(); ++v)
+    {
+        auto const & edges = g[v];
+        std::cout << v << ": ";
+        for (auto const & edge : edges)
+        {
+            std::cout << edge.other(v) << " ";
+        }
+        std::cout << std::endl;
+    }
+}
+
+size_t degree(const Graph& g, size_t v)
+{
+    return g[v].size();
+}
+
+size_t maxDegree(const Graph& g)
+{
+    size_t max = 0;
+    for (size_t i = 0; i < g.vertexCount(); ++i)
+    {
+        size_t d = degree(g, i);
+        if (d > max)
+            max = d;
+    }
+    return max;
+}
+
+//--------------------------------------------------------------------------------------------------
+// Deep first search implementation
+//
+size_t deepFirstSearh(const Graph & g, size_t s)
+{
+    std::vector<bool> marked(g.vertexCount(), false);
+    size_t count = 0;
+
+    std::function<void(const Graph & g, size_t s)> dfs;
+    dfs = [&marked, &count, &dfs](const Graph & g, size_t v) -> void {
+        marked[v] = true;
+        ++count;
+        auto const & edges = g[v];
+        for (auto const & edge : edges)
+        {
+            auto w = edge.other(v);
+            if (!marked[w])
+            {
+    //            std::cout << v << " - " << w << std::endl;
+                dfs(g, w);
+            }
+        }
+    };
+
+    dfs(g, s);
+    return count;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //--------------------------------------------------------------------------------------------------
 // ------- DeepFirstSearch -----------------------------------------------
 //
-DeepFirstSearch::DeepFirstSearch(const Graph &g, size_t s) : marked_(g.vertexCount(), false)
+DeepFirstSearch::DeepFirstSearch(const Graph &g, size_t s) : marked_(g.vertexCount(), false), count_()
 {
     dfs(g ,s);
 }
@@ -136,7 +208,7 @@ void DepthFirstOrder::dfs(const Graph & g, size_t v)
 //
 
 Topological::Topological(const Graph & g)
-    : dfo_(Graph(0, std::make_shared<DirectedGraphStrategy>())), isDAG_(false)
+    : dfo_(Graph(0)), isDAG_(false)
 {
     isDAG_ = !Cyclic(g).isCyclic();
     if (isDAG_)
@@ -153,7 +225,7 @@ Topological::Topological(const Graph & g)
 KosarajuSCC::KosarajuSCC(const Graph & g)
     : count_(0), marked_(g.vertexCount(), false), id_(g.vertexCount())
 {
-    auto r = Graph::reverse(g);
+    auto r = reverse<DirectedGraphStrategy<Graph>>(g);
     DepthFirstOrder order(*r);
 
     while (order.reversePost().size() > 0)
@@ -420,7 +492,7 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
     }
 
     // Generating graph
-    g_ = new Graph(st_.size(), std::make_shared<NonDirectedGraphStrategy>());
+    g_ = new Graph(st_.size());
 
     file.clear();
     file.seekg(0, std::ios::beg);
@@ -445,12 +517,13 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
         {
             std::string token = line.substr(0, pos);
 //            std::cout << "vertex - " << vertex << "; token = " << token << std::endl;
-            g_->addEdge(v, st_.find(token)->second);
+
+            NonDirectedGraphStrategy<Graph>::addEdge(*g_, v, st_.find(token)->second);
             line.erase(0, pos + delimiter.length());
         }
 
         // add token after last delimiter
-        g_->addEdge(v, st_.find(line)->second);
+        NonDirectedGraphStrategy<Graph>::addEdge(*g_, v, st_.find(line)->second);
     }
 
     std::cout << "map: " << std::endl;

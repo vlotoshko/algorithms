@@ -20,10 +20,71 @@
 namespace graph
 {
 
+void   toString (const Graph & g);
+size_t degree   (const Graph & g, size_t v);
+size_t maxDegree(const Graph & g);
+
+template<typename Strategy>
+size_t avgDegree(const Graph & g) { return Strategy::factor() * g.edgeCount() / g.vertexCount(); }
+
+template<typename Strategy>
+size_t selfLoops(const Graph & g)
+{
+    size_t count = 0;
+
+    for (size_t v = 0; v < g.vertexCount(); ++v)
+    {
+        auto const & edges = g[v];
+        for (auto const & edge : edges)
+        {
+            if (edge.other(v) == v)
+            {
+                ++count;
+            }
+        }
+    }
+    return count / Strategy::factor();
+}
+
+template<typename Strategy>
+std::unique_ptr<Graph> reverse(const Graph & g)
+{
+    auto reversed = std::make_unique<Graph>(g.vertexCount());
+    for (size_t v = 0; v < g.vertexCount(); ++v)
+    {
+        auto const & edges = g[v];
+        for (auto const & edge : edges)
+        {
+            Strategy::addEdge(*reversed, edge.other(v), v);
+        }
+    }
+    return reversed;
+}
+
 
 //--------------------------------------------------------------------------------------------------
-// Deep first search implementation
+// ------- DeepFirstSearch -----------------------------------------------
 //
+size_t deepFirstSearh(const Graph & g, size_t s);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class DeepFirstSearch
 {
 public:

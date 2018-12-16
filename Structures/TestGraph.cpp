@@ -6,7 +6,6 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "TestGraph.hpp"
-#include "GraphAlgorithms.hpp"
 #include "MinimalSpanningTree.hpp"
 #include "ShortPathes.hpp"
 
@@ -29,6 +28,12 @@ enum class AlgId : int
     GRAPH_SHORT_PATHES,
 };
 
+template<>
+void TestGraph::showDirectionDependedProperties<DirectedGraphStrategy<Graph>>(DirectedGraphStrategy<Graph>, const Graph & gr) const
+{
+    showDirectedGraphProperties(gr);
+}
+
 TestGraph::TestGraph(size_t algId, const std::string & fileName) : algId_(algId), fileName_(fileName) {}
 
 void TestGraph::runTest(tools::Timer & timer)
@@ -38,22 +43,21 @@ void TestGraph::runTest(tools::Timer & timer)
     {
         case AlgId::GRAPH:
         {
-            Graph gr(fileName_, std::make_shared<NonDirectedGraphStrategy>());
-            showGraphCommonProperties(gr);
+            Graph gr(NonDirectedGraphStrategy<Graph>{}, fileName_);
+            showGraphProperties<NonDirectedGraphStrategy<Graph>>(gr);
             break;
         }
         case AlgId::GRAPH_DIRECTED:
         {
-            Graph gr(fileName_, std::make_shared<DirectedGraphStrategy>());
-            showGraphCommonProperties(gr);
-            showDirectedGraphProperties(gr);
+            Graph gr(DirectedGraphStrategy<Graph>{}, fileName_);
+            showGraphProperties<DirectedGraphStrategy<Graph>>(gr);
             break;
         }
         case AlgId::GRAPH_SYMBOL:
         {
             SymbolGraph sgr(fileName_);
             std::cout << "vertex #2:\n" << sgr.lexical(2);
-            showGraphCommonProperties(sgr.G());
+            showGraphProperties<NonDirectedGraphStrategy<Graph>>(sgr.G());
             break;
         }
         case AlgId::GRAPH_EDGEWEIGHTED:
@@ -77,14 +81,12 @@ void TestGraph::runTest(tools::Timer & timer)
     }
 }
 
-void TestGraph::showGraphCommonProperties(const Graph & gr) const
+void TestGraph::showCommonProperties(const Graph & gr) const
 {
-    gr.toString();
+    toString(gr);
 
-    std::cout << "degree 5: " << Graph::degree(gr, 5) << std::endl;
-    std::cout << "max degree: " << Graph::maxDegree(gr) << std::endl;
-    std::cout << "avg degree: " << Graph::avgDegree(gr) << std::endl;
-    std::cout << "self loops: " << Graph::selfLoops(gr) << std::endl;
+    std::cout << "degree 5: "   << degree(gr, 5) << std::endl;
+    std::cout << "max degree: " << maxDegree(gr) << std::endl;
 
     DeepFirstSearch dfs(gr, 0);
     DeepFirstPaths dfp(gr, 5);
@@ -102,6 +104,32 @@ void TestGraph::showGraphCommonProperties(const Graph & gr) const
     TwoColored tcg(gr);
     std::cout << "is bipartite: " << std::boolalpha << tcg.isBipartite() << std::endl;
 }
+
+//void TestGraph::showGraphCommonProperties(const Graph & gr) const
+//{
+//    toString(gr);
+
+//    std::cout << "degree 5: "   << degree(gr, 5) << std::endl;
+//    std::cout << "max degree: " << maxDegree(gr) << std::endl;
+//    std::cout << "avg degree: " << avgDegree(gr) << std::endl;
+//    std::cout << "self loops: " << selfLoops(gr) << std::endl;
+
+//    DeepFirstSearch dfs(gr, 0);
+//    DeepFirstPaths dfp(gr, 5);
+//    std::cout << "deep to 5:\t" << dfp.pathTo(0) << std::endl;
+
+//    BreadthFirstPaths bfp(gr, 5);
+//    std::cout << "breadth to 5:\t" <<  bfp.pathTo(0) << std::endl;
+
+//    CoupledComponents ccg(gr);
+//    std::cout << "components: " << ccg.componentsCount() << std::endl;
+
+//    Cyclic cg(gr);
+//    std::cout << "has cycle: " << std::boolalpha << cg.isCyclic() << std::endl;
+
+//    TwoColored tcg(gr);
+//    std::cout << "is bipartite: " << std::boolalpha << tcg.isBipartite() << std::endl;
+//}
 
 void TestGraph::showDirectedGraphProperties(const Graph &gr) const
 {

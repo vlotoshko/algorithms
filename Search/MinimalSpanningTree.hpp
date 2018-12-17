@@ -8,7 +8,7 @@
 #ifndef MINIMAL_SPANNING_TREE_HPP
 #define MINIMAL_SPANNING_TREE_HPP
 //--------------------------------------------------------------------------------------------------
-#include "EdgeWeightedGraph.hpp"
+#include "Graph.hpp"
 #include "IndexedPQ.hpp"
 
 #include <vector>

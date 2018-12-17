@@ -16,77 +16,6 @@
 namespace graph
 {
 
-void toString(const Graph & g)
-{
-    std::cout << "vertexes: " << g.vertexCount() << "; edges: " << g.edgeCount() << std::endl;
-    for (size_t v = 0; v < g.vertexCount(); ++v)
-    {
-        auto const & edges = g[v];
-        std::cout << v << ": ";
-        for (auto const & edge : edges)
-        {
-            std::cout << edge.other(v) << " ";
-        }
-        std::cout << std::endl;
-    }
-}
-
-size_t degree(const Graph& g, size_t v)
-{
-    return g[v].size();
-}
-
-size_t maxDegree(const Graph& g)
-{
-    size_t max = 0;
-    for (size_t i = 0; i < g.vertexCount(); ++i)
-    {
-        size_t d = degree(g, i);
-        if (d > max)
-            max = d;
-    }
-    return max;
-}
-
-//--------------------------------------------------------------------------------------------------
-// Deep first search implementation
-//
-size_t deepFirstSearh(const Graph & g, size_t s)
-{
-    std::vector<bool> marked(g.vertexCount(), false);
-    size_t count = 0;
-
-    std::function<void(const Graph & g, size_t s)> dfs;
-    dfs = [&marked, &count, &dfs](const Graph & g, size_t v) -> void {
-        marked[v] = true;
-        ++count;
-        auto const & edges = g[v];
-        for (auto const & edge : edges)
-        {
-            auto w = edge.other(v);
-            if (!marked[w])
-            {
-    //            std::cout << v << " - " << w << std::endl;
-                dfs(g, w);
-            }
-        }
-    };
-
-    dfs(g, s);
-    return count;
-}
-
-
-
-
-
-
-
-
-
-
-
-
 //--------------------------------------------------------------------------------------------------
 // ------- DeepFirstSearch -----------------------------------------------
 //
@@ -106,151 +35,6 @@ void DeepFirstSearch::dfs(const Graph & g, size_t v)
         if (!marked_[w])
         {
 //            std::cout << v << " - " << w << std::endl;
-            dfs(g, w);
-        }
-    }
-}
-
-
-//--------------------------------------------------------------------------------------------------
-// ------- DeepFirstPaths -----------------------------------------------
-//
-DeepFirstPaths::DeepFirstPaths(const Graph &g, size_t s)
-    : marked_(g.vertexCount(), false), edgeTo_(g.vertexCount()), s_(s)
-{
-    dfs(g ,s);
-}
-
-void DeepFirstPaths::dfs(const Graph & g, size_t v)
-{
-    marked_[v] = true;
-
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
-    {
-        auto w = edge.other(v);
-        if (!marked_[w])
-        {
-//            std::cout << v << " - " <<w << std::endl;
-            edgeTo_[w] = v;
-            dfs(g, w);
-        }
-    }
-}
-
-std::string DeepFirstPaths::pathTo(size_t v) const
-{
-    std::stringstream pathStr;
-    if (!hasPathTo(v))
-    {
-        pathStr << "none";
-        return pathStr.str();
-    }
-
-    std::stack<size_t> path;
-
-    for (size_t i = v; i != s_; i = edgeTo_[i])
-    {
-        path.push(i);
-    }
-    path.push(s_);
-
-    while (!path.empty())
-    {
-       pathStr << path.top();
-       path.pop();
-       pathStr << (!path.empty() ? " - " : "");
-    }
-    return pathStr.str();
-}
-
-
-
-//--------------------------------------------------------------------------------------------------
-// ------- DepthFirstOrder ----------------------------------------------------
-//
-
-DepthFirstOrder::DepthFirstOrder(const Graph & g)
-  : marked_(g.vertexCount(), false)
-  , reversePost_(), pre_(), post_()
-{
-
-    for (size_t v = 0; v < g.vertexCount(); ++v)
-    {
-        if (!marked_[v])
-            dfs(g, v);
-    }
-}
-
-
-void DepthFirstOrder::dfs(const Graph & g, size_t v)
-{
-    marked_[v] = true;
-    pre_.push(v);
-
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
-    {
-        auto w = edge.other(v);
-        if (!marked_[w])
-        {
-            dfs(g, w);
-        }
-    }
-
-    post_.push(v);
-    reversePost_.push(v);
-}
-
-
-//--------------------------------------------------------------------------------------------------
-// ------- Topological ----------------------------------------------------
-//
-
-Topological::Topological(const Graph & g)
-    : dfo_(Graph(0)), isDAG_(false)
-{
-    isDAG_ = !Cyclic(g).isCyclic();
-    if (isDAG_)
-    {
-        dfo_ = DepthFirstOrder(g);
-    }
-}
-
-
-//--------------------------------------------------------------------------------------------------
-// ------- KosarajuSCC ----------------------------------------------------
-//
-
-KosarajuSCC::KosarajuSCC(const Graph & g)
-    : count_(0), marked_(g.vertexCount(), false), id_(g.vertexCount())
-{
-    auto r = reverse<DirectedGraphStrategy<Graph>>(g);
-    DepthFirstOrder order(*r);
-
-    while (order.reversePost().size() > 0)
-    {
-        size_t i = order.reversePost().top();
-        if (!marked_[i])
-        {
-            dfs(g, i);
-            ++count_;
-        }
-        order.reversePost().pop();
-    }
-}
-
-void KosarajuSCC::dfs(const Graph & g, size_t v)
-{
-    marked_[v] = true;
-    id_[v] = count_;
-
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
-    {
-        auto w = edge.other(v);
-        if (!marked_[w])
-        {
             dfs(g, w);
         }
     }
@@ -383,32 +167,32 @@ void CoupledComponents::dfs(const Graph &g, size_t v)
 // ------- Cycle --------------------------------------------------------------------
 //
 
-Cyclic::Cyclic(const Graph & g) : hasCycle_(false), marked_(g.vertexCount(), false)
-{
-    for (size_t s = 0; s < g.vertexCount(); ++s)
-    {
-       if(!marked_[s])
-           dfs(g ,s, s);
-    }
-}
+//Cyclic::Cyclic(const Graph & g) : hasCycle_(false), marked_(g.vertexCount(), false)
+//{
+//    for (size_t s = 0; s < g.vertexCount(); ++s)
+//    {
+//       if(!marked_[s])
+//           dfs(g ,s, s);
+//    }
+//}
 
-void Cyclic::dfs(const Graph & g, size_t v, size_t u)
-{
-    marked_[v] = true;
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
-    {
-        auto w = edge.other(v);
-        if (!marked_[w])
-        {
-            dfs(g, w, v);
-        }
-        else if (w != u)
-        {
-            hasCycle_ = true;
-        }
-    }
-}
+//void Cyclic::dfs(const Graph & g, size_t v, size_t u)
+//{
+//    marked_[v] = true;
+//    auto const & edges = g[v];
+//    for (auto const & edge : edges)
+//    {
+//        auto w = edge.other(v);
+//        if (!marked_[w])
+//        {
+//            dfs(g, w, v);
+//        }
+//        else if (w != u)
+//        {
+//            hasCycle_ = true;
+//        }
+//    }
+//}
 
 
 //--------------------------------------------------------------------------------------------------

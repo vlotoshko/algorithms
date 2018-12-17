@@ -62,19 +62,19 @@ void TestGraph::runTest(tools::Timer & timer)
         }
         case AlgId::GRAPH_EDGEWEIGHTED:
         {
-            EdgeWeightedGraph gr(fileName_, std::make_shared<NonDirectedEWGraphStrategy>());
+            EdgeWeightedGraph gr(NonDirectedGraphStrategy<EdgeWeightedGraph>{}, fileName_);
             showEWGraphProperties(gr);
             break;
         }
         case AlgId::GRAPH_MST:
         {
-            EdgeWeightedGraph gr(fileName_, std::make_shared<NonDirectedEWGraphStrategy>());
+            EdgeWeightedGraph gr(NonDirectedGraphStrategy<EdgeWeightedGraph>{}, fileName_);
             showEWGraphProperties(gr);
             break;
         }
         case AlgId::GRAPH_SHORT_PATHES:
         {
-            EdgeWeightedGraph gr(fileName_, std::make_shared<DirectedEWGraphStrategy>());
+            EdgeWeightedGraph gr(DirectedGraphStrategy<EdgeWeightedGraph>{}, fileName_);;
             getShortPathes(gr);
             break;
         }
@@ -88,8 +88,8 @@ void TestGraph::showCommonProperties(const Graph & gr) const
     std::cout << "degree 5: "   << degree(gr, 5) << std::endl;
     std::cout << "max degree: " << maxDegree(gr) << std::endl;
 
-    DeepFirstSearch dfs(gr, 0);
-    DeepFirstPaths dfp(gr, 5);
+    deepFirstSearh(gr, 0);
+    DeepFirstPaths<Graph> dfp(gr, 5);
     std::cout << "deep to 5:\t" << dfp.pathTo(0) << std::endl;
 
     BreadthFirstPaths bfp(gr, 5);
@@ -98,7 +98,7 @@ void TestGraph::showCommonProperties(const Graph & gr) const
     CoupledComponents ccg(gr);
     std::cout << "components: " << ccg.componentsCount() << std::endl;
 
-    Cyclic cg(gr);
+    Cyclic<Graph> cg(gr);
     std::cout << "has cycle: " << std::boolalpha << cg.isCyclic() << std::endl;
 
     TwoColored tcg(gr);
@@ -133,7 +133,7 @@ void TestGraph::showCommonProperties(const Graph & gr) const
 
 void TestGraph::showDirectedGraphProperties(const Graph &gr) const
 {
-    DepthFirstOrder dfo(gr);
+    DepthFirstOrder<Graph> dfo(gr);
 
     std::cout << "Deep first order " << std::endl;
     std::cout << "preorder: " << std::endl;
@@ -161,7 +161,7 @@ void TestGraph::showDirectedGraphProperties(const Graph &gr) const
     }
     std::cout << std::endl;
 
-    Topological tpl(gr);
+    Topological<Graph> tpl(gr);
     std::cout << "Topological: " << std::endl;
     if (!tpl.isDAG())
     {
@@ -177,7 +177,7 @@ void TestGraph::showDirectedGraphProperties(const Graph &gr) const
     }
     std::cout << std::endl;
 
-    KosarajuSCC KSCC(gr);
+    KosarajuSCC<Graph> KSCC(gr);
     std::cout << "KSCC components: " << KSCC.count();
     std::cout << std::endl;
 
@@ -191,7 +191,7 @@ void TestGraph::showDirectedGraphProperties(const Graph &gr) const
 
 void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
 {
-    gr.toString();
+    toString(gr);
 
     std::cout << std::endl;
     PrimMST_Lazy lazyMST(gr);
@@ -223,7 +223,7 @@ void TestGraph::showEWGraphProperties(const EdgeWeightedGraph & gr) const
 
 void TestGraph::getShortPathes(const EdgeWeightedGraph & gr) const
 {
-    gr.toString();
+    toString(gr);
 
     std::cout << std::endl;
     DijkstraSP dijkstraSP(gr, 3);

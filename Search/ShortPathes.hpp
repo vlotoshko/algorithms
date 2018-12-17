@@ -8,7 +8,7 @@
 #ifndef SHORT_PATHES_HPP
 #define SHORT_PATHES_HPP
 //--------------------------------------------------------------------------------------------------
-#include "EdgeWeightedGraph.hpp"
+#include "Graph.hpp"
 #include "IndexedPQ.hpp"
 
 #include <functional>

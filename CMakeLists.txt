@@ -16,7 +16,6 @@ set(CPP_FILES
     "Search/GraphAlgorithms.cpp"
     "Search/MinimalSpanningTree.cpp"
     "Search/ShortPathes.cpp"
-    "Structures/EdgeWeightedGraph.cpp"
     "Structures/Graph.cpp"
     "Structures/TestGraph.cpp"
     "tools.cpp"
@@ -39,9 +38,8 @@ set(HPP_FILES
     "Sort/TestSort.hpp"
     "Structures/BinarySearchTree.hpp"
     "Structures/Edge.hpp"
-    "Structures/EdgeWeightedGraph.hpp"
     "Structures/Graph.hpp"
-	"Structures/IndexedPQ.hpp"
+    "Structures/IndexedPQ.hpp"
     "Structures/TestGraph.hpp"
     )
 

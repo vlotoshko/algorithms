@@ -11,36 +11,37 @@ set(CMAKE_EXE_LINKER_FLAGS ${LINKER_FLAGS})
 include_directories(Search)
 include_directories(Sort)
 include_directories(Structures)
+include_directories(Tests)
 
 set(CPP_FILES
     "Search/GraphAlgorithms.cpp"
     "Search/MinimalSpanningTree.cpp"
     "Search/ShortPathes.cpp"
-    "Structures/Graph.cpp"
-    "Structures/TestGraph.cpp"
-    "tools.cpp"
+    "Tests/TestGraph.cpp"
+    "Tools.cpp"
     "main.cpp"
     )
 
 set(HPP_FILES
-    "ITestable.hpp"
-    "TestRegistry.hpp"
-    "TestFactory.hpp"
-    "tools.hpp"
+    "Tools.hpp"
     "Search/GraphAlgorithms.hpp"
     "Search/MinimalSpanningTree.hpp"
-    "Search/TestBinarySearchTree.hpp"
-    "Search/TestUnionFind.hpp"
     "Search/UnionFind.hpp"
     "Search/ShortPathes.hpp"
     "Sort/ISortable.hpp"
     "Sort/Sort.hpp"
-    "Sort/TestSort.hpp"
     "Structures/BinarySearchTree.hpp"
     "Structures/Edge.hpp"
     "Structures/Graph.hpp"
+    "Structures/GraphDirectionPolicies.hpp"
     "Structures/IndexedPQ.hpp"
-    "Structures/TestGraph.hpp"
+    "Tests/ITestable.hpp"
+    "Tests/TestGraph.hpp"
+    "Tests/TestRegistry.hpp"
+    "Tests/TestFactory.hpp"
+    "Tests/TestBinarySearchTree.hpp"
+    "Tests/TestUnionFind.hpp"
+    "Tests/TestSort.hpp"
     )
 
 set(FILES ${CPP_FILES} ${HPP_FILES})

@@ -16,8 +16,6 @@
 namespace graph
 {
 
-
-
 //Graph::Graph(size_t v, std::shared_ptr<IDirectionStrategy> strategy)
 //    : v_(v), e_(0), vertexes_(v), directionStrategy_(strategy)
 //{

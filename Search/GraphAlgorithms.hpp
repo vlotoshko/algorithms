@@ -40,7 +40,7 @@ void toString(const G & g)
 }
 
 template<typename G>
-size_t degree   (const G & g, size_t v) { return g[v].size(); }
+size_t degree(const G & g, size_t v) { return g[v].size(); }
 
 template<typename G>
 size_t maxDegree(const G & g)
@@ -320,7 +320,7 @@ class KosarajuSCC
 public:
     explicit KosarajuSCC(const G & g) : count_(0), marked_(g.vertexCount(), false), id_(g.vertexCount())
     {
-        auto r = reverse<DirectedGraphStrategy<G>>(g);
+        auto r = reverse<DirectedGraphPolicy<G>>(g);
         DepthFirstOrder<G> order(*r);
 
         while (order.reversePost().size() > 0)

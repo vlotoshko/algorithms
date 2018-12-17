@@ -103,7 +103,7 @@ void PrimMST_Energy::visit(const EdgeWeightedGraph & gr, size_t v)
 KruskalMST::KruskalMST(const EdgeWeightedGraph & gr)
 {
     EdgeContainer edges;
-    NonDirectedGraphStrategy<EdgeWeightedGraph>::edges(gr, edges);
+    NonDirectedGraphPolicy<EdgeWeightedGraph>::edges(gr, edges);
     uf::UnionFindInfo<size_t> unionFindInfo(edges.size());
     uf::UnionFind_QuickFind<size_t> uf;
 

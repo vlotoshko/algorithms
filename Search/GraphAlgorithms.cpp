@@ -164,38 +164,6 @@ void CoupledComponents::dfs(const Graph &g, size_t v)
 
 
 //--------------------------------------------------------------------------------------------------
-// ------- Cycle --------------------------------------------------------------------
-//
-
-//Cyclic::Cyclic(const Graph & g) : hasCycle_(false), marked_(g.vertexCount(), false)
-//{
-//    for (size_t s = 0; s < g.vertexCount(); ++s)
-//    {
-//       if(!marked_[s])
-//           dfs(g ,s, s);
-//    }
-//}
-
-//void Cyclic::dfs(const Graph & g, size_t v, size_t u)
-//{
-//    marked_[v] = true;
-//    auto const & edges = g[v];
-//    for (auto const & edge : edges)
-//    {
-//        auto w = edge.other(v);
-//        if (!marked_[w])
-//        {
-//            dfs(g, w, v);
-//        }
-//        else if (w != u)
-//        {
-//            hasCycle_ = true;
-//        }
-//    }
-//}
-
-
-//--------------------------------------------------------------------------------------------------
 // ------- TwoColored ----------------------------------------------------------------
 //
 
@@ -302,12 +270,12 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
             std::string token = line.substr(0, pos);
 //            std::cout << "vertex - " << vertex << "; token = " << token << std::endl;
 
-            NonDirectedGraphStrategy<Graph>::addEdge(*g_, v, st_.find(token)->second);
+            NonDirectedGraphPolicy<Graph>::addEdge(*g_, v, st_.find(token)->second);
             line.erase(0, pos + delimiter.length());
         }
 
         // add token after last delimiter
-        NonDirectedGraphStrategy<Graph>::addEdge(*g_, v, st_.find(line)->second);
+        NonDirectedGraphPolicy<Graph>::addEdge(*g_, v, st_.find(line)->second);
     }
 
     std::cout << "map: " << std::endl;

@@ -29,7 +29,7 @@ enum class AlgId : int
 };
 
 template<>
-void TestGraph::showDirectionDependedProperties<DirectedGraphStrategy<Graph>>(DirectedGraphStrategy<Graph>, const Graph & gr) const
+void TestGraph::showDirectionDependedProperties<DirectedGraphPolicy<Graph>>(DirectedGraphPolicy<Graph>, const Graph & gr) const
 {
     showDirectedGraphProperties(gr);
 }
@@ -43,38 +43,38 @@ void TestGraph::runTest(tools::Timer & timer)
     {
         case AlgId::GRAPH:
         {
-            Graph gr(NonDirectedGraphStrategy<Graph>{}, fileName_);
-            showGraphProperties<NonDirectedGraphStrategy<Graph>>(gr);
+            Graph gr(NonDirectedGraphPolicy<Graph>{}, fileName_);
+            showGraphProperties<NonDirectedGraphPolicy<Graph>>(gr);
             break;
         }
         case AlgId::GRAPH_DIRECTED:
         {
-            Graph gr(DirectedGraphStrategy<Graph>{}, fileName_);
-            showGraphProperties<DirectedGraphStrategy<Graph>>(gr);
+            Graph gr(DirectedGraphPolicy<Graph>{}, fileName_);
+            showGraphProperties<DirectedGraphPolicy<Graph>>(gr);
             break;
         }
         case AlgId::GRAPH_SYMBOL:
         {
             SymbolGraph sgr(fileName_);
             std::cout << "vertex #2:\n" << sgr.lexical(2);
-            showGraphProperties<NonDirectedGraphStrategy<Graph>>(sgr.G());
+            showGraphProperties<NonDirectedGraphPolicy<Graph>>(sgr.G());
             break;
         }
         case AlgId::GRAPH_EDGEWEIGHTED:
         {
-            EdgeWeightedGraph gr(NonDirectedGraphStrategy<EdgeWeightedGraph>{}, fileName_);
+            EdgeWeightedGraph gr(NonDirectedGraphPolicy<EdgeWeightedGraph>{}, fileName_);
             showEWGraphProperties(gr);
             break;
         }
         case AlgId::GRAPH_MST:
         {
-            EdgeWeightedGraph gr(NonDirectedGraphStrategy<EdgeWeightedGraph>{}, fileName_);
+            EdgeWeightedGraph gr(NonDirectedGraphPolicy<EdgeWeightedGraph>{}, fileName_);
             showEWGraphProperties(gr);
             break;
         }
         case AlgId::GRAPH_SHORT_PATHES:
         {
-            EdgeWeightedGraph gr(DirectedGraphStrategy<EdgeWeightedGraph>{}, fileName_);;
+            EdgeWeightedGraph gr(DirectedGraphPolicy<EdgeWeightedGraph>{}, fileName_);;
             getShortPathes(gr);
             break;
         }

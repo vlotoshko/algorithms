@@ -22,7 +22,7 @@ PrimMST_Lazy::PrimMST_Lazy(const EdgeWeightedGraph & gr)
 
     while (!pq_.empty())
     {
-        EdgeWeigthed e = pq_.top();
+        EdgeWeighted e = pq_.top();
         pq_.pop();
 
         size_t v = e.either();
@@ -107,7 +107,7 @@ KruskalMST::KruskalMST(const EdgeWeightedGraph & gr)
     uf::UnionFindInfo<size_t> unionFindInfo(edges.size());
     uf::UnionFind_QuickFind<size_t> uf;
 
-    std::priority_queue<EdgeWeigthed, std::vector<EdgeWeigthed>, std::greater<EdgeWeigthed>> edgePQ;
+    std::priority_queue<EdgeWeighted, std::vector<EdgeWeighted>, std::greater<EdgeWeighted>> edgePQ;
     for (const auto & item : edges)
     {
         edgePQ.push(item);
@@ -115,7 +115,7 @@ KruskalMST::KruskalMST(const EdgeWeightedGraph & gr)
 
     while (!edgePQ.empty() && mst_.size() < gr.vertexCount() - 1)
     {
-        EdgeWeigthed e = edgePQ.top();
+        EdgeWeighted e = edgePQ.top();
         edgePQ.pop();
 
         auto v = e.either();

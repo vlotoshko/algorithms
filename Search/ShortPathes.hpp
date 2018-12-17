@@ -21,7 +21,7 @@ namespace graph
 class ShortPathes
 {
 public:
-    using EdgeContainer = std::vector<EdgeWeigthed>;
+    using EdgeContainer = std::vector<EdgeWeighted>;
 
     ShortPathes(const EdgeWeightedGraph & gr, size_t s);
     double        distTo(size_t v)    const;

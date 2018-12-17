@@ -125,7 +125,7 @@ protected:
 };
 
 using Graph             = GraphT<EdgeNonWeighted>;
-using EdgeWeightedGraph = GraphT<EdgeWeigthed>;
+using EdgeWeightedGraph = GraphT<EdgeWeighted>;
 
 
 } //namespace graph

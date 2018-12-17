@@ -16,7 +16,7 @@ namespace graph
 
 ShortPathes::ShortPathes(const EdgeWeightedGraph & gr, size_t s) :
     distTo_(gr.vertexCount(), std::numeric_limits<double>::max()),
-    edgeTo_(gr.vertexCount(), EdgeWeigthed{})
+    edgeTo_(gr.vertexCount(), EdgeWeighted{})
 {
     distTo_[s] = 0;
 }
@@ -37,7 +37,7 @@ ShortPathes::EdgeContainer ShortPathes::pathTo(size_t v) const
 
     if (hasPathTo(v))
     {
-        for(EdgeWeigthed e = edgeTo_[v]; e != EdgeWeigthed{}; e = edgeTo_[e.either()])
+        for(EdgeWeighted e = edgeTo_[v]; e != EdgeWeighted{}; e = edgeTo_[e.either()])
         {
             edges.push_back(e);
         }

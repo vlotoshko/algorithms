@@ -29,14 +29,14 @@ public:
 private:
     std::vector<bool> marked_;
     EdgeContainer mst_;
-    std::priority_queue<EdgeWeigthed, std::vector<EdgeWeigthed>, std::greater<EdgeWeigthed>> pq_;
+    std::priority_queue<EdgeWeighted, std::vector<EdgeWeighted>, std::greater<EdgeWeighted>> pq_;
     void visit(const EdgeWeightedGraph & gr, size_t v);
 };
 
 class PrimMST_Energy
 {
 public:
-    using EdgeContainer = std::vector<EdgeWeigthed>;
+    using EdgeContainer = std::vector<EdgeWeighted>;
 
     explicit PrimMST_Energy(const EdgeWeightedGraph & gr);
     EdgeContainer edges() const;

@@ -46,7 +46,7 @@ public:
             }
         }
     }
-    std::string name() const override { return  "Dummy sort"; }
+    std::string name() const override { return "Dummy sort"; }
 };
 
 
@@ -105,7 +105,7 @@ public:
             }
         }
     }
-    std::string name() const override { return  "Comb sort"; }
+    std::string name() const override { return "Comb sort"; }
 };
 
 

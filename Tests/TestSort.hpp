@@ -15,6 +15,9 @@
 
 #include <map>
 #include <memory>
+#include <cppunit/TestFixture.h>
+#include <cppunit/TestCaller.h>
+#include <cppunit/TestSuite.h>
 //--------------------------------------------------------------------------------------------------
 
 namespace sort
@@ -110,6 +113,76 @@ std::map<AlgId, typename TestSort<T>::Alg> TestSort<T>::Algorithms =
     , {AlgId::SORT_QUICK_INS, std::make_shared<QuickInsSort<T>>()}
     , {AlgId::SORT_MERGE_INS, std::make_shared<MergeInsSort<T>>()}
 //    , {SortId::SORT_INSERTION_BIN, std::make_shared<InsertionBinarySort<T>>()}
+};
+
+template <typename T>
+class DummySortTest : public CppUnit::TestFixture
+{
+public:
+    void setUp() override
+    {
+//        m_10_1 = new Complex( 10, 1 );
+//        m_1_1 = new Complex( 1, 1 );
+//        m_11_2 = new Complex( 11, 2 );
+    }
+
+    void tearDown() override
+    {
+//        delete m_10_1;
+//        delete m_1_1;
+//        delete m_11_2;
+    }
+
+    void testSort()
+    {
+        CPPUNIT_ASSERT(isSorted());
+    }
+
+//    void testEquality()
+//    {
+//        CPPUNIT_ASSERT( *m_10_1 == *m_10_1 );
+//        CPPUNIT_ASSERT( !(*m_10_1 == *m_11_2) );
+//    }
+
+//    void testAddition()
+//    {
+//        CPPUNIT_ASSERT_EQUAL(*m_10_1 + *m_1_1 + *m_1_1, *m_11_2 );
+//    }
+
+//    CPPUNIT_TEST_SUITE( ComplexNumberTest );
+//    CPPUNIT_TEST( testEquality );
+//    CPPUNIT_TEST( testAddition );
+////    CPPUNIT_TEST_EXCEPTION( testDivideByZeroThrows, MathException );r
+//    CPPUNIT_TEST_SUITE_END();
+
+    static CppUnit::Test *suite()
+    {
+      CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite( "DummySortTest" );
+      suiteOfTests->addTest( new CppUnit::TestCaller<DummySort<T>>("testEquality", &DummySort<T>::testEquality ) );
+      suiteOfTests->addTest( new CppUnit::TestCaller<DummySort<T>>("testAddition",&DummySort<T>::testAddition ) );
+      return suiteOfTests;
+    }
+
+private:
+    bool isSorted(const std::vector<T> & v)
+    {
+        bool result = true;
+        if (v.size > 0)
+        {
+            auto i = v[0];
+            for (auto const & item : v)
+            {
+                if (item < i)
+                {
+                    return false;
+                }
+                i = item;
+            }
+        }
+        return result;
+    }
+
+    std::vector<T> & elements;
 };
 
 } // namespace sort

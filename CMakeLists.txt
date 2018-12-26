@@ -47,3 +47,4 @@ set(HPP_FILES
 set(FILES ${CPP_FILES} ${HPP_FILES})
 
 add_executable(${PROJECT_NAME} ${FILES})
+target_link_libraries  (${PROJECT_NAME} cppunit)

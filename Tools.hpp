@@ -75,6 +75,27 @@ void show(const std::vector<T> & elements)
 
 
 // ------------------------------------------------------------------------------------------
+// Checks is container's elements are sorted
+//
+template <template <typename...> class Container, typename T>
+bool isSorted(const Container<T> & container)
+{
+    if (container.size() > 0)
+    {
+        auto i = container.front();
+        for (auto const & item : container)
+        {
+            if (std::less<T>()(item, i))
+            {
+                return false;
+            }
+            i = item;
+        }
+    }
+    return true;
+}
+
+// ------------------------------------------------------------------------------------------
 // Calculates ratio between current value and previous, saved before.
 //
 class CalcRatio

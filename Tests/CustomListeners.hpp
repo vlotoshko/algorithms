@@ -11,8 +11,11 @@
 
 //--------------------------------------------------------------------------------------------------
 #include <iostream>
+#include <iomanip>
 
 #include <cppunit/TestListener.h>
+#include <cppunit/Test.h>
+#include <cppunit/TestFailure.h>
 //--------------------------------------------------------------------------------------------------
 
 namespace tests
@@ -21,19 +24,43 @@ namespace tests
 class ShowStartListener : public CppUnit::TestListener
 {
 public:
-    void startSuite( CppUnit::Test * ) override
+    void startSuite( CppUnit::Test * test) override
     {
-        std::cout << "--- START SUITE ------------------------ " << std::endl;
+        suiteName_ = test->getName();
+//        std::cout << "--- START SUITE -- " << test->getName() << std::endl;
     }
+
+    void startTest( CppUnit::Test * test) override
+    {
+        auto str = suiteName_ + " : " + test->getName();
+        std::cout << std::setw(90) << str.c_str() << "... ";
+    }
+private:
+    std::string suiteName_;
 };
 
 class ShowEndListener : public CppUnit::TestListener
 {
 public:
-    void endSuite( CppUnit::Test * ) override
+    ShowEndListener () : testFailed_(false) {}
+
+    void endTest( CppUnit::Test * ) override
     {
-        std::cout << "--- END SUITE -------------------------- " << std::endl << std::endl;
+        std::cout << (testFailed_ ? "[ FAILED ]" : "[ OK ]") << std::endl;
+        testFailed_ = false;
     }
+
+    void addFailure( const CppUnit::TestFailure & ) override
+    {
+        testFailed_ = true;
+    }
+
+    void endSuite( CppUnit::Test *) override
+    {
+        std::cout << std::endl;
+    }
+private:
+    bool testFailed_;
 };
 
 } // namespace tests

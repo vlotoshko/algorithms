@@ -12,7 +12,6 @@
 
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
-#include <cppunit/BriefTestProgressListener.h>
 #include <cppunit/TestRunner.h>
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
@@ -65,9 +64,6 @@ bool runUnitTests()
 
     tests::ShowStartListener showStart;
     testResults.addListener(&showStart);
-
-    CppUnit::BriefTestProgressListener progressBrief;
-    testResults.addListener(&progressBrief);
 
     tests::ShowEndListener showEnd;
     testResults.addListener(&showEnd);

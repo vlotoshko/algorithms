@@ -116,6 +116,13 @@ std::map<AlgId, typename TestSort<T>::Alg> TestSort<T>::Algorithms =
 //    , {SortId::SORT_INSERTION_BIN, std::make_shared<InsertionBinarySort<T>>()}
 };
 
+} // namespace sort
+
+
+
+namespace tests
+{
+
 template <typename T>
 class TestIsSorted : public CppUnit::TestFixture
 {
@@ -193,23 +200,24 @@ private:
     std::vector<T> unsorted;
 };
 
-template<typename T> using TestDummySort            = TestSortAlgorithms<DummySort, T>;
-template<typename T> using TestBubleSort            = TestSortAlgorithms<BubleSort, T>;
-template<typename T> using TestCombSort             = TestSortAlgorithms<CombSort, T>;
-template<typename T> using TestShakeSort            = TestSortAlgorithms<ShakeSort, T>;
-template<typename T> using TestQuickSort            = TestSortAlgorithms<QuickSort, T>;
-template<typename T> using TestQuickSortM           = TestSortAlgorithms<QuickSortM, T>;
-template<typename T> using TestQuick3Sort           = TestSortAlgorithms<Quick3Sort, T>;
-template<typename T> using TestGnomeSort            = TestSortAlgorithms<GnomeSort, T>;
-template<typename T> using TestSelectionSort        = TestSortAlgorithms<SelectionSort, T>;
-template<typename T> using TestHeapSort             = TestSortAlgorithms<HeapSort, T>;
-template<typename T> using TestInsertionySort       = TestSortAlgorithms<InsertionSort, T>;
-template<typename T> using TestMergeSort            = TestSortAlgorithms<MergeSort, T>;
-template<typename T> using TestMergeUpSort          = TestSortAlgorithms<MergeUpSort, T>;
-template<typename T> using TestQuickInsSort         = TestSortAlgorithms<QuickInsSort, T>;
-template<typename T> using TestMergeInsSort         = TestSortAlgorithms<MergeInsSort, T>;
-template<typename T> using TestInsertionBinarySort  = TestSortAlgorithms<InsertionBinarySort, T>;
-
+// Had to use aliases for the test suite registration, because in this particulat case
+// preprocessor does not accept templates with more that 1 parameter
+template<typename T> using TestDummySort            = TestSortAlgorithms<sort::DummySort, T>;
+template<typename T> using TestBubleSort            = TestSortAlgorithms<sort::BubleSort, T>;
+template<typename T> using TestCombSort             = TestSortAlgorithms<sort::CombSort, T>;
+template<typename T> using TestShakeSort            = TestSortAlgorithms<sort::ShakeSort, T>;
+template<typename T> using TestQuickSort            = TestSortAlgorithms<sort::QuickSort, T>;
+template<typename T> using TestQuickSortM           = TestSortAlgorithms<sort::QuickSortM, T>;
+template<typename T> using TestQuick3Sort           = TestSortAlgorithms<sort::Quick3Sort, T>;
+template<typename T> using TestGnomeSort            = TestSortAlgorithms<sort::GnomeSort, T>;
+template<typename T> using TestSelectionSort        = TestSortAlgorithms<sort::SelectionSort, T>;
+template<typename T> using TestHeapSort             = TestSortAlgorithms<sort::HeapSort, T>;
+template<typename T> using TestInsertionySort       = TestSortAlgorithms<sort::InsertionSort, T>;
+template<typename T> using TestMergeSort            = TestSortAlgorithms<sort::MergeSort, T>;
+template<typename T> using TestMergeUpSort          = TestSortAlgorithms<sort::MergeUpSort, T>;
+template<typename T> using TestQuickInsSort         = TestSortAlgorithms<sort::QuickInsSort, T>;
+template<typename T> using TestMergeInsSort         = TestSortAlgorithms<sort::MergeInsSort, T>;
+template<typename T> using TestInsertionBinarySort  = TestSortAlgorithms<sort::InsertionBinarySort, T>;
 
 CPPUNIT_TEST_SUITE_REGISTRATION(TestDummySort<size_t>);
 CPPUNIT_TEST_SUITE_REGISTRATION(TestBubleSort<size_t>);
@@ -228,7 +236,7 @@ CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickInsSort<size_t>);
 CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeInsSort<size_t>);
 CPPUNIT_TEST_SUITE_REGISTRATION(TestInsertionBinarySort<size_t>);
 
-} // namespace sort
+} // namespace tests
 
 //--------------------------------------------------------------------------------------------------
 #endif // TESTSORT_HPP

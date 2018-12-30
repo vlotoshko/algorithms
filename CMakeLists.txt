@@ -35,6 +35,7 @@ set(HPP_FILES
     "Structures/Graph.hpp"
     "Structures/GraphDirectionPolicies.hpp"
     "Structures/IndexedPQ.hpp"
+    "Tests/CustomListeners.hpp"
     "Tests/ITestable.hpp"
     "Tests/TestGraph.hpp"
     "Tests/TestRegistry.hpp"

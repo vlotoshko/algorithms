@@ -17,6 +17,7 @@
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
+#include "CustomListeners.hpp"
 //--------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------------------------
@@ -62,8 +63,14 @@ bool runUnitTests()
     CppUnit::TestResultCollector collectedResult;
     testResults.addListener(&collectedResult);
 
+    tests::ShowStartListener showStart;
+    testResults.addListener(&showStart);
+
     CppUnit::BriefTestProgressListener progressBrief;
     testResults.addListener(&progressBrief);
+
+    tests::ShowEndListener showEnd;
+    testResults.addListener(&showEnd);
 
     CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry();
 

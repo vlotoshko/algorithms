@@ -157,7 +157,76 @@ protected:
     }
 };
 
+
 CPPUNIT_TEST_SUITE_REGISTRATION(TestIsSorted<size_t>);
+
+template <template <typename> class SortAlg, typename T>
+class TestSortAlgorithms : public CppUnit::TestFixture
+{
+    CPPUNIT_TEST_SUITE(TestSortAlgorithms);
+    CPPUNIT_TEST(sort_ShouldReturnSorted_WhenGivenSortedContainer);
+    CPPUNIT_TEST(sort_ShouldReturnSorted_WhenGivenUnsortedContainer);
+    CPPUNIT_TEST_SUITE_END();
+
+public:
+    void setUp()
+    {
+        sorted = {1,2,3,4,5,6,7};
+        unsorted = {5,7,3,4,9,2};
+    }
+protected:
+
+    void sort_ShouldReturnSorted_WhenGivenSortedContainer()
+    {
+        SortAlg<T>().sort(sorted);
+        CPPUNIT_ASSERT(tools::isSorted(sorted));
+    }
+
+    void sort_ShouldReturnSorted_WhenGivenUnsortedContainer()
+    {
+        SortAlg<T>().sort(unsorted);
+        CPPUNIT_ASSERT(tools::isSorted(unsorted));
+    }
+
+private:
+    std::vector<T> sorted;
+    std::vector<T> unsorted;
+};
+
+template<typename T> using TestDummySort            = TestSortAlgorithms<DummySort, T>;
+template<typename T> using TestBubleSort            = TestSortAlgorithms<BubleSort, T>;
+template<typename T> using TestCombSort             = TestSortAlgorithms<CombSort, T>;
+template<typename T> using TestShakeSort            = TestSortAlgorithms<ShakeSort, T>;
+template<typename T> using TestQuickSort            = TestSortAlgorithms<QuickSort, T>;
+template<typename T> using TestQuickSortM           = TestSortAlgorithms<QuickSortM, T>;
+template<typename T> using TestQuick3Sort           = TestSortAlgorithms<Quick3Sort, T>;
+template<typename T> using TestGnomeSort            = TestSortAlgorithms<GnomeSort, T>;
+template<typename T> using TestSelectionSort        = TestSortAlgorithms<SelectionSort, T>;
+template<typename T> using TestHeapSort             = TestSortAlgorithms<HeapSort, T>;
+template<typename T> using TestInsertionySort       = TestSortAlgorithms<InsertionSort, T>;
+template<typename T> using TestMergeSort            = TestSortAlgorithms<MergeSort, T>;
+template<typename T> using TestMergeUpSort          = TestSortAlgorithms<MergeUpSort, T>;
+template<typename T> using TestQuickInsSort         = TestSortAlgorithms<QuickInsSort, T>;
+template<typename T> using TestMergeInsSort         = TestSortAlgorithms<MergeInsSort, T>;
+template<typename T> using TestInsertionBinarySort  = TestSortAlgorithms<InsertionBinarySort, T>;
+
+
+CPPUNIT_TEST_SUITE_REGISTRATION(TestDummySort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestBubleSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestCombSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestShakeSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickSortM<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestQuick3Sort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestGnomeSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestSelectionSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestHeapSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestInsertionySort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeUpSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickInsSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeInsSort<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestInsertionBinarySort<size_t>);
 
 } // namespace sort
 

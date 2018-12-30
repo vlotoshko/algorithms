@@ -56,8 +56,7 @@ void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings s
               << "time eplaced: " << std::setw(10) << time << std::endl;
 }
 
-
-int main(int argc, char *argv[])
+bool runUnitTests()
 {
     CppUnit::TestResult testResults;
     CppUnit::TestResultCollector collectedResult;
@@ -74,7 +73,11 @@ int main(int argc, char *argv[])
 
     CppUnit::CompilerOutputter compileroutputter(&collectedResult, std::cerr);
     compileroutputter.write();
+    return collectedResult.wasSuccessful();
+}
 
+int main(int argc, char *argv[])
+{
     auto settings = registry::getSettings(argc, argv);
     auto builder = tests::getTestBuilder<int>(settings.algId);
 
@@ -93,8 +96,7 @@ int main(int argc, char *argv[])
     {
         tests::TestSettings::usage();
     }
-
-    return collectedResult.wasSuccessful() ? 0 : 1;
+    return runUnitTests() ? 0 : 1;
 }
 
 //--------------------------------------------------------------------------------------------------

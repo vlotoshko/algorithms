@@ -450,7 +450,7 @@ public:
             elements[j + 1] = key;
         }
     }
-    void sort(int *array, int length)
+    void sort(T *array, int length)
     {
         for (int i = 1; i < length; i++)
         {

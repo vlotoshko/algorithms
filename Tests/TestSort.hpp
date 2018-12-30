@@ -18,6 +18,7 @@
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestCaller.h>
 #include <cppunit/TestSuite.h>
+#include <cppunit/extensions/HelperMacros.h>
 //--------------------------------------------------------------------------------------------------
 
 namespace sort
@@ -116,74 +117,47 @@ std::map<AlgId, typename TestSort<T>::Alg> TestSort<T>::Algorithms =
 };
 
 template <typename T>
-class DummySortTest : public CppUnit::TestFixture
+class TestIsSorted : public CppUnit::TestFixture
 {
+    CPPUNIT_TEST_SUITE(TestIsSorted);
+    CPPUNIT_TEST_FAIL(isSorted_ShouldFail_WhenGivenUnSortedContainer);
+    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenSortedContainer);
+    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenContainerHasEqualElements);
+    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenContainerHasSameElement);
+    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenContainerIsEmpty);
+    CPPUNIT_TEST_SUITE_END();
+
 public:
-    void setUp() override
+//    void setUp(void);
+//    void tearDown(void);
+protected:
+    void isSorted_ShouldFail_WhenGivenUnSortedContainer()
     {
-//        m_10_1 = new Complex( 10, 1 );
-//        m_1_1 = new Complex( 1, 1 );
-//        m_11_2 = new Complex( 11, 2 );
+        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,7,3,4,5}));
     }
 
-    void tearDown() override
+    void isSorted_ShouldReturnTrue_WhenGivenSortedContainer()
     {
-//        delete m_10_1;
-//        delete m_1_1;
-//        delete m_11_2;
+        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,2,3,4,5}));
     }
 
-    void testSort()
+    void isSorted_ShouldReturnTrue_WhenGivenContainerHasEqualElements()
     {
-        CPPUNIT_ASSERT(isSorted());
+        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,2,2,2,3,4,5}));
     }
 
-//    void testEquality()
-//    {
-//        CPPUNIT_ASSERT( *m_10_1 == *m_10_1 );
-//        CPPUNIT_ASSERT( !(*m_10_1 == *m_11_2) );
-//    }
-
-//    void testAddition()
-//    {
-//        CPPUNIT_ASSERT_EQUAL(*m_10_1 + *m_1_1 + *m_1_1, *m_11_2 );
-//    }
-
-//    CPPUNIT_TEST_SUITE( ComplexNumberTest );
-//    CPPUNIT_TEST( testEquality );
-//    CPPUNIT_TEST( testAddition );
-////    CPPUNIT_TEST_EXCEPTION( testDivideByZeroThrows, MathException );r
-//    CPPUNIT_TEST_SUITE_END();
-
-    static CppUnit::Test *suite()
+    void isSorted_ShouldReturnTrue_WhenGivenContainerHasSameElement()
     {
-      CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite( "DummySortTest" );
-      suiteOfTests->addTest( new CppUnit::TestCaller<DummySort<T>>("testEquality", &DummySort<T>::testEquality ) );
-      suiteOfTests->addTest( new CppUnit::TestCaller<DummySort<T>>("testAddition",&DummySort<T>::testAddition ) );
-      return suiteOfTests;
+        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{2,2,2}));
     }
 
-private:
-    bool isSorted(const std::vector<T> & v)
+    void isSorted_ShouldReturnTrue_WhenGivenContainerIsEmpty()
     {
-        bool result = true;
-        if (v.size > 0)
-        {
-            auto i = v[0];
-            for (auto const & item : v)
-            {
-                if (item < i)
-                {
-                    return false;
-                }
-                i = item;
-            }
-        }
-        return result;
+        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{}));
     }
-
-    std::vector<T> & elements;
 };
+
+CPPUNIT_TEST_SUITE_REGISTRATION(TestIsSorted<size_t>);
 
 } // namespace sort
 

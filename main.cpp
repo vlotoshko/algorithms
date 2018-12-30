@@ -9,6 +9,14 @@
 
 #include <iostream>
 #include <iomanip>
+
+#include <cppunit/TestResult.h>
+#include <cppunit/TestResultCollector.h>
+#include <cppunit/BriefTestProgressListener.h>
+#include <cppunit/TestRunner.h>
+#include <cppunit/CompilerOutputter.h>
+#include <cppunit/extensions/TestFactoryRegistry.h>
+
 //--------------------------------------------------------------------------------------------------
 
 // ------------------------------------------------------------------------------------------
@@ -51,6 +59,22 @@ void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings s
 
 int main(int argc, char *argv[])
 {
+    CppUnit::TestResult testResults;
+    CppUnit::TestResultCollector collectedResult;
+    testResults.addListener(&collectedResult);
+
+    CppUnit::BriefTestProgressListener progressBrief;
+    testResults.addListener(&progressBrief);
+
+    CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry();
+
+    CppUnit::TestRunner runner;
+    runner.addTest(registry.makeTest());
+    runner.run(testResults);
+
+    CppUnit::CompilerOutputter compileroutputter(&collectedResult, std::cerr);
+    compileroutputter.write();
+
     auto settings = registry::getSettings(argc, argv);
     auto builder = tests::getTestBuilder<int>(settings.algId);
 
@@ -70,7 +94,7 @@ int main(int argc, char *argv[])
         tests::TestSettings::usage();
     }
 
-    return 0;
+    return collectedResult.wasSuccessful() ? 0 : 1;
 }
 
 //--------------------------------------------------------------------------------------------------

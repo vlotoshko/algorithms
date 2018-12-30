@@ -57,8 +57,9 @@ bool algorithmExists(size_t id)
     switch (category)
     {
     case AlgCategory::SORT:
-        return sort::TestSort<T>::Algorithms.find(static_cast<sort::AlgId>(id))
-                != sort::TestSort<T>::Algorithms.end();
+        return false;
+//        return sort::TestSort<T>::Algorithms.find(static_cast<sort::AlgId>(id))
+//                != sort::TestSort<T>::Algorithms.end();
     case AlgCategory::UNION_FIND:
         return uf::TestUnionFind<T>::Algorithms.find(static_cast<uf::AlgId>(id))
                 != uf::TestUnionFind<T>::Algorithms.end();

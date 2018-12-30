@@ -20,19 +20,19 @@ namespace sort
 // ------------------------------------------------------------------------------------------
 // Interface for the all sort algorithms
 //
-template<typename T>
-class ISortable
-{
-public:
-    virtual              ~ISortable()                    = default;
-    virtual void         sort(std::vector<T> & elements) = 0;
-    virtual std::string  name() const                    = 0;
-protected:
-    bool less(const T & a, const T & b)
-    {
-        return std::less<T>()(a, b);
-    }
-};
+//template<typename T>
+//class ISortable
+//{
+//public:
+//    virtual              ~ISortable()                    = default;
+//    virtual void         sort(std::vector<T> & elements) = 0;
+//    virtual std::string  nameA() const                    = 0;
+//protected:
+//    static bool less(const T & a, const T & b)
+//    {
+//        return std::less<T>()(a, b);
+//    }
+//};
 
 
 } // namespace sort

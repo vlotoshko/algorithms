@@ -62,29 +62,29 @@ template <typename T>
 class TestSort : public ITestable
 {
 public:
-    using Alg = std::shared_ptr<ISortable<T>>;
+//    using Alg = std::shared_ptr<ISortable<T>>;
     TestSort(AlgId algId, size_t count) : algId_(algId), elementsCount_(count) {}
 
     void runTest(tools::Timer & timer) override
     {
-        auto iter = Algorithms.find(algId_);
-        if (iter != Algorithms.end())
-        {
-            // Generate elements
-            std::vector<T> elements(elementsCount_);
-//            std::cout << "generating data... " << std::flush;
-            tools::randomData(elements, elementsCount_, 1, 1000);
-//            std::cout << "Ok" << std::endl;
+//        auto iter = Algorithms.find(algId_);
+//        if (iter != Algorithms.end())
+//        {
+//            // Generate elements
+//            std::vector<T> elements(elementsCount_);
+////            std::cout << "generating data... " << std::flush;
+//            tools::randomData(elements, elementsCount_, 1, 1000);
+////            std::cout << "Ok" << std::endl;
 
-            // Sort
-//            tools::show(elements);
-            timer.start();
-            iter->second->sort(elements);
-            std::cout << iter->second->name() << std::endl;
-//            tools::show(elements);
-        }
+//            // Sort
+////            tools::show(elements);
+//            timer.start();
+//            iter->second->sort(elements);
+////            std::cout << iter->second->name() << std::endl;
+////            tools::show(elements);
+//        }
     }
-    static std::map<AlgId, Alg> Algorithms;
+//    static std::map<AlgId, Alg> Algorithms;
 private:
     AlgId algId_;
     size_t elementsCount_;
@@ -94,27 +94,27 @@ private:
 // ------------------------------------------------------------------------------------------
 // Registry of the sort algorithms
 //
-template <typename T>
-std::map<AlgId, typename TestSort<T>::Alg> TestSort<T>::Algorithms =
-{
-      {AlgId::SORT_DUMMY,     std::make_shared<DummySort<T>>()}
-    , {AlgId::SORT_BUBLE,     std::make_shared<BubleSort<T>>()}
-    , {AlgId::SORT_COMB,      std::make_shared<CombSort<T>>()}
-    , {AlgId::SORT_SHAKE,     std::make_shared<ShakeSort<T>>()}
-    , {AlgId::SORT_QUICK,     std::make_shared<QuickSort<T>>()}
-    , {AlgId::SORT_QUICKM,    std::make_shared<QuickSortM<T>>()}
-    , {AlgId::SORT_QUICK3,    std::make_shared<Quick3Sort<T>>()}
-    , {AlgId::SORT_GNOME,     std::make_shared<GnomeSort<T>>()}
-    , {AlgId::SORT_SELECTION, std::make_shared<SelectionSort<T>>()}
-    , {AlgId::SORT_HEAP,      std::make_shared<HeapSort<T>>()}
-    , {AlgId::SORT_INSERTION, std::make_shared<InsertionSort<T>>()}
-    , {AlgId::SORT_SHELL,     std::make_shared<ShellSort<T>>()}
-    , {AlgId::SORT_MERGE,     std::make_shared<MergeSort<T>>()}
-    , {AlgId::SORT_MERGE_UP,  std::make_shared<MergeUpSort<T>>()}
-    , {AlgId::SORT_QUICK_INS, std::make_shared<QuickInsSort<T>>()}
-    , {AlgId::SORT_MERGE_INS, std::make_shared<MergeInsSort<T>>()}
+//template <typename T>
+//std::map<AlgId, typename TestSort<T>::Alg> TestSort<T>::Algorithms =
+//{
+//      {AlgId::SORT_DUMMY,     std::make_shared<DummySort<T>>()}
+//    , {AlgId::SORT_BUBLE,     std::make_shared<BubleSort<T>>()}
+//    , {AlgId::SORT_COMB,      std::make_shared<CombSort<T>>()}
+//    , {AlgId::SORT_SHAKE,     std::make_shared<ShakeSort<T>>()}
+//    , {AlgId::SORT_QUICK,     std::make_shared<QuickSort<T>>()}
+//    , {AlgId::SORT_QUICKM,    std::make_shared<QuickSortM<T>>()}
+//    , {AlgId::SORT_QUICK3,    std::make_shared<Quick3Sort<T>>()}
+//    , {AlgId::SORT_GNOME,     std::make_shared<GnomeSort<T>>()}
+//    , {AlgId::SORT_SELECTION, std::make_shared<SelectionSort<T>>()}
+//    , {AlgId::SORT_HEAP,      std::make_shared<HeapSort<T>>()}
+//    , {AlgId::SORT_INSERTION, std::make_shared<InsertionSort<T>>()}
+//    , {AlgId::SORT_SHELL,     std::make_shared<ShellSort<T>>()}
+//    , {AlgId::SORT_MERGE,     std::make_shared<MergeSort<T>>()}
+//    , {AlgId::SORT_MERGE_UP,  std::make_shared<MergeUpSort<T>>()}
+//    , {AlgId::SORT_QUICK_INS, std::make_shared<QuickInsSort<T>>()}
+//    , {AlgId::SORT_MERGE_INS, std::make_shared<MergeInsSort<T>>()}
 //    , {SortId::SORT_INSERTION_BIN, std::make_shared<InsertionBinarySort<T>>()}
-};
+//};
 
 } // namespace sort
 
@@ -126,17 +126,29 @@ namespace tests
 template <typename T>
 class TestIsSorted : public CppUnit::TestFixture
 {
-    CPPUNIT_TEST_SUITE(TestIsSorted);
-    CPPUNIT_TEST_FAIL(isSorted_ShouldFail_WhenGivenUnSortedContainer);
-    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenSortedContainer);
-    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenContainerHasEqualElements);
-    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenContainerHasSameElement);
-    CPPUNIT_TEST(isSorted_ShouldReturnTrue_WhenGivenContainerIsEmpty);
-    CPPUNIT_TEST_SUITE_END();
-
 public:
-//    void setUp(void);
-//    void tearDown(void);
+    static CppUnit::Test * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestIsSorted");
+
+        suiteOfTests->addTest(new CppUnit::ExceptionTestCaseDecorator<CppUnit::Exception>(
+                                   new CppUnit::TestCaller<TestIsSorted<T>>(
+                                       "isSorted_ShouldFail_WhenGivenUnSortedContainer",
+                                       &TestIsSorted::isSorted_ShouldFail_WhenGivenUnSortedContainer)));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestIsSorted<T>>(
+                                  "isSorted_ShouldReturnTrue_WhenGivenSortedContainer",
+                                  &TestIsSorted::isSorted_ShouldReturnTrue_WhenGivenSortedContainer));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestIsSorted<T>>(
+                                  "isSorted_ShouldReturnTrue_WhenGivenContainerHasEqualElements",
+                                  &TestIsSorted::isSorted_ShouldReturnTrue_WhenGivenContainerHasEqualElements));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestIsSorted<T>>(
+                                  "isSorted_ShouldReturnTrue_WhenGivenContainerHasSameElement",
+                                  &TestIsSorted::isSorted_ShouldReturnTrue_WhenGivenContainerHasSameElement));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestIsSorted<T>>(
+                                  "isSorted_ShouldReturnTrue_WhenGivenContainerIsEmpty",
+                                  &TestIsSorted::isSorted_ShouldReturnTrue_WhenGivenContainerIsEmpty));
+        return suiteOfTests;
+    }
 protected:
     void isSorted_ShouldFail_WhenGivenUnSortedContainer()
     {
@@ -164,25 +176,32 @@ protected:
     }
 };
 
-
 CPPUNIT_TEST_SUITE_REGISTRATION(TestIsSorted<size_t>);
+
 
 template <template <typename> class SortAlg, typename T>
 class TestSortAlgorithms : public CppUnit::TestFixture
 {
-    CPPUNIT_TEST_SUITE(TestSortAlgorithms);
-    CPPUNIT_TEST(sort_ShouldReturnSorted_WhenGivenSortedContainer);
-    CPPUNIT_TEST(sort_ShouldReturnSorted_WhenGivenUnsortedContainer);
-    CPPUNIT_TEST_SUITE_END();
-
 public:
     void setUp()
     {
         sorted = {1,2,3,4,5,6,7};
         unsorted = {5,7,3,4,9,2};
     }
-protected:
 
+    static CppUnit::Test * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(SortAlg<T>::name);
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSortAlgorithms<SortAlg, T>>(
+                                  "sort_ShouldReturnSorted_WhenGivenSortedContainer",
+                                  &TestSortAlgorithms::sort_ShouldReturnSorted_WhenGivenSortedContainer));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSortAlgorithms<SortAlg, T>>(
+                                  "sort_ShouldReturnSorted_WhenGivenUnsortedContainer",
+                                  &TestSortAlgorithms::sort_ShouldReturnSorted_WhenGivenUnsortedContainer));
+        return suiteOfTests;
+    }
+
+protected:
     void sort_ShouldReturnSorted_WhenGivenSortedContainer()
     {
         SortAlg<T>().sort(sorted);
@@ -199,6 +218,7 @@ private:
     std::vector<T> sorted;
     std::vector<T> unsorted;
 };
+
 
 // Had to use aliases for the test suite registration, because in this particulat case
 // preprocessor does not accept templates with more that 1 parameter

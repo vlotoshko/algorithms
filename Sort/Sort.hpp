@@ -11,6 +11,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "ISortable.hpp"
+#include "Tools.hpp"
 //--------------------------------------------------------------------------------------------------
 
 namespace sort
@@ -20,16 +21,22 @@ namespace sort
 // ---------------- Changing sort algorithms ------------------------------------------------
 // ------------------------------------------------------------------------------------------
 
+template<typename T>
+inline bool less(const T & a, const T & b)
+{
+    return std::less<T>()(a, b);
+}
+
 
 // ------------------------------------------------------------------------------------------
 // Simpliest sort algorithm
 // Complexity: O(n*n)
 //
 template <typename T>
-class DummySort : public ISortable<T>
+class DummySort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         size_t length = elements.size();
         bool isSorted = false;
@@ -38,7 +45,7 @@ public:
             isSorted = true;
             for (size_t i = 0; i < length - 1; i++)
             {
-                if (elements[i] != elements[i + 1] && !this->less(elements[i], elements[i + 1]))
+                if (elements[i] != elements[i + 1] && !less(elements[i], elements[i + 1]))
                 {
                     std::swap(elements[i], elements[i + 1]);
                     isSorted = false;
@@ -46,8 +53,11 @@ public:
             }
         }
     }
-    std::string name() const override { return "Dummy sort"; }
+    static char const * name;
 };
+
+template <typename T>
+char const * DummySort<T>::name = "Dummy sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -55,25 +65,28 @@ public:
 // Complexity: O(n*n)
 //
 template <typename T>
-class BubleSort : public ISortable<T>
+class BubleSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    void sort(std::vector<T> & elements)
     {
         size_t length = elements.size();
         for (size_t i = 0; i < length; i++)
         {
             for (size_t j = 0; j < length - i - 1; ++j)
             {
-                if (elements[j] != elements[j + 1] && !this->less(elements[j], elements[j + 1]))
+                if (elements[j] != elements[j + 1] && !less(elements[j], elements[j + 1]))
                 {
                     std::swap(elements[j], elements[j + 1]);
                 }
             }
         }
     }
-    std::string name() const override { return  "Buble sort"; }
+    static char const * name;
 };
+
+template <typename T>
+char const * BubleSort<T>::name = "Buble sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -81,10 +94,10 @@ public:
 // Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
-class CombSort : public ISortable<T>
+class CombSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         size_t length = elements.size();
         size_t h = length;
@@ -97,7 +110,7 @@ public:
             swapped = false;
             for (size_t i = 0; i + h < length; i++)
             {
-                if (this->less(elements[i + h], elements[i]))
+                if (less(elements[i + h], elements[i]))
                 {
                     std::swap(elements[i], elements[i + h]);
                     swapped = true;
@@ -105,8 +118,11 @@ public:
             }
         }
     }
-    std::string name() const override { return "Comb sort"; }
+    static char const * name;
 };
+
+template <typename T>
+char const * CombSort<T>::name = "Comb sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -114,17 +130,17 @@ public:
 // Complexity: O(n*n)
 //
 template <typename T>
-class ShakeSort : public ISortable<T>
+class ShakeSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         int length = static_cast<int>(elements.size());
         for (int left = 0, right = length - 1; left < right;) {
 
             for (int j = left; j < right; ++j)
             {
-                if (elements[j] != elements[j + 1] && this->less(elements[j + 1], elements[j]))
+                if (elements[j] != elements[j + 1] && less(elements[j + 1], elements[j]))
                 {
                     std::swap(elements[j], elements[j + 1]);
                 }
@@ -133,7 +149,7 @@ public:
 
             for (int j = right; j > left; --j)
             {
-                if (elements[j] != elements[j - 1] && this->less(elements[j], elements[j - 1]))
+                if (elements[j] != elements[j - 1] && less(elements[j], elements[j - 1]))
                 {
                     std::swap(elements[j - 1], elements[j]);
                 }
@@ -141,8 +157,11 @@ public:
             left++;
         }
     }
-    std::string name() const override { return "Shake sort"; }
+    static char const * name;
 };
+
+template <typename T>
+char const * ShakeSort<T>::name = "Shake sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -150,17 +169,17 @@ public:
 // Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
-class QuickSort : public ISortable<T>
+class QuickSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
-    std::string name() const override { return "Quick sort"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int lo, int hi)
+    static void sort(std::vector<T> & elements, int lo, int hi)
     {
         if (hi <= lo)
         {
@@ -171,19 +190,19 @@ private:
         sort(elements, j + 1, hi);
     }
 
-    int partition(std::vector<T> & elements, int lo, int hi)
+    static int partition(std::vector<T> & elements, int lo, int hi)
     {
         int i = lo;
         int j = hi + 1;
         T v = elements[lo];
         while (true)
         {
-            while (this->less(elements[++i], v))
+            while (less(elements[++i], v))
             {
                 if (i == hi)
                     break;
             }
-            while (this->less(v, elements[--j]))
+            while (less(v, elements[--j]))
             {
                 if (j == lo)
                     break;
@@ -197,23 +216,26 @@ private:
     }
 };
 
+template <typename T>
+char const * QuickSort<T>::name = "Quick sort";
+
 
 // ------------------------------------------------------------------------------------------
 // Quick sort Median algorithm
 // Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
-class QuickSortM : public ISortable<T>
+class QuickSortM
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
-    std::string name() const override { return "Quick sort median"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int lo, int hi)
+    static void sort(std::vector<T> & elements, int lo, int hi)
     {
         if (hi <= lo)
         {
@@ -224,7 +246,7 @@ private:
         sort(elements, j + 1, hi);
     }
 
-    int partition(std::vector<T> & elements, int lo, int hi)
+    static int partition(std::vector<T> & elements, int lo, int hi)
     {
         int i = lo;
         int j = hi + 1;
@@ -232,9 +254,9 @@ private:
 
         if (hi - lo >= 3)
         {
-            bool a_less_b = this->less(elements[lo], elements[lo + 1]);
-            bool b_less_c = this->less(elements[lo + 1], elements[lo + 2]);
-            bool c_less_a = this->less(elements[lo + 2], elements[lo]);
+            bool a_less_b = less(elements[lo], elements[lo + 1]);
+            bool b_less_c = less(elements[lo + 1], elements[lo + 2]);
+            bool c_less_a = less(elements[lo + 2], elements[lo]);
 
             if (c_less_a && a_less_b)
                 ind = lo;
@@ -253,12 +275,12 @@ private:
 
         while (true)
         {
-            while (this->less(elements[++i], v))
+            while (less(elements[++i], v))
             {
                 if (i == hi)
                     break;
             }
-            while (this->less(v, elements[--j]))
+            while (less(v, elements[--j]))
             {
                 if (j == lo)
                     break;
@@ -272,23 +294,26 @@ private:
     }
 };
 
+template <typename T>
+char const * QuickSortM<T>::name = "Quick sort median";
+
 
 // ------------------------------------------------------------------------------------------
 // Quick sort 3parts algorithm
 // Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
-class Quick3Sort : public ISortable<T>
+class Quick3Sort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
-    std::string name() const override { return "Quick3 sort"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int lo, int hi)
+    static void sort(std::vector<T> & elements, int lo, int hi)
     {
         if (hi <= lo)
         {
@@ -306,7 +331,7 @@ private:
             {
                 i++;
             }
-            else if (this->less(elements[i], v))
+            else if (less(elements[i], v))
             {
                 std::swap(elements[lt++], elements[i++]);
             }
@@ -320,28 +345,34 @@ private:
     }
 };
 
+template <typename T>
+char const * Quick3Sort<T>::name = "Quick3 sort";
+
 
 // ------------------------------------------------------------------------------------------
 // Gnome sort algorithm
 // Complexity: O(n*n)
 //
 template <typename T>
-class GnomeSort : public ISortable<T>
+class GnomeSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         size_t length = elements.size();
         for (size_t i = 1; i < length; i++)
         {
-            for (size_t j = i; j > 0 && this->less(elements[j], elements[j - 1]); j--)
+            for (size_t j = i; j > 0 && less(elements[j], elements[j - 1]); j--)
             {
                 std::swap(elements[j], elements[j - 1]);
             }
         }
-    }
-    std::string name() const override { return  "Gnome sort"; }
+    }    
+    static char const * name;
 };
+
+template <typename T>
+char const * GnomeSort<T>::name = "Gnome sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -353,10 +384,10 @@ public:
 // Complexity: O(n*n)
 //
 template <typename T>
-class SelectionSort : public ISortable<T>
+class SelectionSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         size_t length = elements.size();
         for (size_t i = 0; i < length; i++)
@@ -364,7 +395,7 @@ public:
             size_t min = i;
             for (size_t j = i; j < length - 1; ++j)
             {
-                if (elements[min] != elements[j + 1] && !this->less(elements[min], elements[j + 1]))
+                if (elements[min] != elements[j + 1] && less(elements[j + 1], elements[min]))
                 {
                     min = j + 1;
                 }
@@ -372,8 +403,11 @@ public:
             std::swap(elements[min], elements[i]);
         }
     }
-    std::string name() const override { return  "Selection sort"; }
+    static char const * name;
 };
+
+template <typename T>
+char const * SelectionSort<T>::name = "Selection sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -381,10 +415,10 @@ public:
 // Complexity: O(n*log(n))
 //
 template <typename T>
-class HeapSort : public ISortable<T>
+class HeapSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         int length = static_cast<int>(elements.size());
         {
@@ -403,24 +437,28 @@ public:
             }
         }
     }
-    std::string name() const override { return  "Heap sort"; }
+    static char const * name;
 private:
-    void sink(std::vector<T> & elements, int pos, int length)
+    static void sink(std::vector<T> & elements, int pos, int length)
     {
         ++pos;
         while (2 * pos <= length)
         {
             int j = 2 * pos;
-            if (j < length && this->less(elements[j - 1], elements[j]))
+            if (j < length && less(elements[j - 1], elements[j]))
                 j++;
 
-            if (this->less(elements[j - 1], elements[pos - 1]))
+            if (less(elements[j - 1], elements[pos - 1]))
                 break;
             std::swap(elements[j - 1], elements[pos - 1]);
             pos = j;
         }
     }
 };
+
+template <typename T>
+char const * HeapSort<T>::name = "Heap sort";
+
 
 // ------------------------------------------------------------------------------------------
 // ---------------- Insertion sort algorithms -----------------------------------------------
@@ -431,10 +469,10 @@ private:
 // Complexity: O(n*n)
 //
 template <typename T>
-class InsertionSort : public ISortable<T>
+class InsertionSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         int length = static_cast<int>(elements.size());
         for (int i = 1; i < length; i++)
@@ -450,7 +488,8 @@ public:
             elements[j + 1] = key;
         }
     }
-    void sort(T *array, int length)
+
+    static void sort(T *array, int length)
     {
         for (int i = 1; i < length; i++)
         {
@@ -465,8 +504,12 @@ public:
             array[j + 1] = key;
         }
     }
-    std::string name() const override { return  "Insertion sort"; }
+
+    static char const * name;
 };
+
+template <typename T>
+char const * InsertionSort<T>::name = "Insertion sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -474,10 +517,10 @@ public:
 // Complexity:  O(n*log(n)*log(n))
 //
 template <typename T>
-class ShellSort : public ISortable<T>
+class ShellSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         int length = static_cast<int>(elements.size());
         int h = 1;
@@ -488,16 +531,20 @@ public:
         {
             for (int i = h; i < length; i++)
             {
-                for (int j = i; j >= h && this->less(elements[j], elements[j - h]); j -= h)
+                for (int j = i; j >= h && less(elements[j], elements[j - h]); j -= h)
                 {
                     std::swap(elements[j], elements[j - h]);
                 }
             }
             h /= 3;
         }
-    }
-    std::string name() const override { return  "Shell sort"; }
+    }    
+    static char const * name;
 };
+
+template <typename T>
+char const * ShellSort<T>::name = "Shell sort";
+
 
 // ------------------------------------------------------------------------------------------
 // ---------------- Merging sort algorithms -------------------------------------------------
@@ -508,18 +555,18 @@ public:
 // Complexity: O(n*log(n))
 //
 template <typename T>
-class MergeSort : public ISortable<T>
+class MergeSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         std::vector<T> aux(elements.size());
         sort(elements, 0, static_cast<int>(elements.size()) - 1, aux);
     }
-    std::string name() const override { return  "Merge sort"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
+    static void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
     {
         if (hi <= lo)
         {
@@ -533,7 +580,7 @@ private:
         merge(elements, lo, mid, hi, aux);
     }
 
-    void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
+    static void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
     {
         int i = lo;
         int j = mid + 1;
@@ -553,7 +600,7 @@ private:
                 if (j > hi)
                     elements[k] = aux[i++]; // copy from left part
                 else
-                    if (this->less(aux[j], aux[i]))
+                    if (less(aux[j], aux[i]))
                         elements[k] = aux[j++]; // copy from right part
                     else
                         elements[k] = aux[i++]; // copy from left part
@@ -561,24 +608,27 @@ private:
     }
 };
 
+template <typename T>
+char const * MergeSort<T>::name = "Merge sort";
+
 
 // ------------------------------------------------------------------------------------------
 // Merge upward sort algorithm
 // Complexity: O(n*log(n))
 //
 template <typename T>
-class MergeUpSort : public ISortable<T>
+class MergeUpSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         std::vector<T> aux(elements.size());
         sort(elements, static_cast<int>(elements.size()), aux);
     }
-    std::string name() const override { return  "MergeUp sort"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int length, std::vector<T> & aux)
+    static void sort(std::vector<T> & elements, int length, std::vector<T> & aux)
     {
         for (int sz = 1; sz < length; sz += sz)
         {
@@ -590,7 +640,7 @@ private:
     }
 
     // merge function is the same as in the merge sort algorithm
-    void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
+    static void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
     {
         int i = lo;
         int j = mid + 1;
@@ -610,13 +660,16 @@ private:
                 if (j > hi)
                     elements[k] = aux[i++]; // copy from left part
                 else
-                    if (this->less(aux[j], aux[i]))
+                    if (less(aux[j], aux[i]))
                         elements[k] = aux[j++]; // copy from right part
                     else
                         elements[k] = aux[i++]; // copy from left part
         }
     }
 };
+
+template <typename T>
+char const * MergeUpSort<T>::name = "MergeUp sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -629,18 +682,19 @@ private:
 // Complexity: average O(n*log(n)), worst O(n*n)
 //
 template <typename T>
-class QuickInsSort : public ISortable<T>
+class QuickInsSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         sort(elements, 0, static_cast<int>(elements.size()) - 1);
     }
-    std::string name() const override { return "QuickIns sort"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int lo, int hi)
+    static void sort(std::vector<T> & elements, int lo, int hi)
     {
+        InsertionSort<T> iSort_;
         if (hi - lo <= 15)
         {
             iSort_.sort(&elements[lo], hi - lo + 1);
@@ -652,19 +706,19 @@ private:
         sort(elements, j + 1, hi);
     }
 
-    int partition(std::vector<T> & elements, int lo, int hi)
+    static int partition(std::vector<T> & elements, int lo, int hi)
     {
         int i = lo;
         int j = hi + 1;
         T v = elements[lo];
         while (true)
         {
-            while (this->less(elements[++i], v))
+            while (less(elements[++i], v))
             {
                 if (i == hi)
                     break;
             }
-            while (this->less(v, elements[--j]))
+            while (less(v, elements[--j]))
             {
                 if (j == lo)
                     break;
@@ -676,9 +730,10 @@ private:
         std::swap(elements[lo], elements[j]);
         return j;
     }
-
-    InsertionSort<T> iSort_;
 };
+
+template <typename T>
+char const * QuickInsSort<T>::name = "QuickIns sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -686,19 +741,20 @@ private:
 // Complexity: O(n*log(n))
 //
 template <typename T>
-class MergeInsSort : public ISortable<T>
+class MergeInsSort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
         std::vector<T> aux(elements.size());
         sort(elements, 0, static_cast<int>(elements.size()) - 1, aux);
     }
-    std::string name() const override { return  "MergeIns sort"; }
+    static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type
-    void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
+    static void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
     {
+        InsertionSort<T> iSort_;
         if (hi - lo <= 15)
         {
             iSort_.sort(&elements[lo], hi - lo + 1);
@@ -712,7 +768,7 @@ private:
         merge(elements, lo, mid, hi, aux);
     }
 
-    void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
+    static void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux)
     {
         int i = lo;
         int j = mid + 1;
@@ -732,15 +788,16 @@ private:
                 if (j > hi)
                     elements[k] = aux[i++]; // copy from left part
                 else
-                    if (this->less(aux[j], aux[i]))
+                    if (less(aux[j], aux[i]))
                         elements[k] = aux[j++]; // copy from right part
                     else
                         elements[k] = aux[i++]; // copy from left part
         }
     }
-
-    InsertionSort<T> iSort_;
 };
+
+template <typename T>
+char const * MergeInsSort<T>::name = "MergeIns sort";
 
 
 // ------------------------------------------------------------------------------------------
@@ -748,10 +805,10 @@ private:
 // Complexity: O(n*n)
 //
 template <typename T>
-class InsertionBinarySort : public ISortable<T>
+class InsertionBinarySort
 {
 public:
-    void sort(std::vector<T> & elements) override
+    static void sort(std::vector<T> & elements)
     {
          // TODO: implement InsertionBinary sort
         int length = elements.size();
@@ -768,8 +825,11 @@ public:
             elements[j + 1] = key;
         }
     }
-    std::string name() const override { return  "InsertionBinary sort"; }
+    static char const * name;
 };
+
+template <typename T>
+char const * InsertionBinarySort<T>::name = "InsertionBinary sort";
 
 } // namespace sort
 

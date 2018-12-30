@@ -74,9 +74,9 @@ void show(const std::vector<T> & elements)
 }
 
 
-// ------------------------------------------------------------------------------------------
-// Checks is container's elements are sorted
-//
+/*! \brief Returns true if container is sorted
+ * \param const reference to container Container
+ */
 template <template <typename...> class Container, typename T>
 bool isSorted(const Container<T> & container)
 {

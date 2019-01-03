@@ -185,8 +185,8 @@ class TestSortAlgorithms : public CppUnit::TestFixture
 public:
     void setUp()
     {
-        sorted = {1,2,3,4,5,6,7};
-        unsorted = {5,7,3,4,9,2};
+        sorted   = {1,2,3,4,5,6,7};
+        unsorted = {5,7,3,4,7,9,2};
     }
 
     static CppUnit::Test * suite()
@@ -205,13 +205,25 @@ protected:
     void sort_ShouldReturnSorted_WhenGivenSortedContainer()
     {
         SortAlg<T>().sort(sorted);
-        CPPUNIT_ASSERT(tools::isSorted(sorted));
+        CPPUNIT_ASSERT_EQUAL(sorted[0], static_cast<T>(1));
+        CPPUNIT_ASSERT_EQUAL(sorted[1], static_cast<T>(2));
+        CPPUNIT_ASSERT_EQUAL(sorted[2], static_cast<T>(3));
+        CPPUNIT_ASSERT_EQUAL(sorted[3], static_cast<T>(4));
+        CPPUNIT_ASSERT_EQUAL(sorted[4], static_cast<T>(5));
+        CPPUNIT_ASSERT_EQUAL(sorted[5], static_cast<T>(6));
+        CPPUNIT_ASSERT_EQUAL(sorted[6], static_cast<T>(7));
     }
 
     void sort_ShouldReturnSorted_WhenGivenUnsortedContainer()
     {
         SortAlg<T>().sort(unsorted);
-        CPPUNIT_ASSERT(tools::isSorted(unsorted));
+        CPPUNIT_ASSERT_EQUAL(unsorted[0], static_cast<T>(2));
+        CPPUNIT_ASSERT_EQUAL(unsorted[1], static_cast<T>(3));
+        CPPUNIT_ASSERT_EQUAL(unsorted[2], static_cast<T>(4));
+        CPPUNIT_ASSERT_EQUAL(unsorted[3], static_cast<T>(5));
+        CPPUNIT_ASSERT_EQUAL(unsorted[4], static_cast<T>(7));
+        CPPUNIT_ASSERT_EQUAL(unsorted[5], static_cast<T>(7));
+        CPPUNIT_ASSERT_EQUAL(unsorted[6], static_cast<T>(9));
     }
 
 private:

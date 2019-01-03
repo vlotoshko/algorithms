@@ -32,7 +32,7 @@ public:
 
     void startTest( CppUnit::Test * test) override
     {
-        auto str = suiteName_ + " : " + test->getName();
+        auto str = suiteName_ + ": " + test->getName();
         std::cout << std::setw(90) << str.c_str() << "... ";
     }
 private:

@@ -10,11 +10,16 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
+#include <map>
+#include <memory>
+
 #include "ITestable.hpp"
 #include "UnionFind.hpp"
 
-#include <map>
-#include <memory>
+#include <cppunit/TestFixture.h>
+#include <cppunit/TestCaller.h>
+#include <cppunit/TestSuite.h>
+#include <cppunit/extensions/HelperMacros.h>
 //--------------------------------------------------------------------------------------------------
 
 namespace uf // unionfind
@@ -57,7 +62,7 @@ public:
             {
                 uf.sizes = std::vector<size_t>(elementsCount_, 1);
             }
-//            std::cout << "Ok" << std::endl;
+//            std::cout << "Ok" << std::endl;1
 
             auto unionFind = iter->second;
             timer.start();
@@ -93,6 +98,60 @@ std::map<AlgId, typename TestUnionFind<T>::Alg> TestUnionFind<T>::Algorithms =
 
 } // namespace unionfind
 
+namespace tests
+{
+
+template <typename T>
+class TestUnionFind : public CppUnit::TestFixture
+{
+public:
+    static CppUnit::Test * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestUnionFind");
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<T>>(
+                                  "find_ShouldReturnClusterId_WhenGivenComponent",
+                                  &TestUnionFind::find_ShouldReturnClusterId_WhenGivenComponent));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<T>>(
+                                  "unionComponents_ShouldConnectComponentsIntoOneCluster",
+                                  &TestUnionFind::unionComponents_ShouldConnectComponentsIntoOneCluster));
+        return suiteOfTests;
+    }
+
+    void setUp()
+    {
+        uf_QuickUnion.unionComponents(ufData, 1, 3);
+        uf_QuickUnion.unionComponents(ufData, 2, 8);
+        uf_QuickUnion.unionComponents(ufData, 1, 7);
+        uf_QuickUnion.unionComponents(ufData, 3, 9);
+        uf_QuickUnion.unionComponents(ufData, 4, 8);
+    }
+
+protected:
+    void find_ShouldReturnClusterId_WhenGivenComponent()
+    {
+        CPPUNIT_ASSERT_EQUAL(uf_QuickUnion.find(ufData, 9), static_cast<T>(1));
+        CPPUNIT_ASSERT_EQUAL(uf_QuickUnion.find(ufData, 2), static_cast<T>(4));
+        CPPUNIT_ASSERT_EQUAL(uf_QuickUnion.find(ufData, 6), static_cast<T>(6));
+    }
+
+    void unionComponents_ShouldConnectComponentsIntoOneCluster()
+    {
+        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 1, 3));
+        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 2, 8));
+        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 1, 7));
+        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 3, 9));
+        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 4, 8));
+        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 7, 3));
+    }
+
+private:
+    uf::UnionFindInfo<T> ufData{10};
+    uf::UnionFind_QuickUnion<T> uf_QuickUnion;
+};
+
+CPPUNIT_TEST_SUITE_REGISTRATION(TestUnionFind<size_t>);
+
+}
 //--------------------------------------------------------------------------------------------------
 #endif // TESTUNIONFIND_HPP
 //--------------------------------------------------------------------------------------------------

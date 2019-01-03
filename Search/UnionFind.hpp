@@ -45,6 +45,11 @@ template <typename T>
 class UnionFind
 {
 public:
+    /*! \brief Unions 2 clusters of given components into one
+     *  \param UnionFind structure to union
+     *  \param component(node) 1 of the UnionFind structure
+     *  \param component(node) 2 of the UnionFind structure
+     */
     void unionComponents(UnionFindInfo<T> & ufData, T p, T q)
     {
         ++ufData.unionInvokes;
@@ -54,7 +59,17 @@ public:
         }
     }
 
+    /*! \brief Returns claster ID of a given component
+     *  \param UnionFind structure to search in
+     *  \param component(node) of the UnionFind structure
+     */
     T find(UnionFindInfo<T> & ufData, T p) const { ufData.findInvokes++; return find_(ufData, p); }
+
+    /*! \brief Returns true if both components belongs to the same claster
+     *  \param UnionFind structure to check connection
+     *  \param component(node) 1 of the UnionFind structure
+     *  \param component(node) 2 of the UnionFind structure
+     */
     bool connected(UnionFindInfo<T> & ufData, T p, T q) const {return find(ufData, p) == find(ufData, q); }
 
     virtual ~UnionFind()             = default;

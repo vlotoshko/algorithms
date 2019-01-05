@@ -56,7 +56,7 @@ struct BinarySearchTreeTestBuilder : public ITestFactory
 {
     Test createTest(const TestSettings parameters) override
     {
-        return std::make_shared<bst::TestBST>(parameters.fileName, 0);
+        return std::make_shared<bst::TestBST2>(parameters.fileName, 0);
     }
 };
 

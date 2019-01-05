@@ -29,10 +29,10 @@ namespace bst // binary search tree
 // ------------------------------------------------------------------------------------------
 // Fills binary search tree with words from the text file
 //
-class TestBST : public ITestable
+class TestBST2 : public ITestable
 {
 public:
-    TestBST(const std::string & fileName, size_t /*repeats*/) : fileName_(fileName) {}
+    TestBST2(const std::string & fileName, size_t /*repeats*/) : fileName_(fileName) {}
 
     void runTest(tools::Timer & timer) override
     {
@@ -85,30 +85,42 @@ private:
 namespace tests
 {
 
-class TestBST2 : public CppUnit::TestFixture
+class TestBST : public CppUnit::TestFixture
 {
 public:
     static CppUnit::Test * suite()
     {
-        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestBinarySearchTree");
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST2>(
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestBST");
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
                                   "get_ShouldReturnValue_WhenGivenKey",
-                                  &TestBST2::get_ShouldReturnValue_WhenGivenKey));
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST2>(
+                                  &TestBST::get_ShouldReturnValue_WhenGivenKey));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
                                   "deleteNode_ShouldDeleteNode_WhenGivenKey",
-                                  &TestBST2::deleteNode_ShouldDeleteNode_WhenGivenKey));
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST2>(
+                                  &TestBST::deleteNode_ShouldDeleteNode_WhenGivenKey));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
                                   "min_ShouldReturnKeyWithMinimalValue",
-                                  &TestBST2::min_ShouldReturnKeyWithMinimalValue));
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST2>(
+                                  &TestBST::min_ShouldReturnKeyWithMinimalValue));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
                                   "max_ShouldReturnKeyWithMaximalValue",
-                                  &TestBST2::max_ShouldReturnKeyWithMaximalValue));
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST2>(
+                                  &TestBST::max_ShouldReturnKeyWithMaximalValue));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
                                   "size_ShouldReturnCountOfNodes",
-                                  &TestBST2::size_ShouldReturnCountOfNodes));
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST2>(
+                                  &TestBST::size_ShouldReturnCountOfNodes));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
                                   "valueSum_ShouldReturnSumOfAllvalues",
-                                  &TestBST2::valueSum_ShouldReturnSumOfAllvalues));
+                                  &TestBST::valueSum_ShouldReturnSumOfAllvalues));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
+                                  "floor_ShouldReturnFloor_WhengivenKey",
+                                  &TestBST::floor_ShouldReturnFloor_WhengivenKey));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
+                                  "ceiling_ShouldReturnCeiling_WhengivenKey",
+                                  &TestBST::ceiling_ShouldReturnCeiling_WhengivenKey));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
+                                  "select_ShouldReturnKey_WhenGivenRank",
+                                  &TestBST::select_ShouldReturnKey_WhenGivenRank));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
+                                  "rank_ShouldReturnRank_WhenGivenKey",
+                                  &TestBST::rank_ShouldReturnRank_WhenGivenKey));
         return suiteOfTests;
     }
 
@@ -160,8 +172,36 @@ protected:
     void valueSum_ShouldReturnSumOfAllvalues()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(8), bst.valueSum());
+        bst.deleteNode("car");
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), bst.valueSum());
+        bst.deleteNode("select");
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), bst.valueSum());
     }
 
+    void floor_ShouldReturnFloor_WhengivenKey()
+    {
+        CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("connect"), bst.floor("cow"));
+        CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("android"), bst.floor("ara"));
+    }
+
+    void ceiling_ShouldReturnCeiling_WhengivenKey()
+    {
+        CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("select"), bst.ceiling("flower"));
+        CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("word"), bst.ceiling("star"));
+    }
+
+    void select_ShouldReturnKey_WhenGivenRank()
+    {
+        CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("connect"), bst.select(3));
+        CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("android"), bst.select(0));
+    }
+
+    void rank_ShouldReturnRank_WhenGivenKey()
+    {
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), bst.rank("cat"));
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), bst.rank("word"));
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), bst.rank("android"));
+    }
 private:
     bst::BinarySearchTree<std::string, size_t> bst;
 };

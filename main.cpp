@@ -83,7 +83,7 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TesUnionFind_QuickUnion<size_t>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickUnion_Balanced<size_t>);
 
-    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBST2);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBST);
 }
 
 bool runUnitTests()

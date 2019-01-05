@@ -18,6 +18,14 @@
 namespace bst // binary search tree
 {
 
+struct ObjectCounter
+{
+    ObjectCounter()  { std::cout << "{=} <<< exists " << ++count << std::endl; }
+    ~ObjectCounter() { std::cout << "{=} >>> left "   << --count << std::endl; }
+    static size_t count;
+};
+
+size_t ObjectCounter::count = 0;
 
 template<typename Key, typename Value>
 class BinarySearchTree
@@ -46,7 +54,7 @@ public:
     std::vector<Key> keys()                const { return keys_(min(), max()); }
 
 private:
-    struct Node
+    struct Node //: public ObjectCounter
     {
         Node(Key k, Value v) : key(k), val(v), left(nullptr), right(nullptr), size(1) {}
         Key    key;
@@ -103,7 +111,8 @@ template<typename Key, typename Value>
 Value BinarySearchTree<Key, Value>::get_(Node * n,  Key k) const
 {
     if(n == nullptr)
-        return nullptr;
+//        return static_cast<Value>(nullptr);
+        return 0;
 
     if (k < n->key)
         return get_(n->left, k);
@@ -124,14 +133,24 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::delet
         n->right = deleteNode_(n->right, k);
     else
     {
-        if (n->left == nullptr)
-            return n->left;
         if (n->right == nullptr)
-            return n->right;
+        {
+            Node * t = n->left;
+            delete n;
+            return t;
+        }
+        if (n->left == nullptr)
+        {
+            Node * t = n->right;
+            delete n;
+            return t;
+        }
+
         Node* t = n;
         n = min_(t->right);
         n->right = forgetMin_(t->right);
         n->left = t->left;
+        delete t;
     }
 
     n->size = size_(n->left) + size_(n->right) + 1;

@@ -114,7 +114,7 @@ private:
 };
 
 template <typename T>
-char const * UnionFind_QuickFind<T>::name = "UnionFind / QiuckFind";
+char const * UnionFind_QuickFind<T>::name = "UnionFind/QiuckFind";
 
 
 // ------------------------------------------------------------------------------------------
@@ -150,7 +150,7 @@ private:
 };
 
 template <typename T>
-char const * UnionFind_QuickUnion<T>::name = "UnionFind / QiuckUnion";
+char const * UnionFind_QuickUnion<T>::name = "UnionFind/QiuckUnion";
 
 
 // ------------------------------------------------------------------------------------------
@@ -195,7 +195,7 @@ private:
 };
 
 template <typename T>
-char const * UnionFind_QuickUnion_Balanced<T>::name = "UnionFind / QiuckUnion balanced";
+char const * UnionFind_QuickUnion_Balanced<T>::name = "UnionFind/QiuckUnion balanced";
 
 
 } // namespace unionfind

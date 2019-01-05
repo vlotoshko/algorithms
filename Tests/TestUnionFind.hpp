@@ -70,7 +70,8 @@ public:
             {
                 unionFind->unionComponents(uf, item.first, item.second);
             }
-            std::cout << unionFind->name() << std::endl;
+            // FIXME: uncomment line below
+//            std::cout << unionFind->name() << std::endl;
             std::cout << "clasters: " << uf.clasters
                       << "; invoke find(): " << uf.findInvokes
                       << "; invoke union(): " << uf.unionInvokes
@@ -101,17 +102,17 @@ std::map<AlgId, typename TestUnionFind<T>::Alg> TestUnionFind<T>::Algorithms =
 namespace tests
 {
 
-template <typename T>
+template <template <typename> class UF_Type, typename T>
 class TestUnionFind : public CppUnit::TestFixture
 {
 public:
     static CppUnit::Test * suite()
     {
-        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestUnionFind");
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<T>>(
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(UF_Type<T>::name);
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<UF_Type, T>>(
                                   "find_ShouldReturnClusterId_WhenGivenComponent",
                                   &TestUnionFind::find_ShouldReturnClusterId_WhenGivenComponent));
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<T>>(
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<UF_Type, T>>(
                                   "unionComponents_ShouldConnectComponentsIntoOneCluster",
                                   &TestUnionFind::unionComponents_ShouldConnectComponentsIntoOneCluster));
         return suiteOfTests;
@@ -119,37 +120,55 @@ public:
 
     void setUp()
     {
-        uf_QuickUnion.unionComponents(ufData, 1, 3);
-        uf_QuickUnion.unionComponents(ufData, 2, 8);
-        uf_QuickUnion.unionComponents(ufData, 1, 7);
-        uf_QuickUnion.unionComponents(ufData, 3, 9);
-        uf_QuickUnion.unionComponents(ufData, 4, 8);
+        uf_Type.unionComponents(ufData, 1, 3);
+        uf_Type.unionComponents(ufData, 2, 8);
+        uf_Type.unionComponents(ufData, 1, 7);
+        uf_Type.unionComponents(ufData, 3, 9);
+        uf_Type.unionComponents(ufData, 4, 8);
     }
 
 protected:
     void find_ShouldReturnClusterId_WhenGivenComponent()
     {
-        CPPUNIT_ASSERT_EQUAL(uf_QuickUnion.find(ufData, 9), static_cast<T>(1));
-        CPPUNIT_ASSERT_EQUAL(uf_QuickUnion.find(ufData, 2), static_cast<T>(4));
-        CPPUNIT_ASSERT_EQUAL(uf_QuickUnion.find(ufData, 6), static_cast<T>(6));
+        CPPUNIT_ASSERT_EQUAL(static_cast<T>(1), uf_Type.find(ufData, 9));
+        CPPUNIT_ASSERT_EQUAL(static_cast<T>(4), uf_Type.find(ufData, 2));
+        CPPUNIT_ASSERT_EQUAL(static_cast<T>(6), uf_Type.find(ufData, 6));
     }
 
     void unionComponents_ShouldConnectComponentsIntoOneCluster()
     {
-        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 1, 3));
-        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 2, 8));
-        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 1, 7));
-        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 3, 9));
-        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 4, 8));
-        CPPUNIT_ASSERT(uf_QuickUnion.connected(ufData, 7, 3));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 1, 3));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 2, 8));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 1, 7));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 3, 9));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 4, 8));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 7, 3));
+        CPPUNIT_ASSERT(uf_Type.connected(ufData, 4, 2));
     }
 
 private:
     uf::UnionFindInfo<T> ufData{10};
-    uf::UnionFind_QuickUnion<T> uf_QuickUnion;
+    UF_Type<T> uf_Type;
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestUnionFind<size_t>);
+template<>
+void TestUnionFind<uf::UnionFind_QuickUnion_Balanced, size_t>::find_ShouldReturnClusterId_WhenGivenComponent()
+{
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(1), uf_Type.find(ufData, 9));
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), uf_Type.find(ufData, 2));
+    CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), uf_Type.find(ufData, 6));
+}
+
+
+// Had to use aliases for the test suite registration, because in this particulat case
+// preprocessor does not accept templates with more that 1 parameter
+template<typename T> using TestUnionFind_QuickFind           = TestUnionFind<uf::UnionFind_QuickFind, T>;
+template<typename T> using TesUnionFind_QuickUnion           = TestUnionFind<uf::UnionFind_QuickUnion, T>;
+template<typename T> using TestUnionFind_QuickUnion_Balanced = TestUnionFind<uf::UnionFind_QuickUnion_Balanced, T>;
+
+CPPUNIT_TEST_SUITE_REGISTRATION(TestUnionFind_QuickFind<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TesUnionFind_QuickUnion<size_t>);
+CPPUNIT_TEST_SUITE_REGISTRATION(TestUnionFind_QuickUnion_Balanced<size_t>);
 
 }
 //--------------------------------------------------------------------------------------------------

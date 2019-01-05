@@ -25,7 +25,7 @@ template<typename T>
 struct UnionFindInfo
 {
     explicit UnionFindInfo(size_t count)
-        : elements(count), clasters(count+1), unionInvokes(0), findInvokes(0)
+        : elements(count), clasters(count+1), unionInvokes(0), findInvokes(0), sizes(count, 1)
     {
         int inc = 0;
         for (auto & item : elements)
@@ -72,8 +72,7 @@ public:
      */
     bool connected(UnionFindInfo<T> & ufData, T p, T q) const {return find(ufData, p) == find(ufData, q); }
 
-    virtual ~UnionFind()             = default;
-    virtual std::string name() const = 0;
+    virtual ~UnionFind() = default;
 private:
     virtual bool union_(UnionFindInfo<T> & ufData, T p, T q) = 0;
     virtual T find_(UnionFindInfo<T> & ufData, T p) const    = 0;
@@ -87,7 +86,7 @@ template <typename T>
 class UnionFind_QuickFind : public UnionFind<T>
 {
 public:
-    std::string name() const { return "UnionFind / QiuckFind"; }
+    static char const * name;
 
 private:
     bool union_(UnionFindInfo<T> & ufData, T p, T q) override
@@ -114,6 +113,9 @@ private:
     }
 };
 
+template <typename T>
+char const * UnionFind_QuickFind<T>::name = "UnionFind / QiuckFind";
+
 
 // ------------------------------------------------------------------------------------------
 // Quick union / slow find
@@ -122,7 +124,7 @@ template <typename T>
 class UnionFind_QuickUnion : public UnionFind<T>
 {
 public:
-    std::string name() const { return "UnionFind / QiuckUnion"; }
+    static char const * name;
 
 private:
     bool union_(UnionFindInfo<T> & ufData, T p, T q) override
@@ -147,6 +149,9 @@ private:
     }
 };
 
+template <typename T>
+char const * UnionFind_QuickUnion<T>::name = "UnionFind / QiuckUnion";
+
 
 // ------------------------------------------------------------------------------------------
 // Quick union (using balanced tree) / slow find
@@ -155,15 +160,11 @@ template <typename T>
 class UnionFind_QuickUnion_Balanced : public UnionFind<T>
 {
 public:
-    std::string name() const { return "UnionFind / QiuckUnion balanced"; }
+    static char const * name;
 
 private:
     bool union_(UnionFindInfo<T> & ufData, T p, T q) override
     {
-        if (ufData.sizes.size() < ufData.elements.size())
-        {
-            return false;
-        }
         auto pId = UnionFind<T>::find(ufData, p);
         auto qId = UnionFind<T>::find(ufData, q);
         if (pId != qId)
@@ -192,6 +193,10 @@ private:
         return p;
     }
 };
+
+template <typename T>
+char const * UnionFind_QuickUnion_Balanced<T>::name = "UnionFind / QiuckUnion balanced";
+
 
 } // namespace unionfind
 

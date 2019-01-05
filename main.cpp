@@ -56,6 +56,36 @@ void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings s
               << "time eplaced: " << std::setw(10) << time << std::endl;
 }
 
+
+void registerUnitTests()
+{
+    using namespace tests;
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestIsSorted<size_t>);
+
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestDummySort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBubleSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestCombSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShakeSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestQuickSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestQuickSortM<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestQuick3Sort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestGnomeSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestSelectionSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestHeapSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestInsertionySort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMergeSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMergeUpSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestQuickInsSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMergeInsSort<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestInsertionBinarySort<size_t>);
+
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickFind<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TesUnionFind_QuickUnion<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickUnion_Balanced<size_t>);
+
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBST2);
+}
+
 bool runUnitTests()
 {
     CppUnit::TestResult testResults;
@@ -99,6 +129,8 @@ int main(int argc, char *argv[])
     {
         tests::TestSettings::usage();
     }
+
+    registerUnitTests();
     return runUnitTests() ? 0 : 1;
 }
 

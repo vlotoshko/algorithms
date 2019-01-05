@@ -13,6 +13,7 @@
 #include "ITestable.hpp"
 #include "Sort.hpp"
 
+// TODO: Check and remove unused headers
 #include <map>
 #include <memory>
 #include <cppunit/TestFixture.h>
@@ -176,8 +177,6 @@ protected:
     }
 };
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestIsSorted<size_t>);
-
 
 template <template <typename> class SortAlg, typename T>
 class TestSortAlgorithms : public CppUnit::TestFixture
@@ -251,22 +250,6 @@ template<typename T> using TestQuickInsSort        = TestSortAlgorithms<sort::Qu
 template<typename T> using TestMergeInsSort        = TestSortAlgorithms<sort::MergeInsSort, T>;
 template<typename T> using TestInsertionBinarySort = TestSortAlgorithms<sort::InsertionBinarySort, T>;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestDummySort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestBubleSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestCombSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestShakeSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickSortM<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestQuick3Sort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestGnomeSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestSelectionSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestHeapSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestInsertionySort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeUpSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestQuickInsSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestMergeInsSort<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestInsertionBinarySort<size_t>);
 
 } // namespace tests
 

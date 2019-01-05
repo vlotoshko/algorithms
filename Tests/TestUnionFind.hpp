@@ -166,11 +166,9 @@ template<typename T> using TestUnionFind_QuickFind           = TestUnionFind<uf:
 template<typename T> using TesUnionFind_QuickUnion           = TestUnionFind<uf::UnionFind_QuickUnion, T>;
 template<typename T> using TestUnionFind_QuickUnion_Balanced = TestUnionFind<uf::UnionFind_QuickUnion_Balanced, T>;
 
-CPPUNIT_TEST_SUITE_REGISTRATION(TestUnionFind_QuickFind<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TesUnionFind_QuickUnion<size_t>);
-CPPUNIT_TEST_SUITE_REGISTRATION(TestUnionFind_QuickUnion_Balanced<size_t>);
 
-}
+}// namespace tests
+
 //--------------------------------------------------------------------------------------------------
 #endif // TESTUNIONFIND_HPP
 //--------------------------------------------------------------------------------------------------

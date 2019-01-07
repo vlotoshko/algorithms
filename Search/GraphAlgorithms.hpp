@@ -133,11 +133,11 @@ class DeepFirstSearch
 public:
     DeepFirstSearch(const Graph & g, size_t s);
     bool marked(size_t v) const { return marked_[v]; }
-    int count() const { return count_; }
+    size_t count() const { return count_; }
 
 private:
     std::vector<bool> marked_;
-    int count_;
+    size_t count_;
     void dfs(const Graph & g, size_t v);
 };
 
@@ -234,7 +234,6 @@ private:
     {
         marked_[v] = true;
         pre_.push(v);
-
         auto const & edges = g[v];
         for (auto const & edge : edges)
         {

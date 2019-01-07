@@ -91,7 +91,7 @@ void BreadthFirstPaths::bfs(const Graph & g, size_t v)
         auto const & edges = g[x];
         for (auto const & edge : edges)
         {
-            auto w = edge.other(v);
+            auto w = edge.other(edge.either());
             if (!marked_[w])
             {
 //                std::cout << x << " - " << w << std::endl;
@@ -194,7 +194,7 @@ void TwoColored::dfs(const Graph & g, size_t v)
         }
         else if (colors_[w] == colors_[v])
         {
-            std::cout << "color: " << w << " - " << v << std::endl;
+//            std::cout << "color: " << w << " - " << v << std::endl;
             isTwoColors_ = false;
         }
     }

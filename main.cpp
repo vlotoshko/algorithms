@@ -84,6 +84,8 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickUnion_Balanced<size_t>);
 
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBST);
+
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestGraph<graph::Graph>);
 }
 
 bool runUnitTests()

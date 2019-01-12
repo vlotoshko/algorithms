@@ -221,18 +221,16 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
         {
             token = line.substr(0, pos);
 
-            auto it = st_.begin();
             if (st_.find(token) == st_.end())
             {
-                st_.insert(it, std::pair<std::string, size_t>(token, st_.size()));
+                st_.insert(std::pair<std::string, size_t>(token, st_.size()));
             }
             line.erase(0, pos + delimiter.length());
         }
 
-        auto it = st_.begin();
         if (st_.find(line) == st_.end())
         {
-            st_.insert(it, std::pair<std::string, size_t>(line, st_.size()));
+            st_.insert(std::pair<std::string, size_t>(line, st_.size()));
         }
     }
 
@@ -293,9 +291,37 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
     std::cout << std::endl;
 }
 
+SymbolGraph::SymbolGraph ()
+{
+    g_ = new Graph(st_.size());
+}
+
 SymbolGraph::~SymbolGraph()
 {
     delete g_;
+}
+
+void SymbolGraph::addEdge(std::string v, std::string w)
+{
+    auto add = [this](const std::string s)
+    {
+        if (st_.find(s) == st_.end())
+        {
+            auto index = st_.size();
+            st_.insert(std::pair<std::string, size_t>(s, index));
+
+            if (index > keys_.size())
+            {
+                keys_.resize(index + 1);
+            }
+            keys_[index] = s;
+        }
+    };
+
+    add(v);
+    add(w);
+
+    NonDirectedGraphPolicy<Graph>::addEdge(*g_, st_.find(v)->second, st_.find(w)->second);
 }
 
 int SymbolGraph::index(std::string key) const

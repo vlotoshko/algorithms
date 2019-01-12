@@ -438,10 +438,13 @@ class SymbolGraph
 {
 public:
     explicit SymbolGraph(std::string fileName);
+    SymbolGraph();
     ~SymbolGraph();
 
     SymbolGraph(const SymbolGraph&) = delete;
     SymbolGraph& operator= (const SymbolGraph&) = delete;
+
+    void addEdge(std::string v, std::string w);
 
     Graph& G() const { return *g_; }
     bool contains(std::string key) const;

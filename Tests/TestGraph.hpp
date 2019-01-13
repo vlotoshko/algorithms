@@ -14,6 +14,7 @@
 #include "Graph.hpp"
 #include "GraphAlgorithms.hpp"
 #include "EdgeWeightedGraph.hpp"
+#include "MinimalSpanningTree.hpp"
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestCaller.h>
@@ -424,6 +425,73 @@ protected:
 private:
     graph::SymbolGraph graph_{10};
 };
+
+
+
+template < typename MST>
+class TestMinimalSpanningTree : public CppUnit::TestFixture
+{
+public:
+    using Edge = graph::EdgeWeightedGraph::EdgeType;
+    static CppUnit::Test * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(MST::name);
+
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestMinimalSpanningTree>(
+                                  "edges_ShouldReturnEdgesOfMST_WhenGivenGraph",
+                                  &TestMinimalSpanningTree::edges_ShouldReturnEdgesOfMST_WhenGivenGraph));
+        return suiteOfTests;
+    }
+
+    void setUp() override
+    {
+        graph::EdgeWeightedGraph gr{10};
+        using Strategy = graph::NonDirectedGraphPolicy<graph::EdgeWeightedGraph>;
+
+        Strategy::addEdge(gr, Edge{0, 1, 7});
+        Strategy::addEdge(gr, Edge{1, 2, 4});
+        Strategy::addEdge(gr, Edge{1, 3, 4});
+        Strategy::addEdge(gr, Edge{1, 4, 11}); // this edge should not be present in MST
+        Strategy::addEdge(gr, Edge{2, 5, 5});  // this edge should not be present in MST
+        Strategy::addEdge(gr, Edge{3, 4, 6});
+        Strategy::addEdge(gr, Edge{3, 5, 3});
+        Strategy::addEdge(gr, Edge{4, 5, 13}); // this edge should not be present in MST
+
+        mst_ = new MST(gr);
+    }
+
+    void tearDown() override
+    {
+        delete mst_;
+    }
+protected:
+    void edges_ShouldReturnEdgesOfMST_WhenGivenGraph()
+    {
+        auto edges = mst_->edges();
+        auto edgeExists = [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
+        CPPUNIT_ASSERT(edgeExists(Edge{0, 1, 7}));
+        CPPUNIT_ASSERT(edgeExists(Edge{1, 2, 4}));
+        CPPUNIT_ASSERT(edgeExists(Edge{1, 3, 4}));
+        CPPUNIT_ASSERT(edgeExists(Edge{3, 5, 3}));
+        CPPUNIT_ASSERT(edgeExists(Edge{3, 4, 6}));
+        CPPUNIT_ASSERT(!edgeExists(Edge{1, 4, 11}));
+        CPPUNIT_ASSERT(!edgeExists(Edge{2, 5, 4}));
+        CPPUNIT_ASSERT(!edgeExists(Edge{4, 5, 13}));
+
+        size_t mstWeight = 0;
+        for (auto const & edge : edges)
+        {
+            mstWeight += edge.weight();
+        }
+        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(24), mstWeight);
+    }
+
+private:
+    MST * mst_;
+};
+
+
+
 
 
 } // namespace tests

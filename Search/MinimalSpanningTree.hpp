@@ -25,6 +25,7 @@ class PrimMST_Lazy
 {
 public:
     using EdgeContainer = EdgeWeightedGraph::EdgeContainer;
+    static char const * name;
 
     explicit PrimMST_Lazy(const EdgeWeightedGraph & gr);
     EdgeContainer edges() const;
@@ -35,10 +36,12 @@ private:
     void visit(const EdgeWeightedGraph & gr, size_t v);
 };
 
+
 class PrimMST_Energy
 {
 public:
     using EdgeContainer = std::vector<EdgeWeighted>;
+    static char const * name;
 
     explicit PrimMST_Energy(const EdgeWeightedGraph & gr);
     EdgeContainer edges() const;
@@ -55,6 +58,7 @@ class KruskalMST
 {
 public:
     using EdgeContainer = EdgeWeightedGraph::EdgeContainer;
+    static char const * name;
 
     explicit KruskalMST(const EdgeWeightedGraph & gr);
     EdgeContainer edges() const;

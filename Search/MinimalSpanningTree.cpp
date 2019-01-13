@@ -15,6 +15,10 @@
 namespace graph
 {
 
+char const * PrimMST_Lazy::name = "PrimMST_Lazy";
+char const * PrimMST_Energy::name = "PrimMST_Energy";
+char const * KruskalMST::name = "KruskalMST";
+
 PrimMST_Lazy::PrimMST_Lazy(const EdgeWeightedGraph & gr)
     : marked_(gr.vertexCount(), false), pq_()
 {
@@ -70,7 +74,7 @@ PrimMST_Energy::PrimMST_Energy(const EdgeWeightedGraph & gr)
 {
     distTo_[0] = 0;
     pq_.push(0, 0);
-    while (!pq_.empty())
+    while (!pq_.empty()) // Suppose graph is coupled
     {
         visit(gr, pq_.pop());
     }
@@ -99,6 +103,7 @@ void PrimMST_Energy::visit(const EdgeWeightedGraph & gr, size_t v)
         }
     }
 }
+
 
 KruskalMST::KruskalMST(const EdgeWeightedGraph & gr)
 {

@@ -87,6 +87,9 @@ void registerUnitTests()
 
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestGraph<graph::Graph>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestSymbolGraph);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMinimalSpanningTree<graph::PrimMST_Lazy>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMinimalSpanningTree<graph::PrimMST_Energy>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMinimalSpanningTree<graph::KruskalMST>);
 }
 
 bool runUnitTests()

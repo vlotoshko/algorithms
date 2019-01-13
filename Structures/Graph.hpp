@@ -27,7 +27,7 @@ template <typename Edge = EdgeNonWeighted>
 class GraphT
 {
 public:
-    using EdgeType = EdgeNonWeighted;
+    using EdgeType = Edge;
     using EdgeContainer = std::list<Edge>;
 
     explicit GraphT(size_t v) : v_(v), e_(0), vertexes_(v) {}

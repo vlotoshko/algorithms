@@ -291,29 +291,25 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
     std::cout << std::endl;
 }
 
-SymbolGraph::SymbolGraph ()
-{
-    g_ = new Graph(st_.size());
-}
+SymbolGraph::SymbolGraph(size_t size)  : keys_(size), g_(new Graph(size)) {}
 
 SymbolGraph::~SymbolGraph()
 {
     delete g_;
 }
 
-void SymbolGraph::addEdge(std::string v, std::string w)
+bool SymbolGraph::addEdge(std::string v, std::string w)
 {
+    if (st_.size() == keys_.size())
+    {
+        return false;
+    }
     auto add = [this](const std::string s)
     {
         if (st_.find(s) == st_.end())
         {
             auto index = st_.size();
             st_.insert(std::pair<std::string, size_t>(s, index));
-
-            if (index > keys_.size())
-            {
-                keys_.resize(index + 1);
-            }
             keys_[index] = s;
         }
     };
@@ -322,6 +318,12 @@ void SymbolGraph::addEdge(std::string v, std::string w)
     add(w);
 
     NonDirectedGraphPolicy<Graph>::addEdge(*g_, st_.find(v)->second, st_.find(w)->second);
+    return true;
+}
+
+bool SymbolGraph::contains(std::string key) const
+{
+    return st_.find(key) != st_.end();
 }
 
 int SymbolGraph::index(std::string key) const

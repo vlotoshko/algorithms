@@ -86,6 +86,7 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBST);
 
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestGraph<graph::Graph>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestSymbolGraph);
 }
 
 bool runUnitTests()

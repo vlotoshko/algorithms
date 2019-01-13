@@ -341,24 +341,88 @@ private:
 };
 
 
-template <typename T>
 class TestSymbolGraph : public CppUnit::TestFixture
 {
 public:
     static CppUnit::Test * suite()
     {
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestIsSorted");
-        
-        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph<T>>(
-                                  "isSorted_ShouldFail_WhenGivenUnSortedContainer",
-                                  &TestSymbolGraph::isSorted_ShouldFail_WhenGivenUnSortedContainer));
+
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
+                                  "addEdge_ShouldAddEdge_WhenGivenTwoKeys",
+                                  &TestSymbolGraph::addEdge_ShouldAddEdge_WhenGivenTwoKeys));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
+                                  "addEdge_ShouldReturnFalse_WhenAddedOverflowEdge",
+                                  &TestSymbolGraph::addEdge_ShouldReturnFalse_WhenAddedOverflowEdge));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
+                                  "contains_ShouldReturnTrue_WhenGivenExistingsKey",
+                                  &TestSymbolGraph::contains_ShouldReturnTrue_WhenGivenExistingsKey));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
+                                  "index_ShouldReturnIndex_WhenGivenKey",
+                                  &TestSymbolGraph::index_ShouldReturnIndex_WhenGivenKey));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
+                                  "name_ShouldReturnName_WhenGivenIndex",
+                                  &TestSymbolGraph::name_ShouldReturnName_WhenGivenIndex));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
+                                  "lexical_ShouldReturnEdgesAsString_WhenGivenIndex",
+                                  &TestSymbolGraph::lexical_ShouldReturnEdgesAsString_WhenGivenIndex));
         return suiteOfTests;
     }
-protected:
-    void isSorted_ShouldFail_WhenGivenUnSortedContainer()
+
+    void setUp() override
     {
-        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,7,3,4,5}));
+        graph_.addEdge("key1", "key2");
     }
+protected:
+    void addEdge_ShouldAddEdge_WhenGivenTwoKeys()
+    {
+        graph_.addEdge("key3", "key4");
+        CPPUNIT_ASSERT(graph_.contains("key3"));
+        CPPUNIT_ASSERT(graph_.contains("key4"));
+    }
+
+    void addEdge_ShouldReturnFalse_WhenAddedOverflowEdge()
+    {
+        CPPUNIT_ASSERT(graph_.addEdge("key3", "key7"));
+        CPPUNIT_ASSERT(graph_.addEdge("key4", "key8"));
+        CPPUNIT_ASSERT(graph_.addEdge("key5", "key9"));
+        CPPUNIT_ASSERT(graph_.addEdge("key6", "key0"));
+        CPPUNIT_ASSERT(!graph_.addEdge("keyX", "keyXX"));
+    }
+
+    void contains_ShouldReturnTrue_WhenGivenExistingsKey()
+    {
+        CPPUNIT_ASSERT(graph_.contains("key1"));
+        CPPUNIT_ASSERT(!graph_.contains("key0"));
+    }
+
+    void index_ShouldReturnIndex_WhenGivenKey()
+    {
+        CPPUNIT_ASSERT_EQUAL(0, graph_.index("key1"));
+        CPPUNIT_ASSERT_EQUAL(1, graph_.index("key2"));
+        CPPUNIT_ASSERT_EQUAL(-1, graph_.index("key not exists"));
+    }
+
+    void name_ShouldReturnName_WhenGivenIndex()
+    {
+        CPPUNIT_ASSERT_EQUAL(std::string("key1"), graph_.name(0));
+        CPPUNIT_ASSERT_EQUAL(std::string("key2"), graph_.name(1));
+        CPPUNIT_ASSERT_EQUAL(std::string(), graph_.name(1000));
+    }
+
+    void lexical_ShouldReturnEdgesAsString_WhenGivenIndex()
+    {
+        graph_.addEdge("key1", "key3");
+        graph_.addEdge("key1", "key4");
+        std::stringstream test;
+        test << "key1" << std::endl
+             << "  " << "key2" << std::endl
+             << "  " << "key3" << std::endl
+             << "  " << "key4" << std::endl;
+        CPPUNIT_ASSERT_EQUAL(test.str(), graph_.lexical(0));
+    }
+private:
+    graph::SymbolGraph graph_{10};
 };
 
 

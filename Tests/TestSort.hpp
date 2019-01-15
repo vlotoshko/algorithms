@@ -153,27 +153,27 @@ public:
 protected:
     void isSorted_ShouldFail_WhenGivenUnSortedContainer()
     {
-        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,7,3,4,5}));
+        CPPUNIT_ASSERT(tools::isSorted<std::vector>(std::vector<T>{1,7,3,4,5}));
     }
 
     void isSorted_ShouldReturnTrue_WhenGivenSortedContainer()
     {
-        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,2,3,4,5}));
+        CPPUNIT_ASSERT(tools::isSorted<std::vector>(std::vector<T>{1,2,3,4,5}));
     }
 
     void isSorted_ShouldReturnTrue_WhenGivenContainerHasEqualElements()
     {
-        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{1,2,2,2,3,4,5}));
+        CPPUNIT_ASSERT(tools::isSorted<std::vector>(std::vector<T>{1,2,2,2,3,4,5}));
     }
 
     void isSorted_ShouldReturnTrue_WhenGivenContainerHasSameElement()
     {
-        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{2,2,2}));
+        CPPUNIT_ASSERT(tools::isSorted<std::vector>(std::vector<T>{2,2,2}));
     }
 
     void isSorted_ShouldReturnTrue_WhenGivenContainerIsEmpty()
     {
-        CPPUNIT_ASSERT(tools::isSorted(std::vector<T>{}));
+        CPPUNIT_ASSERT(tools::isSorted<std::vector>(std::vector<T>{}));
     }
 };
 

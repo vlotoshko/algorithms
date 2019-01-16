@@ -52,7 +52,7 @@ class DijkstraAllPairsSP
 public:
     using EdgeContainer = ShortPathes::EdgeContainer;
 
-    DijkstraAllPairsSP(const EdgeWeightedGraph & gr);
+    explicit DijkstraAllPairsSP(const EdgeWeightedGraph & gr);
     double        distTo(size_t s, size_t t)  const;
     EdgeContainer pathTo(size_t s, size_t t) const;
 private:

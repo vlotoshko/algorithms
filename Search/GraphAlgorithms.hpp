@@ -438,7 +438,7 @@ class SymbolGraph
 {
 public:
     explicit SymbolGraph(std::string fileName);
-    SymbolGraph(size_t size);
+    explicit SymbolGraph(size_t size);
     ~SymbolGraph();
 
     SymbolGraph(const SymbolGraph&) = delete;

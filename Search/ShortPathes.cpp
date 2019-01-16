@@ -6,6 +6,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "ShortPathes.hpp"
+#include "GraphAlgorithms.hpp"
 
 #include <limits>
 //--------------------------------------------------------------------------------------------------
@@ -13,6 +14,9 @@
 
 namespace graph
 {
+
+char const * DijkstraSP::name = "DijkstraSP";
+char const * AcyclicSP::name = "AcyclicSP";
 
 ShortPathes::ShortPathes(const EdgeWeightedGraph & gr, size_t s) :
     distTo_(gr.vertexCount(), std::numeric_limits<double>::max()),
@@ -105,12 +109,26 @@ DijkstraAllPairsSP::EdgeContainer DijkstraAllPairsSP::pathTo(size_t s, size_t t)
 AcyclicSP::AcyclicSP(const EdgeWeightedGraph & gr, size_t s) : ShortPathes (gr, s)
 {
     distTo_[s] = 0;
-//    TopologicalEWG top(gr);
+    graph::Topological<EdgeWeightedGraph> top(gr);
 
-//    for (auto vertex : top.order())
-//    {
-//        relax(gr, vertex);
-//    }
+    auto edges = top.order();
+    auto getItem = [&edges] (size_t & item)
+    {
+        if (edges.empty())
+        {
+            return false;
+        }
+
+        item = edges.top();
+        edges.pop();
+        return true;
+    };
+
+    size_t vertex = 0;
+    while(getItem(vertex))
+    {
+        relax(gr, vertex);
+    }
 }
 
 

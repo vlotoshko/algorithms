@@ -74,7 +74,7 @@ PrimMST_Energy::PrimMST_Energy(const EdgeWeightedGraph & gr)
 {
     distTo_[0] = 0;
     pq_.push(0, 0);
-    while (!pq_.empty()) // Suppose graph is coupled
+    while (!pq_.empty())
     {
         visit(gr, pq_.pop());
     }

@@ -90,6 +90,8 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMinimalSpanningTree<graph::PrimMST_Lazy>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMinimalSpanningTree<graph::PrimMST_Energy>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestMinimalSpanningTree<graph::KruskalMST>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::DijkstraSP>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::AcyclicSP>);
 }
 
 bool runUnitTests()

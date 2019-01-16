@@ -42,6 +42,7 @@ public:
     DijkstraSP(const EdgeWeightedGraph & gr, size_t s);
     void relax(const EdgeWeightedGraph & gr, size_t v); // hides relax of base class
 
+    static char const * name;
 private:
     data_structs::IndexedPriorityQueue<double, std::greater<double>> pq_;
 };
@@ -65,9 +66,8 @@ public:
     using EdgeContainer = ShortPathes::EdgeContainer;
 
     AcyclicSP(const EdgeWeightedGraph & gr, size_t s);
-//    double        distTo(size_t v)    const;
-//    bool          hasPathTo(size_t v) const;
-//    EdgeContainer pathTo(size_t v)    const;
+
+    static char const * name;
 private:
 //    std::vector<double> distTo_;
 //    EdgeContainer edgeTo_;

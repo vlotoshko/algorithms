@@ -15,6 +15,7 @@
 #include "GraphAlgorithms.hpp"
 #include "EdgeWeightedGraph.hpp"
 #include "MinimalSpanningTree.hpp"
+#include "ShortPathes.hpp"
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestCaller.h>
@@ -336,7 +337,6 @@ protected:
         CPPUNIT_ASSERT(bfp.hasPathTo(0));
         CPPUNIT_ASSERT(!bfp.hasPathTo(5));
     }
-    
 private:
     G graph_{10};
 };
@@ -468,7 +468,8 @@ protected:
     void edges_ShouldReturnEdgesOfMST_WhenGivenGraph()
     {
         auto edges = mst_->edges();
-        auto edgeExists = [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
+        auto edgeExists =
+            [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
         CPPUNIT_ASSERT(edgeExists(Edge{0, 1, 7}));
         CPPUNIT_ASSERT(edgeExists(Edge{1, 2, 4}));
         CPPUNIT_ASSERT(edgeExists(Edge{1, 3, 4}));
@@ -491,6 +492,92 @@ private:
 };
 
 
+template < typename SP>
+class TestShortPahes : public CppUnit::TestFixture
+{
+public:
+    using Edge = graph::EdgeWeightedGraph::EdgeType;
+    static CppUnit::Test * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(SP::name);
+
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestShortPahes>(
+                                  "distTo_ShouldReturnDistToVertex_WhenGivenVertex",
+                                  &TestShortPahes::distTo_ShouldReturnDistToVertex_WhenGivenVertex));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestShortPahes>(
+                                  "hasPathTo_ShouldReturnTrue_WhenGivenVertex",
+                                  &TestShortPahes::hasPathTo_ShouldReturnTrue_WhenGivenVertex));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestShortPahes>(
+                                  "pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex",
+                                  &TestShortPahes::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex));
+        return suiteOfTests;
+    }
+
+    void setUp() override
+    {
+        graph::EdgeWeightedGraph gr{10};
+        using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
+
+        Strategy::addEdge(gr, Edge{4, 5, 0.35});
+        Strategy::addEdge(gr, Edge{5, 4, 0.35});
+        Strategy::addEdge(gr, Edge{4, 7, 0.37});
+        Strategy::addEdge(gr, Edge{5, 7, 0.28});
+        Strategy::addEdge(gr, Edge{7, 5, 0.28});
+        Strategy::addEdge(gr, Edge{5, 1, 0.32});
+//        Strategy::addEdge(gr, Edge{4, 0, 0.38});
+        Strategy::addEdge(gr, Edge{0, 4, 0.38});
+        Strategy::addEdge(gr, Edge{0, 2, 0.26});
+//        Strategy::addEdge(gr, Edge{3, 7, 0.39});
+        Strategy::addEdge(gr, Edge{7, 3, 0.39});
+        Strategy::addEdge(gr, Edge{1, 3, 0.29});
+        Strategy::addEdge(gr, Edge{2, 7, 0.34});
+//        Strategy::addEdge(gr, Edge{7, 2, 0.34});
+        Strategy::addEdge(gr, Edge{6, 2, 0.40});
+        Strategy::addEdge(gr, Edge{3, 6, 0.52});
+        Strategy::addEdge(gr, Edge{6, 0, 0.58});
+        Strategy::addEdge(gr, Edge{6, 4, 0.93});
+
+        sp_ = new SP(gr, 0);
+    }
+
+    void tearDown() override
+    {
+        delete sp_;
+    }
+protected:
+    void distTo_ShouldReturnDistToVertex_WhenGivenVertex()
+    {
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(1.51), sp_->distTo(6), 0.001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(0.73), sp_->distTo(5), 0.001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(1.05), sp_->distTo(1), 0.001);
+    }
+
+    void hasPathTo_ShouldReturnTrue_WhenGivenVertex()
+    {
+        CPPUNIT_ASSERT(sp_->hasPathTo(1));
+        CPPUNIT_ASSERT(sp_->hasPathTo(5));
+        CPPUNIT_ASSERT(sp_->hasPathTo(6));
+        CPPUNIT_ASSERT(!sp_->hasPathTo(8));
+        CPPUNIT_ASSERT(!sp_->hasPathTo(9));
+    }
+
+    void pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
+    {
+        auto edges = sp_->pathTo(6);
+        auto edgeExists =
+            [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
+        CPPUNIT_ASSERT(edgeExists(Edge{0, 2, 0.26}));
+        CPPUNIT_ASSERT(edgeExists(Edge{2, 7, 0.34}));
+        CPPUNIT_ASSERT(edgeExists(Edge{7, 3, 0.39}));
+        CPPUNIT_ASSERT(edgeExists(Edge{3, 6, 0.52}));
+
+        CPPUNIT_ASSERT(!edgeExists(Edge{6, 2, 0.40}));
+        CPPUNIT_ASSERT(!edgeExists(Edge{6, 4, 0.93}));
+        CPPUNIT_ASSERT(!edgeExists(Edge{7, 5, 0.28}));
+    }
+private:
+    SP * sp_;
+};
 
 
 

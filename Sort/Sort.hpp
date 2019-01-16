@@ -493,7 +493,7 @@ public:
     {
         for (int i = 1; i < length; i++)
         {
-            int key = array[i];
+            T key = array[i];
             int j = i - 1;
 
             while (j >= 0 && array[j] > key)
@@ -694,10 +694,9 @@ private:
     // NOTE: bounders lo and hi should be signed type
     static void sort(std::vector<T> & elements, int lo, int hi)
     {
-        InsertionSort<T> iSort_;
         if (hi - lo <= 15)
         {
-            iSort_.sort(&elements[lo], hi - lo + 1);
+            InsertionSort<T>{}.sort(&elements[lo], hi - lo + 1);
             return;
         }
 
@@ -754,10 +753,9 @@ private:
     // NOTE: bounders lo and hi should be signed type
     static void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux)
     {
-        InsertionSort<T> iSort_;
         if (hi - lo <= 15)
         {
-            iSort_.sort(&elements[lo], hi - lo + 1);
+            InsertionSort<T>{}.sort(&elements[lo], hi - lo + 1);
             return;
         }
 
@@ -811,7 +809,7 @@ public:
     static void sort(std::vector<T> & elements)
     {
          // TODO: implement InsertionBinary sort
-        int length = elements.size();
+        size_t length = elements.size();
         for (int i = 1; i < length; i++)
         {
             T key = elements[i];

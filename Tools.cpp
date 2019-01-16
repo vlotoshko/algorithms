@@ -23,7 +23,7 @@ void Timer::start()
 double Timer::timeSpent()
 {
     std::chrono::time_point<std::chrono::system_clock> end = std::chrono::system_clock::now();
-    double duration = std::chrono::duration_cast<std::chrono::milliseconds>(end-start_).count();
+    double duration = static_cast<double>(std::chrono::duration_cast<std::chrono::milliseconds>(end-start_).count());
     return duration / 1000;
 }
 

@@ -478,12 +478,12 @@ protected:
         CPPUNIT_ASSERT(!edgeExists(Edge{2, 5, 4}));
         CPPUNIT_ASSERT(!edgeExists(Edge{4, 5, 13}));
 
-        size_t mstWeight = 0;
+        double mstWeight = 0;
         for (auto const & edge : edges)
         {
             mstWeight += edge.weight();
         }
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(24), mstWeight);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(24), mstWeight, 0.0001);
     }
 
 private:

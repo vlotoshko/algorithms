@@ -9,7 +9,6 @@
 #include "TestUnionFind.hpp"
 #include "TestBinarySearchTree.hpp"
 #include "TestGraph.hpp"
-#include "TestRegistry.hpp"
 #include "CustomListeners.hpp"
 
 #include <cppunit/TestResult.h>

@@ -13,7 +13,6 @@
 #include "Graph.hpp"
 #include "IndexedPQ.hpp"
 
-#include <functional>
 #include <vector>
 //--------------------------------------------------------------------------------------------------
 
@@ -68,9 +67,6 @@ public:
     AcyclicSP(const EdgeWeightedGraph & gr, size_t s);
 
     static char const * name;
-private:
-//    std::vector<double> distTo_;
-//    EdgeContainer edgeTo_;
 };
 
 } // namespace graph

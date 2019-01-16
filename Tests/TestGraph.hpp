@@ -10,10 +10,8 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "ITestable.hpp"
 #include "Graph.hpp"
 #include "GraphAlgorithms.hpp"
-#include "EdgeWeightedGraph.hpp"
 #include "MinimalSpanningTree.hpp"
 #include "ShortPathes.hpp"
 
@@ -24,41 +22,6 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-
-namespace graph
-{
-
-class TestGraph : public ITestable
-{
-public:
-    TestGraph(size_t algId, const std::string & fileName);
-    void runTest(tools::Timer & timer) override;
-
-private:
-    void showCommonProperties(const Graph & gr) const;
-
-    template<typename Strategy>
-    void showDirectionDependedProperties(Strategy, const Graph &) const {}
-
-    template<typename Strategy>
-    void showGraphProperties(const Graph & gr) const
-    {
-        showCommonProperties(gr);
-        std::cout << "avg degree: " << avgDegree<Strategy>(gr) << std::endl;
-        std::cout << "self loops: " << selfLoops<Strategy>(gr) << std::endl;
-        showDirectionDependedProperties<Strategy>(Strategy{}, gr);
-    }
-    void showDirectedGraphProperties(const Graph & gr) const;
-    void showEWGraphProperties(const EdgeWeightedGraph &gr) const;
-    void getShortPathes(const EdgeWeightedGraph &gr) const;
-    size_t algId_;
-    std::string fileName_;
-};
-
-
-} // namespace graph
-
-
 
 namespace tests
 {
@@ -479,12 +442,12 @@ protected:
         CPPUNIT_ASSERT(!edgeExists(Edge{2, 5, 4}));
         CPPUNIT_ASSERT(!edgeExists(Edge{4, 5, 13}));
 
-        size_t mstWeight = 0;
+        double mstWeight = 0;
         for (auto const & edge : edges)
         {
             mstWeight += edge.weight();
         }
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(24), mstWeight);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(24), mstWeight, 0.0001);
     }
 
 private:

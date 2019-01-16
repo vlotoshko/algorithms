@@ -5,19 +5,27 @@ project(algorithms)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
-set(LINKER_FLAGS "-pthread")
+if (!WIN32)
+    set(LINKER_FLAGS "-pthread")
+endif (WIN32)
 set(CMAKE_EXE_LINKER_FLAGS ${LINKER_FLAGS})
+
 
 include_directories(Search)
 include_directories(Sort)
 include_directories(Structures)
 include_directories(Tests)
 
+if (WIN32)
+    include_directories("D:/Projects/cppunit/include/")
+    link_directories("D:/Projects/cppunit/lib/")
+endif (WIN32)
+
+
 set(CPP_FILES
     "Search/GraphAlgorithms.cpp"
     "Search/MinimalSpanningTree.cpp"
     "Search/ShortPathes.cpp"
-    "Tests/TestGraph.cpp"
     "Tools.cpp"
     "main.cpp"
     )
@@ -28,7 +36,6 @@ set(HPP_FILES
     "Search/MinimalSpanningTree.hpp"
     "Search/UnionFind.hpp"
     "Search/ShortPathes.hpp"
-    "Sort/ISortable.hpp"
     "Sort/Sort.hpp"
     "Structures/BinarySearchTree.hpp"
     "Structures/Edge.hpp"
@@ -36,10 +43,7 @@ set(HPP_FILES
     "Structures/GraphDirectionPolicies.hpp"
     "Structures/IndexedPQ.hpp"
     "Tests/CustomListeners.hpp"
-    "Tests/ITestable.hpp"
     "Tests/TestGraph.hpp"
-    "Tests/TestRegistry.hpp"
-    "Tests/TestFactory.hpp"
     "Tests/TestBinarySearchTree.hpp"
     "Tests/TestUnionFind.hpp"
     "Tests/TestSort.hpp"
@@ -48,4 +52,8 @@ set(HPP_FILES
 set(FILES ${CPP_FILES} ${HPP_FILES})
 
 add_executable(${PROJECT_NAME} ${FILES})
-target_link_libraries  (${PROJECT_NAME} cppunit)
+if (WIN32 AND CMAKE_BUILD_TYPE MATCHES "Debug")
+    target_link_libraries (${PROJECT_NAME} cppunitd)
+else()
+    target_link_libraries (${PROJECT_NAME} cppunit)
+endif ()

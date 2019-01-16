@@ -47,7 +47,7 @@ public:
 
     Key    floor(Key k)   const { Node * n = floor_(root_, k); return n ? n->key : nullptr; }
     Key    ceiling(Key k) const { Node * n = ceiling_(root_, k); return n ? n->key : nullptr; }
-    Key    select(int r)  const { Node * n = select_(root_, r); return n ? n->key : nullptr; }
+    Key    select(size_t r)  const { Node * n = select_(root_, r); return n ? n->key : nullptr; }
     size_t rank(Key k)    const { return rank_(root_, k); }
     void   print()        const { print_(root_); }
     std::vector<Key> keys (Key lo, Key hi) const;
@@ -79,7 +79,7 @@ private:
 
     Node*  floor_(Node * n, Key k) const;
     Node*  ceiling_(Node * n, Key k) const;
-    Node*  select_(Node * n, int k) const;
+    Node*  select_(Node * n, size_t k) const;
     size_t rank_(Node * n, Key k) const;
 
     void   print_(Node * n) const;
@@ -257,12 +257,12 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::ceili
 }
 
 template<typename Key, typename Value>
-typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::select_(Node * n, int k) const
+typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::select_(Node * n, size_t k) const
 {
     if (n == nullptr)
         return nullptr;
 
-    int t = size_(n->left);
+    size_t t = size_(n->left);
 
     if (t > k)
         return select_(n->left, k);

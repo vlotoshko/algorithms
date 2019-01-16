@@ -13,7 +13,6 @@
 #include "Graph.hpp"
 #include "IndexedPQ.hpp"
 
-#include <functional>
 #include <vector>
 //--------------------------------------------------------------------------------------------------
 
@@ -65,12 +64,6 @@ public:
     using EdgeContainer = ShortPathes::EdgeContainer;
 
     AcyclicSP(const EdgeWeightedGraph & gr, size_t s);
-//    double        distTo(size_t v)    const;
-//    bool          hasPathTo(size_t v) const;
-//    EdgeContainer pathTo(size_t v)    const;
-private:
-//    std::vector<double> distTo_;
-//    EdgeContainer edgeTo_;
 };
 
 } // namespace graph

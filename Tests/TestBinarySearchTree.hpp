@@ -10,11 +10,8 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "ITestable.hpp"
 #include "BinarySearchTree.hpp"
 
-#include <fstream>
-#include <sstream>
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestCaller.h>
 #include <cppunit/TestSuite.h>
@@ -22,65 +19,6 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-
-namespace bst // binary search tree
-{
-
-// ------------------------------------------------------------------------------------------
-// Fills binary search tree with words from the text file
-//
-class TestBST2 : public ITestable
-{
-public:
-    TestBST2(const std::string & fileName, size_t /*repeats*/) : fileName_(fileName) {}
-
-    void runTest(tools::Timer & timer) override
-    {
-        timer.start();
-
-        std::ifstream file;
-        file.open (fileName_);
-        BinarySearchTree<std::string, int> bst;
-
-        std::string word;
-        while (file >> word)
-        {
-            bst.put(word, 0);
-        }
-
-        if (bst.size() > 0)
-        {
-            std::cout << "size: " << bst.size() << std::endl;
-            std::cout << "count: " << bst.valueSum() << std::endl;
-            std::cout << "min: " << bst.min() << std::endl;
-            std::cout << "max: " << bst.max() << std::endl;
-//                std::string key;
-//                std::cin >> key;
-//                std::cout << "floor: " << bst.floor(key) << std::endl;
-//                std::cout << "ceiling: " << bst.ceiling(key) << std::endl;
-//                std::cout << "select: " << bst.select(1) << std::endl;
-//                std::cout << "rank \"love\": " << bst.rank("memory") << std::endl;
-//                bst.deleteNode("love");
-//                std::cout << "rank \"love\": " << bst.rank("memory") << std::endl;
-//                bst.put("love", 0);
-//                bst.print();
-//                std::cout << std::endl;
-
-//                auto v = bst.keys("f", "m");
-//                for (auto e : v)
-//                {
-//                    std::cout << e << " ";
-//                }
-//                std::cout << std::endl;
-        }
-    }
-
-private:
-    std::string fileName_;
-};
-
-
-} // namespace binary search tree
 
 namespace tests
 {

@@ -5,10 +5,12 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "TestFactory.hpp"
-
-#include <iostream>
-#include <iomanip>
+#include "TestSort.hpp"
+#include "TestUnionFind.hpp"
+#include "TestBinarySearchTree.hpp"
+#include "TestGraph.hpp"
+#include "TestRegistry.hpp"
+#include "CustomListeners.hpp"
 
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
@@ -16,46 +18,7 @@
 #include <cppunit/CompilerOutputter.h>
 #include <cppunit/extensions/TestFactoryRegistry.h>
 
-#include "CustomListeners.hpp"
 //--------------------------------------------------------------------------------------------------
-
-// ------------------------------------------------------------------------------------------
-// Repeatedly invokes test doubling the amount of elements for each iteration
-//
-void runDoubleAmountTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings settings)
-{
-    tools::CalcRatio calcRatio;
-
-    for (size_t i = 1; i <= settings.repeatTimes; ++i)
-    {
-        auto test = builder->createTest(settings);
-
-        tools::Timer timer;
-        test->runTest(timer);
-        double time = timer.timeSpent();
-
-        std::cout << std::left
-                  << "count: " << std::setw(10) << settings.elementsCount << "time eplaced: " << std::setw(10)
-                  << time << "ratio: " << calcRatio.getRatio(time) << std::endl;
-
-        // Double elements count before next test
-        settings.elementsCount += settings.elementsCount;
-    }
-}
-
-void runTest(std::shared_ptr<tests::ITestFactory> builder, tests::TestSettings settings)
-{
-    auto test = builder->createTest(settings);
-
-    tools::Timer timer;
-    test->runTest(timer);
-
-    double time = timer.timeSpent();
-    std::cout << std::left
-//              << "count: " << std::setw(10) << settings.elementsCount
-              << "time eplaced: " << std::setw(10) << time << std::endl;
-}
-
 
 void registerUnitTests()
 {
@@ -115,27 +78,8 @@ bool runUnitTests()
     return collectedResult.wasSuccessful();
 }
 
-int main(int argc, char *argv[])
+int main(/*int argc, char *argv[]*/)
 {
-    auto settings = registry::getSettings(argc, argv);
-    auto builder = tests::getTestBuilder<int>(settings.algId);
-
-    if (registry::algorithmExists<int>(settings.algId) && builder)
-    {
-        if (settings.repeatTimes > 0)
-        {
-            runDoubleAmountTest(builder, settings);
-        }
-        else
-        {
-            runTest(builder, settings);
-        }
-    }
-    else
-    {
-        tests::TestSettings::usage();
-    }
-
     registerUnitTests();
     return runUnitTests() ? 0 : 1;
 }

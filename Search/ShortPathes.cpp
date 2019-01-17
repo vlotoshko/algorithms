@@ -51,7 +51,7 @@ ShortPathes::EdgeContainer ShortPathes::pathTo(size_t v) const
 
 void ShortPathes::relax(const EdgeWeightedGraph & gr, size_t v)
 {
-    for (auto edge : gr[v])
+    for (const auto & edge : gr[v])
     {
         size_t w = edge.other(v);
         if (distTo_[w] > distTo_[v] + edge.weight())
@@ -75,7 +75,7 @@ DijkstraSP::DijkstraSP(const EdgeWeightedGraph & gr, size_t s)
 
 void DijkstraSP::relax(const EdgeWeightedGraph & gr, size_t v)
 {
-    for (auto edge : gr[v])
+    for (const auto & edge : gr[v])
     {
         size_t w = edge.other(v);
         if (distTo_[w] > distTo_[v] + edge.weight())
@@ -92,7 +92,7 @@ DijkstraAllPairsSP::DijkstraAllPairsSP(const EdgeWeightedGraph & gr)
     all_.reserve(gr.vertexCount());
     for (size_t v = 0; v < gr.vertexCount(); ++v)
     {
-        all_.push_back(DijkstraSP{gr, v});
+        all_.emplace_back(gr, v);
     }
 }
 

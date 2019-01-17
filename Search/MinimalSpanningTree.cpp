@@ -20,7 +20,7 @@ char const * PrimMST_Energy::name = "PrimMST_Energy";
 char const * KruskalMST::name = "KruskalMST";
 
 PrimMST_Lazy::PrimMST_Lazy(const EdgeWeightedGraph & gr)
-    : marked_(gr.vertexCount(), false), pq_()
+    : marked_(gr.vertexCount(), false)
 {
     visit(gr, 0); // Suppose graph is coupled
 
@@ -58,7 +58,7 @@ PrimMST_Lazy::EdgeContainer PrimMST_Lazy::edges() const
 void PrimMST_Lazy::visit(const EdgeWeightedGraph &gr, size_t v)
 {
     marked_[v] = true;
-    for (auto e : gr[v])
+    for (const auto & e : gr[v])
     {
         if (!marked_[e.other(v)])
         {
@@ -88,7 +88,7 @@ PrimMST_Energy::EdgeContainer PrimMST_Energy::edges() const
 void PrimMST_Energy::visit(const EdgeWeightedGraph & gr, size_t v)
 {
     marked_[v] = true;
-    for (auto e : gr[v])
+    for (const auto & e : gr[v])
     {
         size_t w = e.other(v);
         if (marked_[w])
@@ -112,7 +112,7 @@ KruskalMST::KruskalMST(const EdgeWeightedGraph & gr)
     uf::UnionFindInfo<size_t> unionFindInfo(edges.size());
     uf::UnionFind_QuickFind<size_t> uf;
 
-    std::priority_queue<EdgeWeighted, std::vector<EdgeWeighted>, std::greater<EdgeWeighted>> edgePQ;
+    std::priority_queue<EdgeWeighted, std::vector<EdgeWeighted>, std::greater<>> edgePQ;
     for (const auto & item : edges)
     {
         edgePQ.push(item);

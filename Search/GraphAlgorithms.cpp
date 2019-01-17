@@ -204,7 +204,7 @@ void TwoColored::dfs(const Graph & g, size_t v)
 // ------- SymbolGraph --------------------------------------------------------------
 //
 
-SymbolGraph::SymbolGraph(std::string fileName) : st_()
+SymbolGraph::SymbolGraph(const std::string & fileName)
 {
     std::ifstream file;
     file.open (fileName);
@@ -236,7 +236,7 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
 
     // Generating inverted list
     keys_ = std::vector<std::string>(st_.size());
-    for (auto i : st_)
+    for (const auto & i : st_)
     {
         keys_[i.second] = i.first;
     }
@@ -277,7 +277,7 @@ SymbolGraph::SymbolGraph(std::string fileName) : st_()
     }
 
     std::cout << "map: " << std::endl;
-    for (auto i : st_)
+    for (const auto & i : st_)
     {
         std::cout << "[" << i.first << "] [" << i.second << "]" << std::endl;
     }
@@ -298,7 +298,7 @@ SymbolGraph::~SymbolGraph()
     delete g_;
 }
 
-bool SymbolGraph::addEdge(std::string v, std::string w)
+bool SymbolGraph::addEdge(const std::string & v, const std::string & w)
 {
     if (st_.size() == keys_.size())
     {
@@ -321,20 +321,19 @@ bool SymbolGraph::addEdge(std::string v, std::string w)
     return true;
 }
 
-bool SymbolGraph::contains(std::string key) const
+bool SymbolGraph::contains(const std::string & key) const
 {
     return st_.find(key) != st_.end();
 }
 
-int SymbolGraph::index(std::string key) const
+int SymbolGraph::index(const std::string & key) const
 {
     auto it = st_.find(key);
     if (it == st_.end())
     {
         return -1;
     }
-    else
-        return static_cast<int>(it->second);
+    return static_cast<int>(it->second);
 }
 
 std::string SymbolGraph::name(size_t index) const

@@ -437,18 +437,18 @@ private:
 class SymbolGraph
 {
 public:
-    explicit SymbolGraph(std::string fileName);
+    explicit SymbolGraph(const std::string & fileName);
     explicit SymbolGraph(size_t size);
     ~SymbolGraph();
 
     SymbolGraph(const SymbolGraph&) = delete;
     SymbolGraph& operator= (const SymbolGraph&) = delete;
 
-    bool addEdge(std::string v, std::string w);
+    bool addEdge(const std::string & v, const std::string & w);
 
     Graph& G() const { return *g_; }
-    bool contains(std::string key) const;
-    int index(std::string key) const;
+    bool contains(const std::string & key) const;
+    int index(const std::string & key) const;
     std::string name(size_t index) const;
     std::string lexical(size_t index) const;
 private:

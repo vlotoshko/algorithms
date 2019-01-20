@@ -33,7 +33,7 @@ public:
     void startTest( CppUnit::Test * test) override
     {
         auto str = suiteName_ + ": " + test->getName();
-        std::cout << std::setw(90) << str.c_str() << "... ";
+        std::cout << std::setw(90) << setiosflags(std::ios::left) << str.c_str() << "... ";
     }
 private:
     std::string suiteName_;

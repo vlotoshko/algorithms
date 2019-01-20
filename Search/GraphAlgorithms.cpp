@@ -55,9 +55,9 @@ TransitiveClosure::TransitiveClosure(const Graph & g)
 
 TransitiveClosure::~TransitiveClosure()
 {
-    for (auto it = vDFS_.begin();  it != vDFS_.end(); ++it)
+    for (auto * item : vDFS_)
     {
-        delete *it;
+        delete item;
     }
 }
 

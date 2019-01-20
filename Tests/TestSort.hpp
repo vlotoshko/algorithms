@@ -80,7 +80,7 @@ template <template <typename> class SortAlg, typename T>
 class TestSortAlgorithms : public CppUnit::TestFixture
 {
 public:
-    void setUp()
+    void setUp() override
     {
         sorted   = {1,2,3,4,5,6,7};
         unsorted = {5,7,3,4,7,9,2};

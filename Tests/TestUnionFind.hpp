@@ -37,7 +37,7 @@ public:
         return suiteOfTests;
     }
 
-    void setUp()
+    void setUp() override
     {
         uf_Type.unionComponents(ufData, 1, 3);
         uf_Type.unionComponents(ufData, 2, 8);

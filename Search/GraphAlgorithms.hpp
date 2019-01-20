@@ -288,6 +288,63 @@ private:
     }
 };
 
+//--------------------------------------------------------------------------------------------------
+// Defines whether directed graph is cyclic or not
+//
+
+template<typename G>
+class DirectedCyclic
+{
+public:
+    explicit DirectedCyclic(const G & g)
+        : marked_(g.vertexCount(), false), onStack_(g.vertexCount(), false), edgeTo_(g.vertexCount())
+    {
+        for (size_t s = 0; s < g.vertexCount(); ++s)
+        {
+           if(!marked_[s])
+               dfs(g ,s);
+        }
+    }
+    bool isCyclic() const { return cycle_.size() > 0; }
+    std::stack<size_t> cycle() const { return cycle; }
+private:
+    std::vector<bool> marked_;
+    std::vector<bool> onStack_;
+    std::vector<size_t> edgeTo_;
+    std::stack<size_t> cycle_;
+
+    void dfs(const G & g, size_t v)
+    {
+        marked_[v] = true;
+        onStack_[v] = true;
+        auto const & edges = g[v];
+        for (auto const & edge : edges)
+        {
+            auto w = edge.other(v);
+            if(isCyclic())
+            {
+                return;
+            }
+            else if (!marked_[w])
+            {
+                edgeTo_[w] = v;
+                dfs(g, w);
+            }
+            else if (onStack_[w])
+            {
+                for (size_t i = v; i != w; i = edgeTo_[i])
+                {
+                    cycle_.push(i);
+                }
+                cycle_.push(w);
+                cycle_.push(v);
+            }
+        }
+        onStack_[v] = false;
+    }
+};
+
+
 
 //--------------------------------------------------------------------------------------------------
 // Topological sort. Applies only with directed acyclic graphs
@@ -298,7 +355,7 @@ class Topological
 public:
     explicit Topological(const G & g) : dfo_(G(0)), isDAG_(false)
     {
-        isDAG_ = !Cyclic<G>(g).isCyclic();
+        isDAG_ = !DirectedCyclic<G>(g).isCyclic();
         if (isDAG_)
         {
             dfo_ = DepthFirstOrder<G>(g);

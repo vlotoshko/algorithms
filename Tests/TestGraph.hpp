@@ -50,6 +50,9 @@ public:
                                   "isCyclic_ShouldReturnTrue_WhenGivenGraphIsCyclic",
                                   &TestGraph::isCyclic_ShouldReturnTrue_WhenGivenGraphIsCyclic));
         suiteOfTests->addTest(new CppUnit::TestCaller<TestGraph<G>>(
+                                  "isDirectedCyclic_ShouldReturnTrue_WhenGivenDirectedGraphIsCyclic",
+                                  &TestGraph::isDirectedCyclic_ShouldReturnTrue_WhenGivenDirectedGraphIsCyclic));
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestGraph<G>>(
                                   "deepFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph",
                                   &TestGraph::deepFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph));
         suiteOfTests->addTest(new CppUnit::TestCaller<TestGraph<G>>(
@@ -135,6 +138,29 @@ protected:
         setUpCustom();
         CPPUNIT_ASSERT(graph::Cyclic<G>{graph_}.isCyclic());
         CPPUNIT_ASSERT(!graph::Cyclic<G>{gr}.isCyclic());
+    }
+
+    void isDirectedCyclic_ShouldReturnTrue_WhenGivenDirectedGraphIsCyclic()
+    {
+        G gr{10};
+        using Strategy = graph::DirectedGraphPolicy<G>;
+        Strategy::addEdge(gr, 5, 4);
+        Strategy::addEdge(gr, 4, 7);
+        Strategy::addEdge(gr, 5, 7);
+        Strategy::addEdge(gr, 5, 1);
+        Strategy::addEdge(gr, 4, 0);
+        Strategy::addEdge(gr, 0, 2);
+        Strategy::addEdge(gr, 3, 7);
+        Strategy::addEdge(gr, 1, 3);
+        Strategy::addEdge(gr, 7, 2);
+        Strategy::addEdge(gr, 6, 2);
+        Strategy::addEdge(gr, 3, 6);
+        Strategy::addEdge(gr, 6, 0);
+        Strategy::addEdge(gr, 6, 4);
+        CPPUNIT_ASSERT(!graph::DirectedCyclic<G>{gr}.isCyclic());
+
+        Strategy::addEdge(gr, 6, 5);
+        CPPUNIT_ASSERT(graph::DirectedCyclic<G>{gr}.isCyclic());
     }
 
     void deepFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph()
@@ -308,6 +334,8 @@ private:
 class TestSymbolGraph : public CppUnit::TestFixture
 {
 public:
+    TestSymbolGraph() = default;
+
     static CppUnit::Test * suite()
     {
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestIsSorted");
@@ -396,6 +424,8 @@ class TestMinimalSpanningTree : public CppUnit::TestFixture
 {
 public:
     using Edge = graph::EdgeWeightedGraph::EdgeType;
+
+    TestMinimalSpanningTree() = default;
     static CppUnit::Test * suite()
     {
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(MST::name);
@@ -460,6 +490,8 @@ class TestShortPahes : public CppUnit::TestFixture
 {
 public:
     using Edge = graph::EdgeWeightedGraph::EdgeType;
+
+    TestShortPahes() = default;
     static CppUnit::Test * suite()
     {
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(SP::name);
@@ -543,6 +575,43 @@ private:
 };
 
 
+template<>
+void TestShortPahes<graph::AcyclicSP>::setUp()
+{
+    graph::EdgeWeightedGraph gr{10};
+    using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
+
+    Strategy::addEdge(gr, Edge{5, 4, 0.35});
+    Strategy::addEdge(gr, Edge{4, 7, 0.37});
+    Strategy::addEdge(gr, Edge{5, 7, 0.28});
+    Strategy::addEdge(gr, Edge{5, 1, 0.32});
+    Strategy::addEdge(gr, Edge{0, 2, 0.26});
+    Strategy::addEdge(gr, Edge{3, 7, 0.39});
+    Strategy::addEdge(gr, Edge{1, 3, 0.29});
+    Strategy::addEdge(gr, Edge{7, 2, 0.34});
+    Strategy::addEdge(gr, Edge{6, 2, 0.40});
+    Strategy::addEdge(gr, Edge{3, 6, 0.17});
+    Strategy::addEdge(gr, Edge{6, 4, 0.93});
+    Strategy::addEdge(gr, Edge{0, 5, 0.73});
+
+    CPPUNIT_ASSERT(!graph::DirectedCyclic<graph::EdgeWeightedGraph>{gr}.isCyclic());
+    sp_ = new graph::AcyclicSP(gr, 0);
+}
+
+template<>
+void TestShortPahes<graph::AcyclicSP>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
+{
+    auto edges = sp_->pathTo(6);
+    auto edgeExists =
+        [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
+    CPPUNIT_ASSERT(edgeExists(Edge{0, 5, 0.73}));
+    CPPUNIT_ASSERT(edgeExists(Edge{5, 1, 0.32}));
+    CPPUNIT_ASSERT(edgeExists(Edge{3, 6, 0.17}));
+
+    CPPUNIT_ASSERT(!edgeExists(Edge{6, 2, 0.40}));
+    CPPUNIT_ASSERT(!edgeExists(Edge{6, 4, 0.93}));
+    CPPUNIT_ASSERT(!edgeExists(Edge{5, 7, 0.28}));
+}
 
 } // namespace tests
 

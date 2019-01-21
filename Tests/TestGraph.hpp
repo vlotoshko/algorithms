@@ -574,7 +574,6 @@ private:
     SP * sp_;
 };
 
-
 template<>
 void TestShortPahes<graph::AcyclicSP>::setUp()
 {
@@ -600,6 +599,47 @@ void TestShortPahes<graph::AcyclicSP>::setUp()
 
 template<>
 void TestShortPahes<graph::AcyclicSP>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
+{
+    auto edges = sp_->pathTo(6);
+    auto edgeExists =
+        [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
+    CPPUNIT_ASSERT(edgeExists(Edge{0, 5, 0.73}));
+    CPPUNIT_ASSERT(edgeExists(Edge{5, 1, 0.32}));
+    CPPUNIT_ASSERT(edgeExists(Edge{3, 6, 0.17}));
+
+    CPPUNIT_ASSERT(!edgeExists(Edge{6, 2, 0.40}));
+    CPPUNIT_ASSERT(!edgeExists(Edge{6, 4, 0.93}));
+    CPPUNIT_ASSERT(!edgeExists(Edge{5, 7, 0.28}));
+}
+
+template<>
+void TestShortPahes<graph::AcyclicLP>::setUp()
+{
+    graph::EdgeWeightedGraph gr{10};
+    using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
+
+    Strategy::addEdge(gr, Edge{5, 4, 0.35});
+    Strategy::addEdge(gr, Edge{4, 7, 0.37});
+    Strategy::addEdge(gr, Edge{5, 7, 0.28});
+    Strategy::addEdge(gr, Edge{5, 1, 0.32});
+    Strategy::addEdge(gr, Edge{0, 2, 0.26});
+    Strategy::addEdge(gr, Edge{3, 7, 0.39});
+    Strategy::addEdge(gr, Edge{1, 3, 0.29});
+    Strategy::addEdge(gr, Edge{7, 2, 0.34});
+    Strategy::addEdge(gr, Edge{6, 2, 0.40});
+    Strategy::addEdge(gr, Edge{3, 6, 0.17});
+    Strategy::addEdge(gr, Edge{6, 4, 0.93});
+    Strategy::addEdge(gr, Edge{0, 5, 0.73});
+
+    Strategy::addEdge(gr, Edge{1, 9, 0.73});
+    Strategy::addEdge(gr, Edge{9, 6, 0.73});
+
+    CPPUNIT_ASSERT(!graph::DirectedCyclic<graph::EdgeWeightedGraph>{gr}.isCyclic());
+    sp_ = new graph::AcyclicLP(gr, 0);
+}
+
+template<>
+void TestShortPahes<graph::AcyclicLP>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
 {
     auto edges = sp_->pathTo(6);
     auto edgeExists =

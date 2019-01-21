@@ -553,7 +553,6 @@ protected:
         CPPUNIT_ASSERT(sp_->hasPathTo(5));
         CPPUNIT_ASSERT(sp_->hasPathTo(6));
         CPPUNIT_ASSERT(!sp_->hasPathTo(8));
-        CPPUNIT_ASSERT(!sp_->hasPathTo(9));
     }
 
     void pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
@@ -613,6 +612,12 @@ void TestShortPahes<graph::AcyclicSP>::pathTo_ShouldReturnEdgesToVertex_WhenGive
 }
 
 template<>
+void TestShortPahes<graph::AcyclicLP>::distTo_ShouldReturnDistToVertex_WhenGivenVertex()
+{
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(2.51), sp_->distTo(6), 0.001);
+}
+
+template<>
 void TestShortPahes<graph::AcyclicLP>::setUp()
 {
     graph::EdgeWeightedGraph gr{10};
@@ -646,7 +651,7 @@ void TestShortPahes<graph::AcyclicLP>::pathTo_ShouldReturnEdgesToVertex_WhenGive
         [&edges](Edge e){ return std::find(edges.begin(), edges.end(), e) != edges.end(); };
     CPPUNIT_ASSERT(edgeExists(Edge{0, 5, 0.73}));
     CPPUNIT_ASSERT(edgeExists(Edge{5, 1, 0.32}));
-    CPPUNIT_ASSERT(edgeExists(Edge{3, 6, 0.17}));
+    CPPUNIT_ASSERT(edgeExists(Edge{1, 9, 0.73}));
 
     CPPUNIT_ASSERT(!edgeExists(Edge{6, 2, 0.40}));
     CPPUNIT_ASSERT(!edgeExists(Edge{6, 4, 0.93}));

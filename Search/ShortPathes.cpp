@@ -11,7 +11,7 @@
 #include <limits>
 //--------------------------------------------------------------------------------------------------
 
-
+//--------------------------------------------------------------------------------------------------
 namespace graph
 {
 
@@ -21,7 +21,7 @@ char const * AcyclicLP::name = "AcyclicLP";
 
 
 DijkstraSP::DijkstraSP(const EdgeWeightedGraph & gr, size_t s)
-    : ShortPathes(gr ,s), pq_(gr.vertexCount())
+    : ShortPaths(gr ,s), pq_(gr.vertexCount())
 {
     pq_.push(s, 0);
 
@@ -64,7 +64,7 @@ DijkstraAllPairsSP::EdgeContainer DijkstraAllPairsSP::pathTo(size_t s, size_t t)
     return all_[s].pathTo(t);
 }
 
-AcyclicSP::AcyclicSP(const EdgeWeightedGraph & gr, size_t s) : ShortPathes(gr, s)
+AcyclicSP::AcyclicSP(const EdgeWeightedGraph & gr, size_t s) : ShortPaths(gr, s)
 {
     distTo_[s] = 0;
     graph::Topological<EdgeWeightedGraph> top(gr);
@@ -89,7 +89,7 @@ AcyclicSP::AcyclicSP(const EdgeWeightedGraph & gr, size_t s) : ShortPathes(gr, s
     }
 }
 
-AcyclicLP::AcyclicLP(const EdgeWeightedGraph & gr, size_t s) : LongPathes(gr, s)
+AcyclicLP::AcyclicLP(const EdgeWeightedGraph & gr, size_t s) : LongPaths(gr, s)
 {
     distTo_[s] = 0;
     graph::Topological<EdgeWeightedGraph> top(gr);
@@ -112,6 +112,31 @@ AcyclicLP::AcyclicLP(const EdgeWeightedGraph & gr, size_t s) : LongPathes(gr, s)
     {
         relax(gr, vertex);
     }
+}
+
+
+AcyclicLP criticalPathMethod(const ContinuousJobs &jobs)
+{
+    using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
+    using Edge = graph::EdgeWeightedGraph::EdgeType;
+
+    auto n = jobs.size();
+    auto s = n * 2;
+    auto t = n * 2 + 1;
+    EdgeWeightedGraph graph = graph::EdgeWeightedGraph(n * 2 + 2);
+
+    for (size_t i = 0; i < n; ++i)
+    {
+        Strategy::addEdge(graph, Edge{i, i+n, jobs[i].duration});
+        Strategy::addEdge(graph, Edge{s, i, 0.0});
+        Strategy::addEdge(graph, Edge{i+n, t, 0.0});
+        for (auto jobIndex : jobs[i].dependentJobs)
+        {
+            Strategy::addEdge(graph, Edge{i+n, jobIndex, 0.0});
+        }
+    }
+
+    return AcyclicLP(graph, s);
 }
 
 } // namespace graph

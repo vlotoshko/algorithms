@@ -1,8 +1,10 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   05-Nov-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * --------------------------------------------------------------------------------------------------
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @skype vlotoshko
+ * @date 05-Nov-2018
+ * --------------------------------------------------------------------------------------------------
+ */
 
 //--------------------------------------------------------------------------------------------------
 #ifndef SHORT_PATHES_HPP
@@ -20,12 +22,12 @@ namespace graph
 {
 
 template<typename Compare, typename InitialValue>
-class Pathes
+class Paths
 {
 public:
     using EdgeContainer = std::vector<EdgeWeighted>;
 
-    Pathes(const EdgeWeightedGraph & gr, size_t s);
+    Paths(const EdgeWeightedGraph & gr, size_t s);
     double        distTo(size_t v)    const;
     bool          hasPathTo(size_t v) const;
     EdgeContainer pathTo(size_t v)    const;
@@ -37,7 +39,7 @@ protected:
 };
 
 template<typename Compare, typename InitialValue>
-Pathes<Compare, InitialValue>::Pathes(const EdgeWeightedGraph & gr, size_t s) :
+Paths<Compare, InitialValue>::Paths(const EdgeWeightedGraph & gr, size_t s) :
     distTo_(gr.vertexCount(), InitialValue{}()),
     edgeTo_(gr.vertexCount(), EdgeWeighted{})
 {
@@ -45,21 +47,21 @@ Pathes<Compare, InitialValue>::Pathes(const EdgeWeightedGraph & gr, size_t s) :
 }
 
 template<typename Compare, typename InitialValue>
-double Pathes<Compare, InitialValue>::distTo(size_t v) const
+double Paths<Compare, InitialValue>::distTo(size_t v) const
 {
     return distTo_[v];
 }
 
 template<typename Compare, typename InitialValue>
-bool Pathes<Compare, InitialValue>::hasPathTo(size_t v) const
+bool Paths<Compare, InitialValue>::hasPathTo(size_t v) const
 {
     return Compare{}(InitialValue{}(), distTo_[v]);
 }
 
 template<typename Compare, typename InitialValue>
-typename Pathes<Compare, InitialValue>::EdgeContainer Pathes<Compare, InitialValue>::pathTo(size_t v) const
+typename Paths<Compare, InitialValue>::EdgeContainer Paths<Compare, InitialValue>::pathTo(size_t v) const
 {
-    typename Pathes<Compare, InitialValue>::EdgeContainer edges;
+    typename Paths<Compare, InitialValue>::EdgeContainer edges;
 
     if (hasPathTo(v))
     {
@@ -72,7 +74,7 @@ typename Pathes<Compare, InitialValue>::EdgeContainer Pathes<Compare, InitialVal
 }
 
 template<typename Compare, typename InitialValue>
-void Pathes<Compare, InitialValue>::relax(const EdgeWeightedGraph & gr, size_t v)
+void Paths<Compare, InitialValue>::relax(const EdgeWeightedGraph & gr, size_t v)
 {
     for (const auto & edge : gr[v])
     {
@@ -94,11 +96,21 @@ struct MinDouble
 {
     double operator()() const { return std::numeric_limits<double>::lowest(); }
 };
-using ShortPathes = Pathes<std::greater<>, MaxDouble>;
-using LongPathes  = Pathes<std::less<>, MinDouble>;
+using ShortPaths = Paths<std::greater<>, MaxDouble>;
+using LongPaths  = Paths<std::less<>, MinDouble>;
 
 
-class DijkstraSP : public ShortPathes
+
+/**
+ * -------------------------------------------------------------------------------
+ * @class DijkstraSP
+ * @brief The DijkstraSP class holds shortest paths from given vertex
+ *
+ * The DijkstraSP class holds shortest paths from given vertex to other vertexes
+ * in the given graph with non-negative weighted edges
+ * -------------------------------------------------------------------------------
+ */
+class DijkstraSP : public ShortPaths
 {
 public:
     DijkstraSP(const EdgeWeightedGraph & gr, size_t s);
@@ -110,10 +122,19 @@ private:
 };
 
 
+/**
+ * -------------------------------------------------------------------------------
+ * @class DijkstraAllPairsSP
+ * @brief The DijkstraAllPairsSP class holds pairs of shortes paths
+ *
+ * The AcyclicSP class holds pairs of hortest paths from all vertexes to other
+ * vertexes in the given acyclic graph with non-negative weighted edges
+ * -------------------------------------------------------------------------------
+ */
 class DijkstraAllPairsSP
 {
 public:
-    using EdgeContainer = ShortPathes::EdgeContainer;
+    using EdgeContainer = ShortPaths::EdgeContainer;
 
     explicit DijkstraAllPairsSP(const EdgeWeightedGraph & gr);
     double        distTo(size_t s, size_t t)  const;
@@ -122,25 +143,82 @@ private:
     std::vector<DijkstraSP> all_;
 };
 
-class AcyclicSP : public ShortPathes
+
+/**
+ * -------------------------------------------------------------------------------
+ * @class AcyclicSP
+ * @brief The AcyclicSP class holds shortest paths from given vertex
+ *
+ * The AcyclicSP class holds shortest paths from given vertex to other vertexes
+ * in the given acyclic graph with non-negative weighted edges
+ * -------------------------------------------------------------------------------
+ */
+class AcyclicSP : public ShortPaths
 {
 public:
-    using EdgeContainer = ShortPathes::EdgeContainer;
+    using EdgeContainer = ShortPaths::EdgeContainer;
 
     AcyclicSP(const EdgeWeightedGraph & gr, size_t s);
 
     static char const * name;
 };
 
-class AcyclicLP : public LongPathes
+
+/**
+ * -------------------------------------------------------------------------------
+ * @class AcyclicLP
+ * @brief The AcyclicLP class holds longest paths from given vertex
+ *
+ * The AcyclicLP class holds longest paths from given vertex to other vertexes
+ * in the given acyclic graph with non-negative weighted edges
+ * -------------------------------------------------------------------------------
+ */
+class AcyclicLP : public LongPaths
 {
 public:
-    using EdgeContainer = ShortPathes::EdgeContainer;
+    using EdgeContainer = ShortPaths::EdgeContainer;
 
     AcyclicLP(const EdgeWeightedGraph & gr, size_t s);
 
     static char const * name;
 };
+
+
+/**
+ * -------------------------------------------------------------------------------
+ * @struct ContinuousJob
+ * @brief The ContinuousJob struct has job duration and list of dependent jobs
+ *
+ * The ContinuousJob struct has job duration and list of dependent jobs.
+ * Dependent jobs list is a vector with indexes of these jobs in the some other
+ * container with all jobs. So these indexes should not be bigger than size of
+ * that contaier.
+ * -------------------------------------------------------------------------------
+ */
+struct ContinuousJob
+{
+    ContinuousJob() = default;
+
+    /** Time duration of job lasting */
+    double duration;
+    /** Indexes of dependent jobs in the container with all jobs */
+    std::vector<size_t> dependentJobs;
+};
+
+using ContinuousJobs = std::vector<ContinuousJob>;
+
+
+/**
+ * -------------------------------------------------------------------------------
+ * @class criticalPathMethod
+ * @brief The criticalPathMethod function generates graph for parallel dependend
+ * jobs
+ * @param Const reference to ContinuousJobs
+ * @return Returns AcyclicLP object which presents distTo as time when dependent
+ * job can be started to execute
+ * -------------------------------------------------------------------------------
+ */
+AcyclicLP criticalPathMethod(const ContinuousJobs & jobs);
 
 } // namespace graph
 

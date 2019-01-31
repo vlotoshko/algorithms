@@ -25,7 +25,7 @@ endif (WIN32)
 set(CPP_FILES
     "Search/GraphAlgorithms.cpp"
     "Search/MinimalSpanningTree.cpp"
-    "Search/ShortPathes.cpp"
+    "Search/ShortPaths.cpp"
     "Tools.cpp"
     "main.cpp"
     )
@@ -35,7 +35,7 @@ set(HPP_FILES
     "Search/GraphAlgorithms.hpp"
     "Search/MinimalSpanningTree.hpp"
     "Search/UnionFind.hpp"
-    "Search/ShortPathes.hpp"
+    "Search/ShortPaths.hpp"
     "Sort/Sort.hpp"
     "Structures/BinarySearchTree.hpp"
     "Structures/Edge.hpp"

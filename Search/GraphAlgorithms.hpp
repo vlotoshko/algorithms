@@ -143,7 +143,7 @@ private:
 
 
 //--------------------------------------------------------------------------------------------------
-// Finds all pathes to the concrete vertex using deep first search algorithm
+// Finds all paths to the concrete vertex using deep first search algorithm
 //
 template<typename G>
 class DeepFirstPaths
@@ -433,7 +433,7 @@ private:
 
 
 //--------------------------------------------------------------------------------------------------
-// Finds all pathes to the concrete vertex using breadth first search algorithm
+// Finds all paths to the concrete vertex using breadth first search algorithm
 //
 class BreadthFirstPaths
 {

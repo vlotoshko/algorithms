@@ -13,7 +13,7 @@
 #include "Graph.hpp"
 #include "GraphAlgorithms.hpp"
 #include "MinimalSpanningTree.hpp"
-#include "ShortPathes.hpp"
+#include "ShortPaths.hpp"
 
 #include <cppunit/TestFixture.h>
 #include <cppunit/TestCaller.h>

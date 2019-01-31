@@ -55,6 +55,7 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::DijkstraSP>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::AcyclicSP>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::AcyclicLP>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestCriticalPathMethod);
 }
 
 bool runUnitTests()

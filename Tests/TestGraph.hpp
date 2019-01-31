@@ -477,7 +477,7 @@ protected:
         {
             mstWeight += edge.weight();
         }
-        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(24), mstWeight, 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(24.0, mstWeight, 0.0001);
     }
 
 private:
@@ -542,9 +542,9 @@ public:
 protected:
     void distTo_ShouldReturnDistToVertex_WhenGivenVertex()
     {
-        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(1.51), sp_->distTo(6), 0.001);
-        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(0.73), sp_->distTo(5), 0.001);
-        CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(1.05), sp_->distTo(1), 0.001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(1.51, sp_->distTo(6), 0.001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(0.73, sp_->distTo(5), 0.001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(1.05, sp_->distTo(1), 0.001);
     }
 
     void hasPathTo_ShouldReturnTrue_WhenGivenVertex()
@@ -614,7 +614,7 @@ void TestShortPahes<graph::AcyclicSP>::pathTo_ShouldReturnEdgesToVertex_WhenGive
 template<>
 void TestShortPahes<graph::AcyclicLP>::distTo_ShouldReturnDistToVertex_WhenGivenVertex()
 {
-    CPPUNIT_ASSERT_DOUBLES_EQUAL(static_cast<double>(2.51), sp_->distTo(6), 0.001);
+    CPPUNIT_ASSERT_DOUBLES_EQUAL(2.51, sp_->distTo(6), 0.001);
 }
 
 template<>
@@ -657,6 +657,61 @@ void TestShortPahes<graph::AcyclicLP>::pathTo_ShouldReturnEdgesToVertex_WhenGive
     CPPUNIT_ASSERT(!edgeExists(Edge{6, 4, 0.93}));
     CPPUNIT_ASSERT(!edgeExists(Edge{5, 7, 0.28}));
 }
+
+
+class TestCriticalPathMethod : public CppUnit::TestFixture
+{
+public:
+    static CppUnit::Test * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("CriticalPathMethod");
+
+        suiteOfTests->addTest(new CppUnit::TestCaller<TestCriticalPathMethod>(
+                                  "criticalPathMethod_ShouldReturnAcyclicLP_DependentJobs",
+                                  &TestCriticalPathMethod::criticalPathMethod_ShouldReturnAcyclicLP_DependentJobs));
+        return suiteOfTests;
+    }
+
+    void setUp() override
+    {
+        graph::ContinuousJobs jobs;
+
+        jobs.emplace_back(graph::ContinuousJob{41.0, {1, 7, 9}});
+        jobs.emplace_back(graph::ContinuousJob{51.0, {2}});
+        jobs.emplace_back(graph::ContinuousJob{50.0, {}});
+        jobs.emplace_back(graph::ContinuousJob{36.0, {}});
+        jobs.emplace_back(graph::ContinuousJob{38.0, {}});
+        jobs.emplace_back(graph::ContinuousJob{45.0, {}});
+        jobs.emplace_back(graph::ContinuousJob{21.0, {3, 8}});
+        jobs.emplace_back(graph::ContinuousJob{32.0, {3, 8}});
+        jobs.emplace_back(graph::ContinuousJob{32.0, {2}});
+        jobs.emplace_back(graph::ContinuousJob{29.0, {4, 6}});
+
+        alp_.push_back(graph::criticalPathMethod(jobs));
+    }
+
+protected:
+    void criticalPathMethod_ShouldReturnAcyclicLP_DependentJobs()
+    {
+        auto const & acyclicLP_ = alp_.front();
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(0.0, acyclicLP_.distTo(0), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(41.0, acyclicLP_.distTo(1), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(123.0, acyclicLP_.distTo(2), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(91.0, acyclicLP_.distTo(3), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(70.0, acyclicLP_.distTo(4), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(0.0, acyclicLP_.distTo(5), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(70.0, acyclicLP_.distTo(6), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(41.0, acyclicLP_.distTo(7), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(91.0, acyclicLP_.distTo(8), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(41.0, acyclicLP_.distTo(9), 0.0001);
+        CPPUNIT_ASSERT_DOUBLES_EQUAL(173.0, acyclicLP_.distTo(21), 0.0001);
+    }
+
+private:
+    std::vector<graph::AcyclicLP> alp_;
+};
+
+
 
 } // namespace tests
 

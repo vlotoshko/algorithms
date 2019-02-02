@@ -574,7 +574,7 @@ private:
 };
 
 template<>
-void TestShortPahes<graph::AcyclicSP>::setUp()
+void TestShortPahes<graph::AcyclicShortPaths>::setUp()
 {
     graph::EdgeWeightedGraph gr{10};
     using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
@@ -593,11 +593,11 @@ void TestShortPahes<graph::AcyclicSP>::setUp()
     Strategy::addEdge(gr, Edge{0, 5, 0.73});
 
     CPPUNIT_ASSERT(!graph::DirectedCyclic<graph::EdgeWeightedGraph>{gr}.isCyclic());
-    sp_ = new graph::AcyclicSP(gr, 0);
+    sp_ = new graph::AcyclicShortPaths(gr, 0);
 }
 
 template<>
-void TestShortPahes<graph::AcyclicSP>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
+void TestShortPahes<graph::AcyclicShortPaths>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
 {
     auto edges = sp_->pathTo(6);
     auto edgeExists =
@@ -612,13 +612,13 @@ void TestShortPahes<graph::AcyclicSP>::pathTo_ShouldReturnEdgesToVertex_WhenGive
 }
 
 template<>
-void TestShortPahes<graph::AcyclicLP>::distTo_ShouldReturnDistToVertex_WhenGivenVertex()
+void TestShortPahes<graph::AcyclicLongPaths>::distTo_ShouldReturnDistToVertex_WhenGivenVertex()
 {
     CPPUNIT_ASSERT_DOUBLES_EQUAL(2.51, sp_->distTo(6), 0.001);
 }
 
 template<>
-void TestShortPahes<graph::AcyclicLP>::setUp()
+void TestShortPahes<graph::AcyclicLongPaths>::setUp()
 {
     graph::EdgeWeightedGraph gr{10};
     using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
@@ -640,11 +640,11 @@ void TestShortPahes<graph::AcyclicLP>::setUp()
     Strategy::addEdge(gr, Edge{9, 6, 0.73});
 
     CPPUNIT_ASSERT(!graph::DirectedCyclic<graph::EdgeWeightedGraph>{gr}.isCyclic());
-    sp_ = new graph::AcyclicLP(gr, 0);
+    sp_ = new graph::AcyclicLongPaths(gr, 0);
 }
 
 template<>
-void TestShortPahes<graph::AcyclicLP>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
+void TestShortPahes<graph::AcyclicLongPaths>::pathTo_ShouldReturnEdgesToVertex_WhenGivenvVertex()
 {
     auto edges = sp_->pathTo(6);
     auto edgeExists =
@@ -667,8 +667,8 @@ public:
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("CriticalPathMethod");
 
         suiteOfTests->addTest(new CppUnit::TestCaller<TestCriticalPathMethod>(
-                                  "criticalPathMethod_ShouldReturnAcyclicLP_DependentJobs",
-                                  &TestCriticalPathMethod::criticalPathMethod_ShouldReturnAcyclicLP_DependentJobs));
+                                  "criticalPathMethod_ShouldReturnAcyclicLongPaths_DependentJobs",
+                                  &TestCriticalPathMethod::criticalPathMethod_ShouldReturnAcyclicLongPaths_DependentJobs));
         return suiteOfTests;
     }
 
@@ -691,7 +691,7 @@ public:
     }
 
 protected:
-    void criticalPathMethod_ShouldReturnAcyclicLP_DependentJobs()
+    void criticalPathMethod_ShouldReturnAcyclicLongPaths_DependentJobs()
     {
         auto const & acyclicLP_ = alp_.front();
         CPPUNIT_ASSERT_DOUBLES_EQUAL(0.0, acyclicLP_.distTo(0), 0.0001);
@@ -708,7 +708,7 @@ protected:
     }
 
 private:
-    std::vector<graph::AcyclicLP> alp_;
+    std::vector<graph::AcyclicLongPaths> alp_;
 };
 
 

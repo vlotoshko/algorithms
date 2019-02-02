@@ -16,8 +16,8 @@ namespace graph
 {
 
 char const * DijkstraSP::name = "DijkstraSP";
-char const * AcyclicSP::name = "AcyclicSP";
-char const * AcyclicLP::name = "AcyclicLP";
+char const * AcyclicShortPaths::name = "AcyclicShortPaths";
+char const * AcyclicLongPaths::name = "AcyclicLongPaths";
 
 
 DijkstraSP::DijkstraSP(const EdgeWeightedGraph & gr, size_t s)
@@ -64,7 +64,7 @@ DijkstraAllPairsSP::EdgeContainer DijkstraAllPairsSP::pathTo(size_t s, size_t t)
     return all_[s].pathTo(t);
 }
 
-AcyclicSP::AcyclicSP(const EdgeWeightedGraph & gr, size_t s) : ShortPaths(gr, s)
+AcyclicShortPaths::AcyclicShortPaths(const EdgeWeightedGraph & gr, size_t s) : ShortPaths(gr, s)
 {
     distTo_[s] = 0;
     graph::Topological<EdgeWeightedGraph> top(gr);
@@ -89,7 +89,7 @@ AcyclicSP::AcyclicSP(const EdgeWeightedGraph & gr, size_t s) : ShortPaths(gr, s)
     }
 }
 
-AcyclicLP::AcyclicLP(const EdgeWeightedGraph & gr, size_t s) : LongPaths(gr, s)
+AcyclicLongPaths::AcyclicLongPaths(const EdgeWeightedGraph & gr, size_t s) : LongPaths(gr, s)
 {
     distTo_[s] = 0;
     graph::Topological<EdgeWeightedGraph> top(gr);
@@ -115,7 +115,7 @@ AcyclicLP::AcyclicLP(const EdgeWeightedGraph & gr, size_t s) : LongPaths(gr, s)
 }
 
 
-AcyclicLP criticalPathMethod(const ContinuousJobs &jobs)
+AcyclicLongPaths criticalPathMethod(const ContinuousJobs &jobs)
 {
     using Strategy = graph::DirectedGraphPolicy<graph::EdgeWeightedGraph>;
     using Edge = graph::EdgeWeightedGraph::EdgeType;
@@ -136,7 +136,7 @@ AcyclicLP criticalPathMethod(const ContinuousJobs &jobs)
         }
     }
 
-    return AcyclicLP(graph, s);
+    return AcyclicLongPaths(graph, s);
 }
 
 } // namespace graph

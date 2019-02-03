@@ -53,11 +53,11 @@ public:
                                   "isDirectedCyclic_ShouldReturnTrue_WhenGivenDirectedGraphIsCyclic",
                                   &TestGraph::isDirectedCyclic_ShouldReturnTrue_WhenGivenDirectedGraphIsCyclic));
         suiteOfTests->addTest(new CppUnit::TestCaller<TestGraph<G>>(
-                                  "deepFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph",
-                                  &TestGraph::deepFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph));
+                                  "depthFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph",
+                                  &TestGraph::depthFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph));
         suiteOfTests->addTest(new CppUnit::TestCaller<TestGraph<G>>(
-                                  "deepFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex",
-                                  &TestGraph::deepFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex));
+                                  "depthFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex",
+                                  &TestGraph::depthFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex));
         suiteOfTests->addTest(new CppUnit::TestCaller<TestGraph<G>>(
                                   "depthFirstOrder_ShouldReturnOrderedGraphs_WhenGivenGraph",
                                   &TestGraph::depthFirstOrder_ShouldReturnOrderedGraphs_WhenGivenGraph));
@@ -122,8 +122,8 @@ protected:
         setUpCustom();
         // NOTE: make sense only for directed graphs
         auto reversed = graph::reverse<graph::DirectedGraphPolicy<G>>(graph_);
-//        graph::toString(graph_);
-//        graph::toString(*reversed);
+//        std::cout << graph::toString(graph_);
+//        std::cout << graph::toString(*reversed);
     }
 
     void isCyclic_ShouldReturnTrue_WhenGivenGraphIsCyclic()
@@ -163,18 +163,21 @@ protected:
         CPPUNIT_ASSERT(graph::DirectedCyclic<G>{gr}.isCyclic());
     }
 
-    void deepFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph()
+    void depthFirstSearh_ShouldReturnCountOfSteps_WhenGivenGraph()
     {
         setUpCustom();
-        graph::DeepFirstSearch dfs(graph_, 0);
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(9), graph::deepFirstSearh(graph_, 0));
-        CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(9), dfs.count());
+        std::vector<bool> b(graph_.vertexCount());
+        graph::depthFirstSearh(graph_, 0, b);
+
+        CPPUNIT_ASSERT(b[4]);
+        CPPUNIT_ASSERT(b[0]);
+        CPPUNIT_ASSERT(!b[5]);
     }
 
-    void deepFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex()
+    void depthFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex()
     {
         setUpCustom();
-        graph::DeepFirstPaths<G> dfp(graph_, 0);
+        graph::DepthFirstPaths<G> dfp(graph_, 0);
         CPPUNIT_ASSERT(dfp.hasPathTo(4));
         CPPUNIT_ASSERT(dfp.hasPathTo(0));
         CPPUNIT_ASSERT(!dfp.hasPathTo(5));

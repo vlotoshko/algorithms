@@ -1,8 +1,10 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   11-Jun-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------------------------------
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @skype vlotoshko
+ * @date 11-Jun-2018
+ * -------------------------------------------------------------------------------------------------
+ */
 
 //--------------------------------------------------------------------------------------------------
 #include "GraphAlgorithms.hpp"
@@ -17,53 +19,22 @@ namespace graph
 {
 
 //--------------------------------------------------------------------------------------------------
-// ------- DeepFirstSearch -----------------------------------------------
-//
-DeepFirstSearch::DeepFirstSearch(const Graph &g, size_t s) : marked_(g.vertexCount(), false), count_()
-{
-    dfs(g ,s);
-}
-
-void DeepFirstSearch::dfs(const Graph & g, size_t v)
-{
-    marked_[v] = true;
-    ++count_;
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
-    {
-        auto w = edge.other(v);
-        if (!marked_[w])
-        {
-//            std::cout << v << " - " << w << std::endl;
-            dfs(g, w);
-        }
-    }
-}
-
-
-//--------------------------------------------------------------------------------------------------
 // ------- TransitiveClosure ----------------------------------------------------
 //
 
 TransitiveClosure::TransitiveClosure(const Graph & g)
+    : marked_(g.vertexCount(), std::vector<bool>(g.vertexCount(), false))
 {
     for (size_t v = 0; v < g.vertexCount(); ++v)
     {
-        vDFS_.push_back(new DeepFirstSearch(g, v));
+        depthFirstSearh<Graph>(g,v, marked_[v]);
+        marked_.push_back(marked_[v]);
     }
 }
 
-TransitiveClosure::~TransitiveClosure()
+bool TransitiveClosure::reachable(const size_t & v, const size_t & w) const
 {
-    for (auto * item : vDFS_)
-    {
-        delete item;
-    }
-}
-
-bool TransitiveClosure::reachable(size_t v, size_t w)
-{
-    return vDFS_[v]->marked(w);
+    return marked_[v][w];
 }
 
 
@@ -71,13 +42,13 @@ bool TransitiveClosure::reachable(size_t v, size_t w)
 // ------- BreadthFirstPaths -----------------------------------------------
 //
 
-BreadthFirstPaths::BreadthFirstPaths(const Graph & g, size_t s)
+BreadthFirstPaths::BreadthFirstPaths(const Graph & g, const size_t & s)
     : marked_(g.vertexCount(), false), edgeTo_(g.vertexCount()), s_(s)
 {
     bfs(g ,s);
 }
 
-void BreadthFirstPaths::bfs(const Graph & g, size_t v)
+void BreadthFirstPaths::bfs(const Graph & g, const size_t & v)
 {
     marked_[v] = true;
     std::queue<size_t> queue;
@@ -103,7 +74,7 @@ void BreadthFirstPaths::bfs(const Graph & g, size_t v)
     }
 }
 
-std::string BreadthFirstPaths::pathTo(size_t v) const
+std::string BreadthFirstPaths::pathTo(const size_t & v) const
 {
     std::stringstream pathStr;
     if (!hasPathTo(v))
@@ -147,12 +118,11 @@ CoupledComponents::CoupledComponents(const Graph & g)
     }
 }
 
-void CoupledComponents::dfs(const Graph &g, size_t v)
+void CoupledComponents::dfs(const Graph & g, const size_t & v)
 {
     marked_[v] = true;
     id_[v] = count_;
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
+    for (auto const & edge : g[v])
     {
         auto w = edge.other(v);
         if (!marked_[w])
@@ -180,11 +150,10 @@ TwoColored::TwoColored(const Graph & g)
     }
 }
 
-void TwoColored::dfs(const Graph & g, size_t v)
+void TwoColored::dfs(const Graph & g, const size_t & v)
 {
     marked_[v] = true;
-    auto const & edges = g[v];
-    for (auto const & edge : edges)
+    for (auto const & edge : g[v])
     {
         auto w = edge.other(v);
         if (!marked_[w])
@@ -291,7 +260,7 @@ SymbolGraph::SymbolGraph(const std::string & fileName)
     std::cout << std::endl;
 }
 
-SymbolGraph::SymbolGraph(size_t size)  : keys_(size), g_(new Graph(size)) {}
+SymbolGraph::SymbolGraph(const size_t & size)  : keys_(size), g_(new Graph(size)) {}
 
 SymbolGraph::~SymbolGraph()
 {
@@ -336,16 +305,16 @@ int SymbolGraph::index(const std::string & key) const
     return static_cast<int>(it->second);
 }
 
-std::string SymbolGraph::name(size_t index) const
+std::string SymbolGraph::name(const size_t & index) const
 {
     if (index < keys_.size())
     {
         return keys_[index];
     }
-    return  std::string();
+    return std::string{};
 }
 
-std::string SymbolGraph::lexical(size_t index) const
+std::string SymbolGraph::lexical(const size_t & index) const
 {
     std::stringstream pathStr;
     if (index < keys_.size())

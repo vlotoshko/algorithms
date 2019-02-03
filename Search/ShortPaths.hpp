@@ -119,7 +119,7 @@ using LongPaths  = Paths<std::less<>, MinDouble>;
  * @brief The DijkstraSP class calculates shortest paths from given vertex
  *
  * The DijkstraSP class calculates paths from given vertex to other vertexes,
- * using DijkstraSP algorithm.
+ * using Dijkstra's algorithm.
  * Graph should consist of non-negative weighted edges.
  * -------------------------------------------------------------------------------
  */
@@ -131,8 +131,8 @@ public:
      * \param graph whose paths will be explored
      * \param initial vertex to explore the grahp
      *
-     * DijkstraSP constructor explores all graph and calculates shortest paths,
-     * using DijkstraSP algorithm.
+     * DijkstraSP constructor explores graph and finds shortest paths, using
+     * DijkstraSP algorithm.
      */
     DijkstraSP(const EdgeWeightedGraph & gr, size_t s);
     /// uses its own implenemtation of relax method and hides base class's implementation
@@ -167,6 +167,7 @@ public:
      * initial vertex and calculates shortest paths, using DijkstraSP algorithm.
      */
     explicit DijkstraAllPairsSP(const EdgeWeightedGraph & gr);
+
     /**
      * \brief changes path to given vertex for a better one
      * \param graph
@@ -175,6 +176,7 @@ public:
      * changes path to given vertex for a better one according to comparator results
      */
     double        distTo(size_t s, size_t t)  const;
+
     /**
      * \brief changes path to given vertex for a better one
      * \param graph
@@ -277,7 +279,6 @@ using ContinuousJobs = std::vector<ContinuousJob>;
 
 /**
  * -------------------------------------------------------------------------------
- * @class criticalPathMethod
  * @brief The criticalPathMethod function generates graph for parallel dependend
  * jobs
  * @param Const reference to ContinuousJobs

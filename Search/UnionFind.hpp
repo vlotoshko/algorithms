@@ -54,8 +54,8 @@ struct UnionFindInfo
 
 /**
  * ----------------------------------------------------------------------------------------
- * @struct UnionFind
- * @brief The UnionFind template class is a base class for all UnionFind classes
+ * @class UnionFind
+ * @brief The UnionFind template class is the base class for all UnionFind classes
  *
  * The UnionFind template class is a base class for all UnionFind classes.
  * It uses NVI-technique to provide polymorphism
@@ -65,10 +65,11 @@ template <typename T>
 class UnionFind
 {
 public:
-    /** @brief unions 2 clusters of given components into one
-     *  @param UnionFindInfo structure to union
-     *  @param component(node) 1 of the UnionFindInfo structure
-     *  @param component(node) 2 of the UnionFindInfo structure
+    /**
+     * @brief unions 2 clusters of given components into one
+     * @param UnionFindInfo structure to union
+     * @param component(node) 1 of the UnionFindInfo structure
+     * @param component(node) 2 of the UnionFindInfo structure
      *
      * Unions 2 clusters of given components into one if they were not connected before
      * and decreases clasters count by 1.
@@ -82,18 +83,20 @@ public:
         }
     }
 
-    /** @brief finds claster ID of a given component
-     *  @param UnionFindInfo structure to search in
-     *  @param component(node) of the UnionFindInfo structure
-     *  @returns claster ID of a given component
+    /**
+     * @brief finds claster ID of a given component
+     * @param UnionFindInfo structure to search in
+     * @param component(node) of the UnionFindInfo structure
+     * @returns claster ID of a given component
      */
     T find(const UnionFindInfo<T> & ufData, T p) { ufData.findInvokes++; return find_(ufData, p); }
 
-    /** @brief checks wether two components belongs to the same claster, i.e. connected
-     *  @param UnionFindInfo structure to check connection
-     *  @param component(node) 1 of the UnionFindInfo structure
-     *  @param component(node) 2 of the UnionFindInfo structure
-     *  @returns true if components are connected
+    /**
+     * @brief checks wether two components belongs to the same claster, i.e. connected
+     * @param UnionFindInfo structure to check connection
+     * @param component(node) 1 of the UnionFindInfo structure
+     * @param component(node) 2 of the UnionFindInfo structure
+     * @returns true if components are connected
      */
     bool connected(const UnionFindInfo<T> & ufData, T p, T q) {return find(ufData, p) == find(ufData, q); }
 
@@ -110,7 +113,7 @@ private:
 
 /**
  * ----------------------------------------------------------------------------------------
- * @struct UnionFind_QuickFind
+ * @class UnionFind_QuickFind
  * @brief The UnionFind_QuickFind template class implements 'quick find / slow union'
  * strategy
  * ----------------------------------------------------------------------------------------
@@ -123,20 +126,22 @@ public:
     static char const * name;
 
 private:
-    /** @brief unions 2 clusters of two components into one if they were not connected before
-     *  @param UnionFindInfo structure to union
-     *  @param component(node) 1 of the UnionFindInfo structure
-     *  @param component(node) 2 of the UnionFindInfo structure
+    /**
+     * @brief unions 2 clusters of two components into one if they were not connected before
+     * @param UnionFindInfo structure to union
+     * @param component(node) 1 of the UnionFindInfo structure
+     * @param component(node) 2 of the UnionFindInfo structure
      *
      * Assings cluster ID of the firts component to the second component, also assings this ID
      * claster to all compomemts connected with the second component.
      */
     bool union_(UnionFindInfo<T> & ufData, T p, T q) override;
 
-    /** @brief finds claster ID of a given component
-     *  @param UnionFindInfo structure to search in
-     *  @param component(node) of the UnionFind structure
-     *  @returns claster ID of a given component
+    /**
+     * @brief finds claster ID of a given component
+     * @param UnionFindInfo structure to search in
+     * @param component(node) of the UnionFind structure
+     * @returns claster ID of a given component
      */
     T find_(const UnionFindInfo<T> & ufData, T p) override { return ufData.elements[p]; }
 };
@@ -144,7 +149,7 @@ private:
 
 /**
  * ----------------------------------------------------------------------------------------
- * @struct UnionFind_QuickFind
+ * @class UnionFind_QuickFind
  * @brief The UnionFind_QuickFind template class implements 'quick union / slow find'
  * strategy
  * ----------------------------------------------------------------------------------------
@@ -157,20 +162,22 @@ public:
     static char const * name;
 
 private:
-    /** @brief unions 2 clusters of two components into one if they were not connected before
-     *  @param UnionFindInfo structure to union
-     *  @param component(node) 1 of the UnionFindInfo structure
-     *  @param component(node) 2 of the UnionFindInfo structure
+    /**
+     * @brief unions 2 clusters of two components into one if they were not connected before
+     * @param UnionFindInfo structure to union
+     * @param component(node) 1 of the UnionFindInfo structure
+     * @param component(node) 2 of the UnionFindInfo structure
      *
      * Assings cluster ID of the firts component to the second component. Thus such IDs
      * forms a tree of connection.
      */
     bool union_(UnionFindInfo<T> & ufData, T p, T q);
 
-    /** @brief finds claster ID of a given component
-     *  @param UnionFindInfo structure to search in
-     *  @param component(node) of the UnionFind structure
-     *  @returns claster ID of a given component
+    /**
+     * @brief finds claster ID of a given component
+     * @param UnionFindInfo structure to search in
+     * @param component(node) of the UnionFind structure
+     * @returns claster ID of a given component
      *
      * Finds claster ID from the root of the 'tree of connection'. It will be the
      * claster ID of the tree.
@@ -185,7 +192,7 @@ private:
 
 /**
  * ----------------------------------------------------------------------------------------
- * @struct UnionFind_QuickUnion_Balanced
+ * @class UnionFind_QuickUnion_Balanced
  * @brief The UnionFind_QuickUnion_Balanced template class implements 'quick union /
  * slow find' strategy and uses additional data to generate balanced tree of connection
  * ----------------------------------------------------------------------------------------
@@ -198,20 +205,22 @@ public:
     static char const * name;
 
 private:
-    /** @brief unions 2 clusters of two components into one if they were not connected before
-     *  @param UnionFindInfo structure to union
-     *  @param component(node) 1 of the UnionFindInfo structure
-     *  @param component(node) 2 of the UnionFindInfo structure
+    /**
+     * @brief unions 2 clusters of two components into one if they were not connected before
+     * @param UnionFindInfo structure to union
+     * @param component(node) 1 of the UnionFindInfo structure
+     * @param component(node) 2 of the UnionFindInfo structure
      *
      * Assings cluster ID of the firts component to the second component. Thus such IDs
      * forms a balanced tree of connection.
      */
     bool union_(UnionFindInfo<T> & ufData, T p, T q) override;
 
-    /** @brief finds claster ID of a given component
-     *  @param UnionFindInfo structure to search in
-     *  @param component(node) of the UnionFind structure
-     *  @returns claster ID of a given component
+    /**
+     * @brief finds claster ID of a given component
+     * @param UnionFindInfo structure to search in
+     * @param component(node) of the UnionFind structure
+     * @returns claster ID of a given component
      *
      * Finds claster ID from the root of the 'tree of connection'. It will be the
      * claster ID of the tree.
@@ -222,9 +231,8 @@ private:
 
 
 // -------------------------------------------------------------------------------
-// Template classes definitions
+// ---------------- Template classes definitions ---------------------------------
 // -------------------------------------------------------------------------------
-
 
 // -------------------------------------------------------------------------------
 // ----- UnionFindInfo -----

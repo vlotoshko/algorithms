@@ -289,10 +289,10 @@ using ContinuousJobs = std::vector<ContinuousJob>;
 AcyclicLongPaths criticalPathMethod(const ContinuousJobs & jobs);
 
 
+// -------------------------------------------------------------------------------
+// ---------------- Template classes definitions ---------------------------------
+// -------------------------------------------------------------------------------
 
-// -------------------------------------------------------------------------------
-// Template classes definitions
-// -------------------------------------------------------------------------------
 
 template<typename Compare, typename InitialValue>
 Paths<Compare, InitialValue>::Paths(const EdgeWeightedGraph & gr, size_t s) :

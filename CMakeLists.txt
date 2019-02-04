@@ -37,6 +37,7 @@ set(HPP_FILES
     "Search/UnionFind.hpp"
     "Search/ShortPaths.hpp"
     "Sort/Sort.hpp"
+    "Sort/Sort_Impl.hpp"
     "Structures/BinarySearchTree.hpp"
     "Structures/Edge.hpp"
     "Structures/Graph.hpp"

@@ -1,17 +1,19 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   08-Jul-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * -------------------------------------------------------------------------------------------------
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @skype vlotoshko
+ * @date 08-Jul-2018
+ * -------------------------------------------------------------------------------------------------
+ */
 
-//--------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 #include "MinimalSpanningTree.hpp"
 #include "UnionFind.hpp"
 
 #include <limits>
-//--------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
-//--------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 namespace graph
 {
 
@@ -55,7 +57,7 @@ PrimMST_Lazy::EdgeContainer PrimMST_Lazy::edges() const
     return mst_;
 }
 
-void PrimMST_Lazy::visit(const EdgeWeightedGraph &gr, size_t v)
+void PrimMST_Lazy::visit(const EdgeWeightedGraph & gr, const size_t & v)
 {
     marked_[v] = true;
     for (const auto & e : gr[v])
@@ -85,7 +87,7 @@ PrimMST_Energy::EdgeContainer PrimMST_Energy::edges() const
     return edgeTo_;
 }
 
-void PrimMST_Energy::visit(const EdgeWeightedGraph & gr, size_t v)
+void PrimMST_Energy::visit(const EdgeWeightedGraph & gr, const size_t & v)
 {
     marked_[v] = true;
     for (const auto & e : gr[v])

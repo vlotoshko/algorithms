@@ -1,9 +1,6 @@
 /**
- * -------------------------------------------------------------------------------------------------
  * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
- * @skype vlotoshko
  * @date 08-Jul-2018
- * -------------------------------------------------------------------------------------------------
  */
 
 // -------------------------------------------------------------------------------------------------
@@ -24,13 +21,9 @@ namespace graph
 {
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class PrimMST_Lazy
- * @brief The PrimMST_Lazy class finds the minimal spanning tree
- *
- * The PrimMST_Lazy class finds the minimal spanning tree, using Prim's algorithm lazy
- * variant
- * ----------------------------------------------------------------------------------------
+ * @brief The PrimMST_Lazy class finds the minimal spanning tree, using Prim's algorithm lazy
+ * variant.
  */
 class PrimMST_Lazy
 {
@@ -41,8 +34,8 @@ public:
     static char const * name;
 
     /**
-     * @brief PrimMST_Lazy constructor explores graph and builds minimal spanning tree
-     * @param edgeweighted graph
+     * @brief The PrimMST_Lazy constructor explores graph and builds minimal spanning tree.
+     * @param[in] gr graph
      */
     explicit PrimMST_Lazy(const EdgeWeightedGraph & gr);
 
@@ -50,9 +43,9 @@ public:
     EdgeContainer edges() const;
 private:
     /**
-     * @brief the visit method adds nearest edges of the vertex to the queue
-     * @param edgeweighted graph
-     * @param initial vertex
+     * @brief The visit method adds nearest edges of the vertex to the queue.
+     * @param[in] gr edgeweighted graph
+     * @param[in] v initial vertex
      */
     void visit(const EdgeWeightedGraph & gr, const size_t & v);
 
@@ -68,13 +61,9 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class PrimMST_Energy
- * @brief The PrimMST_Energy class finds the minimal spanning tree
- *
- * The PrimMST_Energy class finds the minimal spanning tree, using Prim's algorithm energy
- * variant
- * ----------------------------------------------------------------------------------------
+ * @brief The PrimMST_Energy class finds the minimal spanning tree, using Prim's algorithm
+ * energy variant.
  */
 class PrimMST_Energy
 {
@@ -85,8 +74,8 @@ public:
     static char const * name;
 
     /**
-     * @brief PrimMST_Energy constructor explores graph and builds minimal spanning tree
-     * @param initial vertex
+     * @brief The PrimMST_Energy constructor explores graph and builds minimal spanning tree.
+     * @param[in] gr graph
      */
     explicit PrimMST_Energy(const EdgeWeightedGraph & gr);
 
@@ -94,12 +83,10 @@ public:
     EdgeContainer edges() const;
 private:
     /**
-     * @brief the visit method adds nearest edges of the vertex to the queue
-     * @param edgeweighted graph
-     * @param initial vertex
-     *
-     * the visit method adds nearest edges of the vertex to the queue if edges have
+     * @brief The visit method adds nearest edges of the vertex to the queue if edges have
      * smaller distance than found before.
+     * @param[in] gr edgeweighted graph
+     * @param[in] v initial vertex
      */
     void visit(const EdgeWeightedGraph & gr, const size_t & v);
 
@@ -118,12 +105,8 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class KruskalMST
- * @brief The KruskalMST class finds the minimal spanning tree
- *
- * The KruskalMST class finds the minimal spanning tree, using Kruskal's algorithm
- * ----------------------------------------------------------------------------------------
+ * @brief The KruskalMST class finds the minimal spanning tree, using Kruskal's algorithm
  */
 class KruskalMST
 {
@@ -134,11 +117,9 @@ public:
     static char const * name;
 
     /**
-     * @brief KruskalMST constructor explores graph and builds minimal spanning tree
-     * @param initial vertex
-     *
-     * KruskalMST constructor explores graph and builds minimal spanning tree, using
-     * unionFind object
+     * @brief The KruskalMST constructor explores graph and builds minimal spanning tree,
+     * using unionFind object
+     * @param[in] gr edgeweighted graph
      */
     explicit KruskalMST(const EdgeWeightedGraph & gr);
 

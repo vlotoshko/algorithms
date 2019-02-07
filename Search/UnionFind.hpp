@@ -25,7 +25,7 @@ template<typename T>
 struct UnionFindInfo
 {
     /**
-     * @brief UnionFindInfo constructor inits data with initial values.
+     * @brief The UnionFindInfo constructor inits data with initial values.
      * @param[in] count count of the elements
      */
     explicit UnionFindInfo(const size_t & count);

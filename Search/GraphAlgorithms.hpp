@@ -1,9 +1,6 @@
 /**
- * -------------------------------------------------------------------------------------------------
  * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
- * @skype vlotoshko
  * @date 11-Jun-2018
- * -------------------------------------------------------------------------------------------------
  */
 
 // -------------------------------------------------------------------------------------------------
@@ -29,11 +26,10 @@ namespace graph
 {
 
 /**
- * ----------------------------------------------------------------------------------------
- * @brief The toString template function represents graph's information as string
- * @param graph
- * @return graph's information as string
- * ----------------------------------------------------------------------------------------
+ * @brief The toString template function represents graph's information as string.
+ * @tparam G graph type
+ * @param[in] g graph
+ * @return graph's information as string.
  */
 template<typename G>
 std::string toString(const G & g)
@@ -54,22 +50,20 @@ std::string toString(const G & g)
 }
 
 /**
- * ----------------------------------------------------------------------------------------
- * @brief The degree template function returns the degree of the given vertex
- * @param graph
- * @param vertex
- * @return degree of given vertex
- * ----------------------------------------------------------------------------------------
+ * @brief The degree template function returns the degree of the given vertex.
+ * @tparam G graph type
+ * @param[in] g graph
+ * @param[in] v vertex
+ * @return degree of the given vertex.
  */
 template<typename G>
 size_t degree(const G & g, const size_t & v) { return g[v].size(); }
 
 /**
- * ----------------------------------------------------------------------------------------
- * @brief The maxDegree template function returns the max degree of the given graph
- * @param graph
- * @return max degree of given graph
- * ----------------------------------------------------------------------------------------
+ * @brief The maxDegree template function returns the max degree of the given graph.
+ * @tparam G graph type
+ * @param[in] g graph
+ * @return max degree of the given graph.
  */
 template<typename G>
 size_t maxDegree(const G & g)
@@ -85,23 +79,21 @@ size_t maxDegree(const G & g)
 }
 
 /**
- * ----------------------------------------------------------------------------------------
  * @brief The avgDegree template function calculates the average degree of the given graph
- * @param graph
- * @tparam strategy determines wether graph is directed or non-directed
- * @return average degree of given graph
- * ----------------------------------------------------------------------------------------
+ * @tparam Strategy determines wether graph is directed or non-directed
+ * @tparam G graph type
+ * @param[in] g graph
+ * @return average degree of given graph.
  */
 template<typename Strategy, typename G>
 size_t avgDegree(const G & g) { return Strategy::factor() * g.edgeCount() / g.vertexCount(); }
 
 /**
- * ----------------------------------------------------------------------------------------
  * @brief The selfLoops template function calculates vertexes self loops
- * @param graph
- * @tparam strategy determines wether graph is directed or non-directed
+ * @tparam Strategy determines wether graph is directed or non-directed
+ * @tparam G graph type
+ * @param[in] g graph
  * @return vertexes self loops count
- * ----------------------------------------------------------------------------------------
  */
 template<typename Strategy, typename G>
 size_t selfLoops(const G & g)
@@ -123,12 +115,11 @@ size_t selfLoops(const G & g)
 }
 
 /**
- * ----------------------------------------------------------------------------------------
- * @brief The reverse template function reverses the given graph
- * @param graph
- * @tparam strategy determines wether graph is directed or non-directed
- * @return reversed graph
- * ----------------------------------------------------------------------------------------
+ * @brief The reverse template function reverses the given graph.
+ * @tparam Strategy determines wether graph is directed or non-directed
+ * @tparam G graph type
+ * @param[in] g graph
+ * @return reversed graph.
  */
 template<typename Strategy, typename G>
 std::unique_ptr<G> reverse(const G & g)
@@ -147,13 +138,12 @@ std::unique_ptr<G> reverse(const G & g)
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @brief The depthFirstSearh template function traverses graph using Depth-first search
- * algorithm
- * @param graph
- * @param initial vertex
- * @param container to save results of accessing vertexes from initial vertex
- * ----------------------------------------------------------------------------------------
+ * algorithm.
+ * @tparam G graph type
+ * @param[in] g graph
+ * @param[in] s initial vertex
+ * @param[out] marked container to save results of accessing vertexes from initial vertex
  */
 template<typename G>
 void depthFirstSearh(const G & g, const size_t & s, std::vector<bool> & marked)
@@ -177,41 +167,42 @@ void depthFirstSearh(const G & g, const size_t & s, std::vector<bool> & marked)
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class DepthFirstPaths
- * @brief The DepthFirstPaths template class finds paths to the vertexes in the given graph
- *
- * The DepthFirstPaths class finds paths to the vertexes in the given graph
+ * @brief The DepthFirstPaths class finds paths to the vertexes in the given graph
  * using depth-first search algorithm.
- * ----------------------------------------------------------------------------------------
+ * @tparam G graph type
  */
 template<typename G>
 class DepthFirstPaths
 {
 public:
     /**
-     * @brief DepthFirstPaths constructor
-     * @param graph
-     * @param initial vertex
-     *
-     * DepthFirstPaths constructor explores graph and discovers paths from initial
-     * vertex to other vertexes in the graph.
+     * @brief The DepthFirstPaths constructor explores graph and discovers paths from
+     * initial vertex to other vertexes in the graph.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     DepthFirstPaths(const G & g, const size_t & s);
 
-    /// @return true if there is a paths to given vertex
+    /**
+     * @brief The hasPathTo method defines whether there is a path to given vertex.
+     * @param[in] v index of the vertex
+     * @return true if there is a path to given vertex
+     */
     bool hasPathTo(const size_t & v) const { return marked_[v]; }
 
-    /// @returns path as string to the given vertex
+    /**
+    * @brief The pathTo method finds path to the vertex.
+    * @param[in] v vertex
+    * @return path to the vertex as string.
+    */
     std::string pathTo(const size_t &  v) const;
 private:
     /**
-     * @brief modification of the depth-first search algorithm
-     * @param graph
-     * @param initial vertex
-     *
-     * Explores graph using depth-first search algorithm and saves to the edge
+     * @brief Explores graph using depth-first search algorithm and saves to the edge
      * container index of vertex from which current vertex was found.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void dfs(const Graph & g, const size_t & v);
 
@@ -225,26 +216,20 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class DepthFirstOrder
- * @brief The DepthFirstOrder template class saves vertexes in different orders exploring
- * the given graph
- *
- * The DepthFirstOrder class saves vertexes in pre-, post- and reversed orders while
- * exploring the given graph.
+ * @brief The DepthFirstOrder class saves vertexes in pre-, post- and reversed orders
+ * while exploring the given graph.
  * Graph is traversed using depth-first search algorithm.
- * ----------------------------------------------------------------------------------------
+ * @tparam G graph type
  */
 template<typename G>
 class DepthFirstOrder
 {
 public:
     /**
-     * @brief DepthFirstOrder constructor
-     * @param graph
-     *
-     * DepthFirstOrder constructor explores graph and saves vertexes in pre-,
-     * post- and reversed orders
+     * @brief The DepthFirstOrder constructor explores graph and saves vertexes in pre-,
+     * post- and reversed orders.
+     * @param[in] g graph
      */
     explicit DepthFirstOrder(const G & g);
 
@@ -256,12 +241,10 @@ public:
     std::queue<size_t> & post() { return post_; }
 private:
     /**
-     * @brief modification of the depth-first search algorithm
-     * @param graph
-     * @param initial vertex
-     *
-     * Explores graph using depth-first search algorithm and saves vertexes
-     * into three containers unsing different order saving
+     * @brief Explores graph using depth-first search algorithm and saves vertexes
+     * into three containers unsing different order saving.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void dfs(const G & g, const size_t & v);
 
@@ -277,21 +260,19 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class Cyclic
- * @brief The Cyclic template class defines whether graph has cycles or not
- *
- * The Cyclic template class defines whether non-directed graph has cycles or not, using
- * depth-first search algorithm.
- * ----------------------------------------------------------------------------------------
+ * @brief The Cyclic template class defines whether non-directed graph has cycles or not,
+ * using depth-first search algorithm.
+ * @tparam G graph type
+ * @note Works only with non-directed graphs.
  */
 template<typename G>
 class Cyclic
 {
 public:
     /**
-     * @brief Cyclic constructor explores graph and searches for the cycles
-     * @param non-directed graph
+     * @brief The Cyclic constructor explores graph and searches for the cycles
+     * @param[in] g non-directed graph
      */
     explicit Cyclic(const G & g);
 
@@ -299,10 +280,10 @@ public:
     bool isCyclic() const { return hasCycle_; }
 private:
     /**
-     * @brief modification of the depth-first search algorithm to find cycles
-     * @param graph
-     * @param initial vertex
-     * @param initial vertex of previous iteration
+     * @brief Modification of the depth-first search algorithm to find cycles.
+     * @param[in] g graph
+     * @param[in] v initial vertex
+     * @param[in] u initial vertex of previous iteration
      */
     void dfs(const G & g, const size_t & v, const size_t & u);
 
@@ -314,21 +295,19 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class DirectedCyclic
- * @brief The DirectedCyclic template class defines whether directed graph has cycles or not
- *
- * The DirectedCyclic template class defines whether directed graph has cycles or not,
+ * @brief The DirectedCyclic template class defines whether directed graph has cycles or not,
  * using depth-first search algorithm.
- * ----------------------------------------------------------------------------------------
+ * @tparam G graph type
+ * @note Works only with directed graphs.
  */
 template<typename G>
 class DirectedCyclic
 {
 public:
     /**
-     * @brief DirectedCyclic constructor explores graph and searches for the cycles
-     * @param directed graph
+     * @brief The DirectedCyclic constructor explores graph and searches for the cycles
+     * @param[in] g graph
      */
     explicit DirectedCyclic(const G & g);
 
@@ -339,12 +318,9 @@ public:
     std::stack<size_t> cycle() const { return cycle; }
 private:
     /**
-     * @brief modification of the depth-first search algorithm to find cycles
-     * @param directed graph
-     * @param initial vertex
-     *
-     * Explores directed graph using depth-first search algorithm and saves vertexes
-     * into three containers unsing different order saving
+     * @brief Modification of the depth-first search algorithm to find cycles.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void dfs(const G & g, const size_t & v);
 
@@ -360,22 +336,20 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class Topological
- * @brief The Topological template class sorts directed graph in the topological way
- *
- * The Topological template class sorts directed graph in the topological way, using
- * DepthFirstOrder object.
- * Reversed post- order actually is the topological oreder.
- * ----------------------------------------------------------------------------------------
+ * @brief The Topological template class sorts directed graph in the topological way,
+ * using DepthFirstOrder object.
+ * Reversed post- order actually is the topological order.
+ * @tparam G graph type
+ * @note Works only with directed acyclic graphs.
  */
 template<typename G>
 class Topological
 {
 public:
     /**
-     * @brief Topological constructor sorts graph in the topological way
-     * @param directed graph
+     * @brief The Topological constructor sorts graph in the topological way.
+     * @param[in] g directed acyclic graph
      */
     explicit Topological(const G & g);
 
@@ -394,22 +368,18 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class KosarajuSCC
- * @brief The KosarajuSCC template class searches for Strong Coupled Components in the
- * given graph
- *
- * The KosarajuSCC template class searches for Strong Coupled Components using
- * topologicaly sorted order
- * ----------------------------------------------------------------------------------------
+ * @brief The KosarajuSCC template class searches for Strong Coupled Components using
+ * topologicaly sorted order.
+ * @tparam G graph type
  */
 template<typename G>
 class KosarajuSCC
 {
 public:
     /**
-     * @brief KosarajuSCC constructor searches for Strong Coupled Components
-     * @param directed graph
+     * @brief The KosarajuSCC constructor searches for Strong Coupled Components
+     * @param[in] g directed graph
      */
     explicit KosarajuSCC(const G & g);
 
@@ -423,13 +393,11 @@ public:
     size_t id(const size_t & v) const { return id_[v]; }
 private:
     /**
-     * @brief modification of the depth-first search algorithm to find the
-     * Strong Coupled Components
-     * @param directed graph
-     * @param initial vertex
-     *
-     * Explores directed graph using depth-first search algorithm and searches
+     * @brief Explores directed graph using depth-first search algorithm and searches
      * for the Strong Coupled Components
+     * Strong Coupled Components
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void dfs(const G & g, const size_t & v);
 
@@ -445,32 +413,27 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class TransitiveClosure
- * @brief The TransitiveClosure class explores grash and finds out is there parh from one
- * vertex to other
- *
- * The TransitiveClosure class explores grash using depth-first search algorithm.
- * It fills bool matrix by results wether reachable one vertex from other.
- * ----------------------------------------------------------------------------------------
+ * @brief The TransitiveClosure class explores grash and finds out is there parh
+ * from one vertex to other.
+ * Explores grash using depth-first search algorithm and fills bool matrix
+ * by results wether reachable one vertex from other.
  */
 class TransitiveClosure
 {
 public:
     /**
-     * @brief TransitiveClosure constructor
-     * @param graph whose paths will be explored
-     *
-     * TransitiveClosure constructor fills bool matrix by results wether
+     * @brief The TransitiveClosure constructor fills bool matrix by results wether
      * reachable one vertex from other.
+     * @param[in] g graph whose paths will be explored
      */
     explicit TransitiveClosure(const Graph & g);
 
     /**
-     * @brief defines if the vertex is reachebla from other one
-     * @param vertex from
-     * @param vertex to
-     * @return true if one vertex is reachable from other
+     * @brief Defines wether the vertex is reachable from other one.
+     * @param[in] v vertex 'from'
+     * @param[in] w vertex 'to'
+     * @return true if one vertex is reachable from other.
      */
     bool reachable(const size_t & v, const size_t & w) const;
 private:
@@ -480,24 +443,18 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class BreadthFirstPaths
  * @brief The BreadthFirstPaths class finds paths to the vertexes in the given graph
- *
- * The BreadthFirstPaths class finds paths to the vertexes in the given graph using
- * breadth-first search algorithm.
- * ----------------------------------------------------------------------------------------
+ * using breadth-first search algorithm.
  */
 class BreadthFirstPaths
 {
 public:
     /**
-     * @brief BreadthFirstPaths constructor
-     * @param graph
-     * @param initial vertex
-     *
-     * BreadthFirstPaths constructor explores graph and discovers paths from initial
-     * vertex to other vertexes in the graph.
+     * @brief The BreadthFirstPaths constructor explores graph and discovers paths
+     * from initial vertex to other vertexes in the graph.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     BreadthFirstPaths(const Graph & g, const size_t & s);
 
@@ -509,12 +466,10 @@ public:
 
 private:
     /**
-     * @brief implementation of the breadth-first search algorithm
-     * @param graph
-     * @param initial vertex
-     *
-     * Explores graph using breadth-first search algorithm and saves to the edge
-     * container index of vertex from which current vertex was found.
+     * @brief Explores graph using breadth-first search algorithm and saves to the
+     * edge container index of vertex from which current vertex was found.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void bfs(const Graph & g, const size_t & v);
 
@@ -527,20 +482,16 @@ private:
 };
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class CoupledComponents
- * @brief The CoupledComponents class searches for coupled components
- *
- * The CoupledComponents class searches for coupled components in the given graph using
- * depth-first search algorithm.
- * ----------------------------------------------------------------------------------------
+ * @brief The CoupledComponents class searches for coupled components in the given
+ * graph using depth-first search algorithm.
  */
 class CoupledComponents
 {
 public:
     /**
-     * @brief CoupledComponents constructor searches for coupled components
-     * @param graph
+     * @brief The CoupledComponents constructor searches for coupled components
+     * @param[in] g graph
      */
     explicit CoupledComponents(const Graph & g);
 
@@ -555,13 +506,10 @@ public:
 
 private:
     /**
-     * @brief modification of the depth-first search algorithm to find the coupled
-     * components
-     * @param graph
-     * @param initial vertex
-     *
-     * Explores graph using depth-first search algorithm and searches for the coupled
-     * components
+     * @brief Explores graph using depth-first search algorithm and searches for
+     * the coupled components.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void dfs(const Graph & g, const size_t & v);
 
@@ -577,20 +525,16 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class TwoColored
- * @brief The TwoColored class defines wether graph is bipartite or not
- *
- * The TwoColored class defines wether graph is bipartite or not, using depth-first search
- * algorithm.
- * ----------------------------------------------------------------------------------------
+ * @brief The TwoColored class defines wether graph is bipartite or not, using
+ * depth-first search algorithm.
  */
 class TwoColored
 {
 public:
     /**
-     * @brief TwoColored constructor explores graph and defines wether graph is bipartite
-     * @param non-directed graph
+     * @brief The TwoColored constructor explores graph and defines wether graph is bipartite
+     * @param[in] g non-directed graph
      */
     explicit TwoColored(const Graph& g);
 
@@ -598,10 +542,10 @@ public:
     bool isBipartite() const { return isTwoColors_; }
 private:
     /**
-     * @brief modification of the depth-first search algorithm to define wether graph is
-     * bipartite
-     * @param graph
-     * @param initial vertex
+     * @brief Modification of the depth-first search algorithm to define wether graph is
+     * bipartite.
+     * @param[in] g graph
+     * @param[in] v initial vertex
      */
     void dfs(const Graph& g, const size_t & v);
 
@@ -617,26 +561,21 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class SymbolGraph
- * @brief The SymbolGraph class represents graph where vertexes are strings
- *
- * The TwoColored class defines wether graph is bipartite or not, using depth-first search
- * algorithm.
- * ----------------------------------------------------------------------------------------
+ * @brief The SymbolGraph class represents graph where vertexes are strings.
  */
 class SymbolGraph
 {
 public:
     /**
-     * @brief SymbolGraph constructor creates symbolic graph reading data from file
-     * @param file name
+     * @brief The SymbolGraph constructor creates symbolic graph reading data from file.
+     * @param[in] fileName file name
      */
     explicit SymbolGraph(const std::string & fileName);
 
     /**
-     * @brief SymbolGraph constructor creates empty symbolic graph of the given size
-     * @param size of the graph
+     * @brief The SymbolGraph constructor creates empty symbolic graph of the given size.
+     * @param[in] size size of the graph
      */
     explicit SymbolGraph(const size_t & size);
 
@@ -647,10 +586,10 @@ public:
     SymbolGraph& operator= (const SymbolGraph&) = delete;
 
     /**
-     * @brief adds new adge to the graph
-     * @param vertex from
-     * @param vertex to
-     * @returns true if graph is not full and adge was added
+     * @brief Adds new adge to the graph.
+     * @param[in] s vertex 'from'
+     * @param[in] t vertex 'to'
+     * @returns true if graph is not full and adge was added.
      */
     bool addEdge(const std::string & v, const std::string & w);
 

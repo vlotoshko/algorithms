@@ -34,7 +34,7 @@ public:
     using EdgeContainer = std::vector<EdgeWeighted>;
 
     /**
-     * @brief Paths constructor just constructs required data structures.
+     * @brief The Paths constructor just constructs required data structures.
      * @param[in] gr graph whose paths will be explored
      * @param[in] s initial vertex to explore the grahp
      */
@@ -113,8 +113,8 @@ class DijkstraSP : public ShortPaths
 {
 public:
     /**
-     * @brief DijkstraSP constructor explores graph and finds shortest paths, using
-     * Dijkstra's algorithm.
+     * @brief The DijkstraSP constructor explores graph and finds shortest paths,
+     * using Dijkstra's algorithm.
      * @param[in] gr graph whose paths will be explored
      * @param[in] s initial vertex to explore the grahp
      */
@@ -148,8 +148,8 @@ public:
     using EdgeContainer = ShortPaths::EdgeContainer;
 
     /**
-     * @brief  DijkstraAllPairsSP constructor explores all graph for every vertex as
-     * initial vertex and calculates shortest paths, using DijkstraSP algorithm.
+     * @brief The DijkstraAllPairsSP constructor explores all graph for every vertex
+     * as initial vertex and calculates shortest paths, using DijkstraSP algorithm.
      * @param[in] gr graph whose paths will be explored
      */
     explicit DijkstraAllPairsSP(const EdgeWeightedGraph & gr);
@@ -191,7 +191,7 @@ public:
     using EdgeContainer = ShortPaths::EdgeContainer;
 
     /**
-     * @brief AcyclicShortPaths constructor explores all graph and calculates
+     * @brief The AcyclicShortPaths constructor explores all graph and calculates
      * shortest paths, using topolocigal sort.
      * @param[in] gr graph whose paths will be explored
      * @param[in] s initial vertex to explore the grahp
@@ -219,7 +219,7 @@ public:
     using EdgeContainer = ShortPaths::EdgeContainer;
 
     /**
-     * @brief AcyclicLongPaths constructor explores all graph and calculates
+     * @brief The AcyclicLongPaths constructor explores all graph and calculates
      * longest paths, using topolocigal sort.
      * @param[in] gr graph whose paths will be explored
      * @param[in] s initial vertex to explore the grahp

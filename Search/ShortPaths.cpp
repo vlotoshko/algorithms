@@ -20,7 +20,7 @@ char const * AcyclicShortPaths::name = "AcyclicShortPaths";
 char const * AcyclicLongPaths::name = "AcyclicLongPaths";
 
 
-DijkstraSP::DijkstraSP(const EdgeWeightedGraph & gr, size_t s)
+DijkstraSP::DijkstraSP(const EdgeWeightedGraph & gr, const size_t & s)
     : ShortPaths(gr ,s), pq_(gr.vertexCount())
 {
     pq_.push(s, 0);
@@ -31,7 +31,7 @@ DijkstraSP::DijkstraSP(const EdgeWeightedGraph & gr, size_t s)
     }
 }
 
-void DijkstraSP::relax(const EdgeWeightedGraph & gr, size_t v)
+void DijkstraSP::relax(const EdgeWeightedGraph & gr, const size_t & v)
 {
     for (const auto & edge : gr[v])
     {
@@ -54,17 +54,17 @@ DijkstraAllPairsSP::DijkstraAllPairsSP(const EdgeWeightedGraph & gr)
     }
 }
 
-double DijkstraAllPairsSP:: distTo(size_t s, size_t t)    const
+double DijkstraAllPairsSP:: distTo(const size_t & s, const size_t & t) const
 {
     return all_[s].distTo(t);
 }
 
-DijkstraAllPairsSP::EdgeContainer DijkstraAllPairsSP::pathTo(size_t s, size_t t) const
+DijkstraAllPairsSP::EdgeContainer DijkstraAllPairsSP::pathTo(const size_t & s, const size_t & t) const
 {
     return all_[s].pathTo(t);
 }
 
-AcyclicShortPaths::AcyclicShortPaths(const EdgeWeightedGraph & gr, size_t s) : ShortPaths(gr, s)
+AcyclicShortPaths::AcyclicShortPaths(const EdgeWeightedGraph & gr, const size_t & s) : ShortPaths(gr, s)
 {
     distTo_[s] = 0;
     graph::Topological<EdgeWeightedGraph> top(gr);
@@ -89,7 +89,7 @@ AcyclicShortPaths::AcyclicShortPaths(const EdgeWeightedGraph & gr, size_t s) : S
     }
 }
 
-AcyclicLongPaths::AcyclicLongPaths(const EdgeWeightedGraph & gr, size_t s) : LongPaths(gr, s)
+AcyclicLongPaths::AcyclicLongPaths(const EdgeWeightedGraph & gr, const size_t & s) : LongPaths(gr, s)
 {
     distTo_[s] = 0;
     graph::Topological<EdgeWeightedGraph> top(gr);

@@ -61,7 +61,7 @@ public:
     /**
      * @brief Unions two clusters of given components into one if they were not connected before.
      * Decreases clasters count by 1.
-     * @param[out] ufDate UnionFindInfo structure to union
+     * @param[out] ufData UnionFindInfo structure to union
      * @param[in] p component 1 of the UnionFindInfo structure
      * @param[in] q component 2 of the UnionFindInfo structure
      *
@@ -77,7 +77,7 @@ public:
 
     /**
      * @brief Finds claster ID of a given component.
-     * @param[in] ufDate UnionFindInfo structure to search in
+     * @param[in] ufData UnionFindInfo structure to search in
      * @param[in] p component of the UnionFindInfo structure
      * @returns claster ID of a given component.
      */
@@ -90,7 +90,7 @@ public:
      * @param[in] q component 2 of the UnionFindInfo structure
      * @returns true if components are connected.
      */
-    bool connected(const UnionFindInfo<T> & ufData,const T & p, const T & q) {return find(ufData, p) == find(ufData, q); }
+    bool connected(const UnionFindInfo<T> & ufData, const T & p, const T & q) {return find(ufData, p) == find(ufData, q); }
 
     /// default virtual constructor for the base polymorphic class
     virtual ~UnionFind() = default;

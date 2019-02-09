@@ -458,10 +458,18 @@ public:
      */
     BreadthFirstPaths(const Graph & g, const size_t & s);
 
-    /// @return true if there is a paths to given vertex
+    /**
+     * @brief The hasPathTo method defines whether there is a path to given vertex.
+     * @param[in] v index of the vertex
+     * @return true if there is a path to given vertex.
+     */
     bool hasPathTo(const size_t & v) const { return marked_[v]; }
 
-    /// @returns path as string to the given vertex
+    /**
+     * @brief The pathTo method finds path to the vertex.
+     * @param[in] v index of the vertex
+     * @return path to the vertex as string.
+     */
     std::string pathTo(const size_t & v) const;
 
 private:
@@ -495,13 +503,22 @@ public:
      */
     explicit CoupledComponents(const Graph & g);
 
-    /// @returns true if two vertexes are connected
+    /**
+     * @brief Checks wether two vertexes are connected.
+     * @param[in] v vertex 'from'
+     * @param[in] w vertex 'to'
+     * @return true if components are connected.
+     */
     bool connected(const size_t & v, const size_t & w) const { return id_[v] == id_[w]; }
 
     /// @returns the count of strongly coupled components in the given graph
     size_t componentsCount() const { return count_; }
 
-    /// @returns id of the component to which belongs the given vertex
+    /**
+     * @brief Returns id of the component to which belongs the given vertex.
+     * @param[in] v initial vertex
+     * @return id of the component to which belongs the given vertex.
+     */
     size_t id(const size_t & v) const { return id_[v]; }
 
 private:
@@ -587,8 +604,8 @@ public:
 
     /**
      * @brief Adds new adge to the graph.
-     * @param[in] s vertex 'from'
-     * @param[in] t vertex 'to'
+     * @param[in] v vertex 'from'
+     * @param[in] w vertex 'to'
      * @returns true if graph is not full and adge was added.
      */
     bool addEdge(const std::string & v, const std::string & w);
@@ -596,17 +613,32 @@ public:
     /// @returns reference to the created graph
     Graph & G() const { return *g_; }
 
-    /// @returns true if symbolic graph containes given key
+    /**
+     * @brief Defined does exist souch key in the graph.
+     * @param[in] key key name
+     * @return true if symbolic graph containes given key.
+     */
     bool contains(const std::string & key) const;
 
-    /// @returns index of the given key or -1 if key does not exist
+    /**
+     * @brief Defined index of the given key.
+     * @param[in] key key name
+     * @return index of the given key or -1 if key does not exist
+     */
     int index(const std::string & key) const;
 
-    /// @returns the name of the key by the given index
+    /**
+     * @brief Defined the key name by the given index.
+     * @param[in] index index
+     * @return the name of the key by the given index.
+     */
     std::string name(const size_t & index) const;
 
-    /// @returns as string the vertex by the given index and all vertexes reachable
-    /// from given vertex
+    /**
+     * @brief Represents as string the vertex and its edges.
+     * @param[in] index index
+     * @return as string the vertex and its edges by the given index.
+     */
     std::string lexical(const size_t & index) const;
 private:
     /// table of names string -> index

@@ -1,7 +1,6 @@
 /**
  * -------------------------------------------------------------------------------------------------
  * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
- * @skype vlotoshko
  * @date 09-May-2018
  * -------------------------------------------------------------------------------------------------
  */
@@ -41,8 +40,8 @@ class DummySort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -63,8 +62,8 @@ class BubleSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -85,8 +84,8 @@ class CombSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -107,8 +106,8 @@ class ShakeSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -129,8 +128,8 @@ class QuickSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -140,15 +139,24 @@ public:
     /// class name
     static char const * name;
 private:
-    // NOTE: bounders lo and hi should be signed type
     /**
      * @brief sorts elements in the container
      * @param container with the elements
-     * @param container with the elements
-     * @param container with the elements
+     * @param left boundary
+     * @param right boundary
+     *
+     * @note bounders lo and hi should be signed type
      */
     static void sort(std::vector<T> & elements, int lo, int hi);
 
+    /**
+     * @brief sorts elements in the container
+     * @param container with the elements
+     * @param left boundary
+     * @param right boundary
+     *
+     * @note bounders lo and hi should be signed type
+     */
     static int partition(std::vector<T> & elements, int lo, int hi);
 };
 
@@ -166,8 +174,8 @@ class QuickSortM
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -177,9 +185,24 @@ public:
     /// class name
     static char const * name;
 private:
-    // NOTE: bounders lo and hi should be signed type
+    /**
+     * @brief sorts elements in the container
+     * @param container with the elements
+     * @param left boundary
+     * @param right boundary
+     *
+     * @note bounders lo and hi should be signed type
+     */
     static void sort(std::vector<T> & elements, int lo, int hi);
 
+    /**
+     * @brief sorts elements in the container
+     * @param container with the elements
+     * @param left boundary
+     * @param right boundary
+     *
+     * @note bounders lo and hi should be signed type
+     */
     static int partition(std::vector<T> & elements, int lo, int hi);
 };
 
@@ -197,8 +220,8 @@ class Quick3Sort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -225,8 +248,8 @@ class GnomeSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -252,8 +275,8 @@ class SelectionSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -274,8 +297,8 @@ class HeapSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -302,8 +325,8 @@ class InsertionSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -325,8 +348,8 @@ class ShellSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 
@@ -352,8 +375,8 @@ class MergeSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -383,8 +406,8 @@ class MergeUpSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -421,8 +444,8 @@ class QuickInsSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -451,8 +474,8 @@ class MergeInsSort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements)
     {
@@ -480,8 +503,8 @@ class InsertionBinarySort
 {
 public:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
 

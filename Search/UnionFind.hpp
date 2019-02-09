@@ -20,6 +20,7 @@ namespace uf
  * @struct UnionFindInfo
  * @brief The UnionFindInfo template struct holds information how elements are connected
  * one with other.
+ * @tparam T type of the element
  */
 template<typename T>
 struct UnionFindInfo
@@ -50,9 +51,10 @@ struct UnionFindInfo
 /**
  * @class UnionFind
  * @brief The UnionFind template class is the base class for all UnionFind classes.
+ * @tparam T type of the element
  *
  * The UnionFind template class is the base class for all UnionFind classes.
- * It uses NVI-technique to provide polymorphism
+ * It uses NVI-technique to provide polymorphism.
  */
 template <typename T>
 class UnionFind
@@ -106,7 +108,8 @@ private:
 /**
  * @class UnionFind_QuickFind
  * @brief The UnionFind_QuickFind template class implements 'quick find / slow union'
- * strategy
+ * strategy.
+ * @tparam T type of the element
  */
 template <typename T>
 class UnionFind_QuickFind : public UnionFind<T>
@@ -141,7 +144,8 @@ private:
 /**
  * @class UnionFind_QuickUnion
  * @brief The UnionFind_QuickUnion template class implements 'quick union / slow find'
- * strategy
+ * strategy.
+ * @tparam T type of the element
  */
 template <typename T>
 class UnionFind_QuickUnion : public UnionFind<T>
@@ -180,6 +184,7 @@ private:
  * @class UnionFind_QuickUnion_Balanced
  * @brief The UnionFind_QuickUnion_Balanced template class implements 'quick union /
  * slow find' strategy and uses additional data to generate balanced tree of connections.
+ * @tparam T type of the element
  */
 template <typename T>
 class UnionFind_QuickUnion_Balanced : public UnionFind<T>

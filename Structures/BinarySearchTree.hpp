@@ -1,8 +1,7 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   02-Jun-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @date 02-Jun-2018
+ */
 
 //--------------------------------------------------------------------------------------------------
 #ifndef BINARY_SEARCH_TREE_HPP
@@ -18,6 +17,10 @@
 namespace bst // binary search tree
 {
 
+/**
+ * @struct ObjectCounter
+ * @brief The ObjectCounter struct counts constructed and destroyed objects.
+ */
 struct ObjectCounter
 {
     ObjectCounter()  { std::cout << "{=} <<< exists " << ++count << std::endl; }
@@ -27,22 +30,72 @@ struct ObjectCounter
 
 size_t ObjectCounter::count = 0;
 
+/**
+ * @class BinarySearchTree
+ * @brief The UnionFind template class is the base class for all UnionFind classes.
+ * @tparam Key key type of the tree
+ * @tparam Value value type of the tree
+ */
 template<typename Key, typename Value>
 class BinarySearchTree
 {
 public:
+    /**
+     * @brief The BinarySearchTree constructor. Default.
+     */
     BinarySearchTree() : root_(nullptr) {}
     ~BinarySearchTree() { clear_(root_); }
 
-    void    put(Key k, Value v)       { root_ = put_(root_, k, v); }
-    Value   get(Key k)          const { return get_(root_, k); }
-    void    deleteNode(Key k)         { root_ = deleteNode_(root_, k); }
-    void    forgetMin()               { root_ = forgetMin_(root_); }
+    /**
+     * @brief put Puts new element into the tree.
+     * @param k key
+     * @param v value
+     */
+    void put(Key k, Value v) { root_ = put_(root_, k, v); }
 
+    /**
+     * @brief get Gets element from the tree.
+     * @param k key of the element
+     * @return value of the element.
+     */
+    Value get(Key k) const { return get_(root_, k); }
+
+    /**
+     * @brief deleteNode Deletes element with the given key.
+     * @param k key of the element
+     */
+    void deleteNode(Key k) { root_ = deleteNode_(root_, k); }
+
+    void    forgetMin() { root_ = forgetMin_(root_); }
+
+    /**
+     * @brief min Defines mininal key in the tree.
+     * @return minimal key.
+     */
     Key     min()         const { return min_(root_)->key; }
+
+    /**
+     * @brief min Defines maxinmal key in the tree.
+     * @return maxinmal key.
+     */
     Key     max()         const { return max_(root_)->key; }
+
+    /**
+     * @brief size Defines size of the tree.
+     * @return size of the tree.
+     */
     size_t  size()        const { return size_(root_); }
+
+    /**
+     * @brief isEmpty Defines wether tree is empty.
+     * @return true if tree is empty.
+     */
     bool    isEmpty()     const { return size() != 0; }
+
+    /**
+     * @brief valueSum Calculates sum of all elements in the tree.
+     * @return sum of all elements in the tree.
+     */
     Value   valueSum()    const { return valueSum_(root_); }
 
     Key    floor(Key k)   const { Node * n = floor_(root_, k); return n ? n->key : nullptr; }

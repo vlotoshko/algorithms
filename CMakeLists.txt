@@ -17,8 +17,8 @@ include_directories(Structures)
 include_directories(Tests)
 
 if (WIN32)
-    include_directories("D:/Projects/cppunit/include/")
-    link_directories("D:/Projects/cppunit/lib/")
+    include_directories("S:/Projects/cppunit/include/")
+    link_directories("S:/Projects/cppunit/lib/")
 endif (WIN32)
 
 

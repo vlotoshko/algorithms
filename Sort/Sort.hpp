@@ -1,8 +1,6 @@
 /**
- * -------------------------------------------------------------------------------------------------
  * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
  * @date 09-May-2018
- * -------------------------------------------------------------------------------------------------
  */
 
 // -------------------------------------------------------------------------------------------------
@@ -12,7 +10,7 @@
 
 // -------------------------------------------------------------------------------------------------
 #include "Tools.hpp"
-// --------------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------------
 
 namespace sort
 {
@@ -24,16 +22,14 @@ inline bool less(const T & a, const T & b)
 }
 
 
-// ------------------------------------------------------------------------------------------
-// ---------------- Changing sort algorithms ------------------------------------------------
-// ------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------
+// ---------------- Changing sort algorithms ----------------------------------------------
+// ----------------------------------------------------------------------------------------
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class DummySort
  * @brief The DummySort template class is the simpliest sort algorithm. Complexity: O(n*n).
  *
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class DummySort
@@ -51,11 +47,8 @@ public:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class BubleSort
  * @brief The BubleSort template class is the classic sort algorithm. Complexity: O(n*n).
- *
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class BubleSort
@@ -73,11 +66,8 @@ public:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class CombSort
  * @brief The CombSort template class. Complexity: average O(n*log(n)), worst O(n*n).
- *
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class CombSort
@@ -95,11 +85,8 @@ public:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class ShakeSort
  * @brief The ShakeSort template class. Complexity: O(n*n).
- *
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class ShakeSort
@@ -117,11 +104,8 @@ public:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class QuickSort
  * @brief The QuickSort template class. Complexity: average O(n*log(n)), worst O(n*n).
- *
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class QuickSort
@@ -140,20 +124,20 @@ public:
     static char const * name;
 private:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
-     * @param left boundary
-     * @param right boundary
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
+     * @param[in] lo left boundary
+     * @param[in] hi right boundary
      *
      * @note bounders lo and hi should be signed type
      */
     static void sort(std::vector<T> & elements, int lo, int hi);
 
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
-     * @param left boundary
-     * @param right boundary
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
+     * @param[in] lo left boundary
+     * @param[in] hi right boundary
      *
      * @note bounders lo and hi should be signed type
      */
@@ -162,12 +146,9 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class QuickSortM
- * @brief The QuickSortM template class. Complexity: average O(n*log(n)), worst O(n*n).
- *
- * The QuickSortM class implements quick-sort-median algorithm.
- * ----------------------------------------------------------------------------------------
+ * @brief The QuickSortM template class implements quick-sort-median algorithm.
+ * Complexity: average O(n*log(n)), worst O(n*n).
  */
 template <typename T>
 class QuickSortM
@@ -186,20 +167,20 @@ public:
     static char const * name;
 private:
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
-     * @param left boundary
-     * @param right boundary
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
+     * @param[in] lo left boundary
+     * @param[in] hi right boundary
      *
      * @note bounders lo and hi should be signed type
      */
     static void sort(std::vector<T> & elements, int lo, int hi);
 
     /**
-     * @brief sorts elements in the container
-     * @param container with the elements
-     * @param left boundary
-     * @param right boundary
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
+     * @param[in] lo left boundary
+     * @param[in] hi right boundary
      *
      * @note bounders lo and hi should be signed type
      */
@@ -208,12 +189,9 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class Quick3Sort
- * @brief The Quick3Sort template class. Complexity: average O(n*log(n)), worst O(n*n).
- *
- * The Quick3Sort class implements quick-sort-3parts algorithm.
- * ----------------------------------------------------------------------------------------
+ * @brief The Quick3Sort template class implements quick-sort-3parts algorithm.
+ * Complexity: average O(n*log(n)), worst O(n*n).
  */
 template <typename T>
 class Quick3Sort
@@ -231,17 +209,21 @@ public:
     /// class name
     static char const * name;
 private:
-    // NOTE: bounders lo and hi should be signed type
+    /**
+     * @brief Sorts elements in the container.
+     * @param[in] elements container with the elements
+     * @param[in] lo left boundary
+     * @param[in] hi right boundary
+     *
+     * @note bounders lo and hi should be signed type
+     */
     static void sort(std::vector<T> & elements, int lo, int hi);
 };
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class GnomeSort
  * @brief The GnomeSort template class. Complexity: O(n*n).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class GnomeSort
@@ -264,11 +246,8 @@ public:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class SelectionSort
  * @brief The SelectionSort template class. Complexity: O(n*n).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class SelectionSort
@@ -286,11 +265,8 @@ public:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class HeapSort
  * @brief The HeapSort template class. Complexity: O(n*log(n)).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class HeapSort
@@ -314,11 +290,8 @@ private:
 // ------------------------------------------------------------------------------------------
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class InsertionSort
  * @brief The InsertionSort template class. Complexity: O(n*n).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class InsertionSort
@@ -329,19 +302,20 @@ public:
      * @param[in] elements container with the elements
      */
     static void sort(std::vector<T> & elements);
-
-    static void sort(T *array, int length);
+    /**
+     * @brief Sorts elements in the container.
+     * @param[in] array container with the elements
+     * @param[in] length length of the array
+     */
+    static void sort(T * array, int length);
     /// class name
     static char const * name;
 };
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class ShellSort
  * @brief The ShellSort template class. Complexity: O(n*log(n)*log(n)).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class ShellSort
@@ -364,11 +338,8 @@ public:
 // ------------------------------------------------------------------------------------------
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class MergeSort
  * @brief The MergeSort template class. Complexity: O(n*log(n)).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class MergeSort
@@ -387,7 +358,15 @@ public:
     /// class name
     static char const * name;
 private:
-    // NOTE: bounders lo and hi should be signed type
+    /**
+     * @brief Sorts elements in the container and copies its into aux.
+     * @param[in] elements container with the elements
+     * @param[in] lo left boundary
+     * @param[in] hi right boundary
+     * @param[out] aux container
+     *
+     * @note bounders lo and hi should be signed type
+     */
     static void sort(std::vector<T> & elements, int lo, int hi, std::vector<T> & aux);
 
     static void merge(std::vector<T> & elements, int lo, int mid, int hi, std::vector<T> & aux);
@@ -395,11 +374,8 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class MergeUpSort
  * @brief The MergeUpSort template class. Complexity: O(n*log(n)).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class MergeUpSort
@@ -433,11 +409,8 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class QuickInsSort
  * @brief The QuickInsSort template class. Complexity: average O(n*log(n)), worst O(n*n).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class QuickInsSort
@@ -463,11 +436,8 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class MergeInsSort
  * @brief The MergeInsSort template class. Complexity: O(n*log(n)).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class MergeInsSort
@@ -492,11 +462,8 @@ private:
 
 
 /**
- * ----------------------------------------------------------------------------------------
  * @class InsertionBinary
  * @brief The InsertionBinary template class. Complexity: O(n*n).
- * @category
- * ----------------------------------------------------------------------------------------
  */
 template <typename T>
 class InsertionBinarySort

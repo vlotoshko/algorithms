@@ -28,6 +28,9 @@ namespace graph
 class PrimMST_Lazy
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = EdgeWeightedGraph::EdgeContainer;
 
     /// class name
@@ -68,6 +71,9 @@ private:
 class PrimMST_Energy
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = std::vector<EdgeWeighted>;
 
     /// class name
@@ -111,6 +117,9 @@ private:
 class KruskalMST
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = EdgeWeightedGraph::EdgeContainer;
 
     /// class name

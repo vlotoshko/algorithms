@@ -15,6 +15,13 @@
 namespace sort
 {
 
+/**
+ * @brief The less template function is a comparator.
+ * @tparam type of elements to compare
+ * @param[in] a the first element
+ * @param[in] b the second elements
+ * @return true if a less than b
+ */
 template<typename T>
 inline bool less(const T & a, const T & b)
 {
@@ -29,7 +36,6 @@ inline bool less(const T & a, const T & b)
 /**
  * @class DummySort
  * @brief The DummySort template class is the simpliest sort algorithm. Complexity: O(n*n).
- *
  */
 template <typename T>
 class DummySort
@@ -452,6 +458,8 @@ public:
         std::vector<T> aux(elements.size());
         sort(elements, 0, static_cast<int>(elements.size()) - 1, aux);
     }
+
+    /// class name
     static char const * name;
 private:
     // NOTE: bounders lo and hi should be signed type

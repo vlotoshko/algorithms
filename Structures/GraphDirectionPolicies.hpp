@@ -1,8 +1,7 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   10-Jun-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @date 10-Jun-2018
+ */
 
 //--------------------------------------------------------------------------------------------------
 #ifndef GRAPH_DIRECTION_POLICIES_HPP
@@ -15,9 +14,22 @@
 
 namespace graph
 {
+
+/**
+ * @struct NonDirectedGraphPolicy
+ * @brief The NonDirectedGraphPolicy struct adds edges to the graph as graph is
+ * non-directed.
+ * @tparam G graph type
+ */
 template<typename G>
 struct NonDirectedGraphPolicy
 {
+    /**
+     * @brief Addes new edge to the graph.
+     * @param[out] gr graph
+     * @param[in] v vertex 'from'
+     * @param[in] w vertex 'to'
+     */
     static void addEdge(G & gr, size_t v, size_t w)
     {
         gr.vertexes_[v].emplace_back(v, w);
@@ -25,6 +37,11 @@ struct NonDirectedGraphPolicy
         ++gr.e_;
     }
 
+    /**
+     * @brief Addes new edge to the graph.
+     * @param[out] gr graph
+     * @param[in] e new edge'
+     */
     static void addEdge(G & gr, typename G::EdgeType e)
     {
         size_t v = e.either();
@@ -34,6 +51,11 @@ struct NonDirectedGraphPolicy
         ++gr.e_;
     }
 
+    /**
+     * @brief Fills container with edges of the given graph.
+     * @param[in] gr graph
+     * @param[out] edges container for edges
+     */
     static void edges(const G & gr, typename G::EdgeContainer & edges)
     {
         for (size_t v = 0; v < gr.vertexCount(); ++v)
@@ -46,24 +68,46 @@ struct NonDirectedGraphPolicy
         }
     }
 
+    /// @brief scale factor wich helps to calculate number of edges
     static inline size_t factor() { return 2; }
 };
 
+/**
+ * @struct DirectedGraphPolicy
+ * @brief The DirectedGraphPolicy struct adds edges to the graph as graph is directed.
+ * @tparam G graph type
+ */
 template<typename G>
 struct DirectedGraphPolicy
 {
+    /**
+     * @brief Addes new edge to the graph.
+     * @param[out] gr graph
+     * @param[in] v vertex 'from'
+     * @param[in] w vertex 'to'
+     */
     static void addEdge(G & gr, size_t v, size_t w)
     {
         gr.vertexes_[v].emplace_back(v, w);
         ++gr.e_;
     }
 
+    /**
+     * @brief Addes new edge to the graph.
+     * @param[out] gr graph
+     * @param[in] e new edge'
+     */
     static void addEdge(G & gr, typename G::EdgeType e)
     {
         gr.vertexes_[e.either()].push_back(e);
         ++gr.e_;
     }
 
+    /**
+     * @brief Fills container with edges of the given graph.
+     * @param[in] gr graph
+     * @param[out] edges container for edges
+     */
     static void edges(const G & gr, typename G::EdgeContainer & edges)
     {
         for (size_t v = 0; v < gr.vertexCount(); ++v)
@@ -75,6 +119,7 @@ struct DirectedGraphPolicy
         }
     }
 
+    /// @brief scale factor wich helps to calculate number of edges
     static inline size_t factor() { return 1; }
 };
 

@@ -180,7 +180,7 @@ public:
      * @brief The DepthFirstPaths constructor explores graph and discovers paths from
      * initial vertex to other vertexes in the graph.
      * @param[in] g graph
-     * @param[in] v initial vertex
+     * @param[in] s initial vertex
      */
     DepthFirstPaths(const G & g, const size_t & s);
 
@@ -192,10 +192,10 @@ public:
     bool hasPathTo(const size_t & v) const { return marked_[v]; }
 
     /**
-    * @brief The pathTo method finds path to the vertex.
-    * @param[in] v vertex
-    * @return path to the vertex as string.
-    */
+     * @brief The pathTo method finds path to the vertex.
+     * @param[in] v vertex
+     * @return path to the vertex as string.
+     */
     std::string pathTo(const size_t &  v) const;
 private:
     /**
@@ -454,7 +454,7 @@ public:
      * @brief The BreadthFirstPaths constructor explores graph and discovers paths
      * from initial vertex to other vertexes in the graph.
      * @param[in] g graph
-     * @param[in] v initial vertex
+     * @param[in] s initial vertex
      */
     BreadthFirstPaths(const Graph & g, const size_t & s);
 

@@ -31,6 +31,9 @@ template<typename Compare, typename InitialValue>
 class Paths
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = std::vector<EdgeWeighted>;
 
     /**
@@ -86,6 +89,10 @@ protected:
  */
 struct MaxDouble
 {
+    /**
+     * @brief operator ()
+     * @return maximal double value.
+     */
     double operator()() const { return std::numeric_limits<double>::max(); }
 };
 
@@ -96,10 +103,21 @@ struct MaxDouble
  */
 struct MinDouble
 {
+    /**
+     * @brief operator ()
+     * @return minimal double value.
+     */
     double operator()() const { return std::numeric_limits<double>::lowest(); }
 };
 
+/**
+ * @brief Explicit instantiation for short pathes.
+ */
 using ShortPaths = Paths<std::greater<>, MaxDouble>;
+
+/**
+ * @brief Explicit instantiation for long pathes.
+ */
 using LongPaths  = Paths<std::less<>, MinDouble>;
 
 
@@ -145,6 +163,9 @@ private:
 class DijkstraAllPairsSP
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = ShortPaths::EdgeContainer;
 
     /**
@@ -188,6 +209,9 @@ private:
 class AcyclicShortPaths : public ShortPaths
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = ShortPaths::EdgeContainer;
 
     /**
@@ -216,6 +240,9 @@ public:
 class AcyclicLongPaths : public LongPaths
 {
 public:
+    /**
+     * @brief container of the edges
+     */
     using EdgeContainer = ShortPaths::EdgeContainer;
 
     /**
@@ -250,6 +277,7 @@ struct ContinuousJob
     std::vector<size_t> dependentJobs;
 };
 
+/// @brief container of continuous jobs
 using ContinuousJobs = std::vector<ContinuousJob>;
 
 

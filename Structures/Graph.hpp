@@ -1,8 +1,7 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   10-Jun-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @date 10-Jun-2018
+ */
 
 //--------------------------------------------------------------------------------------------------
 #ifndef GRAPH_HPP
@@ -23,15 +22,32 @@
 namespace graph
 {
 
+/**
+ * @class GraphT
+ * @brief The GraphT template class represents the graph data structure.
+ * @tparam Edge edge type
+ */
 template <typename Edge = EdgeNonWeighted>
 class GraphT
 {
 public:
+    /// @brief type of the edges
     using EdgeType = Edge;
+
+    /// @brief container of the edges
     using EdgeContainer = std::list<Edge>;
 
+    /**
+     * @brief The GraphT constructor creates empty grapth.
+     * @param[in] v size of the graph
+     */
     explicit GraphT(size_t v) : v_(v), e_(0), vertexes_(v) {}
 
+    /**
+     * @brief The GraphT constructor creates grapth reading data from the file.
+     * @param[in] strategy type used for overloading template constructor
+     * @param[in] fileName name of the file
+     */
     template<typename Strategy>
     GraphT (Strategy, std::string fileName)
     {
@@ -54,9 +70,18 @@ public:
         v_ = vertexes_.size();
     }
 
+    /// @return number of vertexes in the graph
     size_t vertexCount() const { return v_; }
-    size_t edgeCount()   const { return e_; }
-    const  EdgeContainer& operator[] (size_t index) const { return vertexes_[index]; }
+
+    /// @return number of edges in the graph
+    size_t edgeCount() const { return e_; }
+
+    /**
+     * @brief Gets edges of the given vertex
+     * @param[in] index vertex
+     * @return edges of the given vertex
+     */
+    const EdgeContainer & operator[] (size_t index) const { return vertexes_[index]; }
 protected:
     friend struct NonDirectedGraphPolicy<GraphT>;
     friend struct DirectedGraphPolicy<GraphT>;
@@ -65,7 +90,15 @@ protected:
     std::vector<EdgeContainer> vertexes_;
 };
 
-using Graph             = GraphT<EdgeNonWeighted>;
+/**
+ * @brief The Graph class is the explicit instantiation of GraphT with non-weighted edges.
+ */
+using Graph = GraphT<EdgeNonWeighted>;
+
+/**
+ * @brief The EdgeWeightedGraph class is the explicit instantiation of GraphT with
+ * weighted edges.
+ */
 using EdgeWeightedGraph = GraphT<EdgeWeighted>;
 
 

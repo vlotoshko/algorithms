@@ -25,6 +25,7 @@ struct ObjectCounter
 {
     ObjectCounter()  { std::cout << "{=} <<< exists " << ++count << std::endl; }
     ~ObjectCounter() { std::cout << "{=} >>> left "   << --count << std::endl; }
+    /// count of created objects
     static size_t count;
 };
 
@@ -48,63 +49,104 @@ public:
 
     /**
      * @brief put Puts new element into the tree.
-     * @param k key
-     * @param v value
+     * @param[in] k key
+     * @param[in] v value
      */
     void put(Key k, Value v) { root_ = put_(root_, k, v); }
 
     /**
-     * @brief get Gets element from the tree.
-     * @param k key of the element
+     * @brief Gets element from the tree.
+     * @param[in] k key of the element
      * @return value of the element.
      */
     Value get(Key k) const { return get_(root_, k); }
 
     /**
-     * @brief deleteNode Deletes element with the given key.
-     * @param k key of the element
+     * @brief Deletes element with the given key.
+     * @param[in] k key of the element
      */
     void deleteNode(Key k) { root_ = deleteNode_(root_, k); }
 
-    void    forgetMin() { root_ = forgetMin_(root_); }
-
     /**
-     * @brief min Defines mininal key in the tree.
+     * @brief Defines mininal key in the tree.
      * @return minimal key.
      */
-    Key     min()         const { return min_(root_)->key; }
+    Key min() const { return min_(root_)->key; }
 
     /**
-     * @brief min Defines maxinmal key in the tree.
+     * @brief Defines maxinmal key in the tree.
      * @return maxinmal key.
      */
-    Key     max()         const { return max_(root_)->key; }
+    Key max() const { return max_(root_)->key; }
 
     /**
      * @brief size Defines size of the tree.
      * @return size of the tree.
      */
-    size_t  size()        const { return size_(root_); }
+    size_t size() const { return size_(root_); }
 
     /**
      * @brief isEmpty Defines wether tree is empty.
      * @return true if tree is empty.
      */
-    bool    isEmpty()     const { return size() != 0; }
+    bool isEmpty() const { return size() != 0; }
 
     /**
      * @brief valueSum Calculates sum of all elements in the tree.
      * @return sum of all elements in the tree.
      */
-    Value   valueSum()    const { return valueSum_(root_); }
+    Value valueSum() const { return valueSum_(root_); }
 
-    Key    floor(Key k)   const { Node * n = floor_(root_, k); return n ? n->key : nullptr; }
-    Key    ceiling(Key k) const { Node * n = ceiling_(root_, k); return n ? n->key : nullptr; }
-    Key    select(size_t r)  const { Node * n = select_(root_, r); return n ? n->key : nullptr; }
-    size_t rank(Key k)    const { return rank_(root_, k); }
-    void   print()        const { print_(root_); }
+    /**
+     * @brief Gets nearest element smaller then given.
+     * @param[in] k key of the element
+     * @return nearest element smaller then given.
+     */
+    Key floor(Key k)  const { Node * n = floor_(root_, k); return n ? n->key : nullptr; }
+
+    /**
+     * @brief Gets nearest element bigger then given.
+     * @param[in] k key of the element
+     * @return nearest element bigger then given.
+     */
+    Key ceiling(Key k) const { Node * n = ceiling_(root_, k); return n ? n->key : nullptr; }
+
+    /**
+     * @brief Gets the element by its rank.
+     * @param[in] r key of the element
+     * @return the element by its rank.
+     *
+     * Rank - the count of elements less then given.
+     */
+    Key select(size_t r) const { Node * n = select_(root_, r); return n ? n->key : nullptr; }
+
+    /**
+     * @brief Gets the rank of the element.
+     * @param[in] k key of the element
+     * @return the rank of the element.
+     *
+     * Rank - the count of elements less then given.
+     */
+    size_t rank(Key k)  const { return rank_(root_, k); }
+
+    /**
+     * @brief Prints all elements fo the tree.
+     */
+    void print() const { print_(root_); }
+
+    /**
+     * @brief Gets sorted keys within lo-hi interval.
+     * @param[in] lo low boundary of the inveral
+     * @param[in] hi high boundary of the interval
+     * @return sorted keys within lo-hi interval.
+     */
     std::vector<Key> keys (Key lo, Key hi) const;
-    std::vector<Key> keys()                const { return keys_(min(), max()); }
+
+    /**
+     * @brief Returns all keys sorted.
+     * @return all keys, sorted.
+     */
+    std::vector<Key> keys() const { return keys_(min(), max()); }
 
 private:
     struct Node //: public ObjectCounter
@@ -211,7 +253,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::delet
 }
 
 template< typename Key, typename Value >
-void BinarySearchTree<Key, Value>::clear_(Node* n)
+void BinarySearchTree<Key, Value>::clear_(Node * n)
 {
     if (n == nullptr)
         return;
@@ -222,7 +264,6 @@ void BinarySearchTree<Key, Value>::clear_(Node* n)
         clear_(n->right);
 
     delete n;
-    n = nullptr;
 }
 
 template<typename Key, typename Value>

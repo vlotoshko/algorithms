@@ -86,7 +86,7 @@ public:
     T find(const UnionFindInfo<T> & ufData, const T & p) { ufData.findInvokes++; return find_(ufData, p); }
 
     /**
-     * @brief Checks wether two components belongs to the same claster, i.e. connected.
+     * @brief Checks whether two components belongs to the same claster, i.e. connected.
      * @param[in] ufData UnionFindInfo structure to check connection
      * @param[in] p component 1 of the UnionFindInfo structure
      * @param[in] q component 2 of the UnionFindInfo structure

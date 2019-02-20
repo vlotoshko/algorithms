@@ -86,7 +86,7 @@ public:
     size_t size() const { return size_(root_); }
 
     /**
-     * @brief isEmpty Defines wether tree is empty.
+     * @brief isEmpty Defines whether tree is empty.
      * @return true if tree is empty.
      */
     bool isEmpty() const { return size() != 0; }

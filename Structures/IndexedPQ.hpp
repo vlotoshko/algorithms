@@ -128,7 +128,7 @@ public:
     const_reference operator[] (size_t i) const { return *byIndex_[i]; }
 
     /**
-     * @brief Defines wether queue containes element with the given index.
+     * @brief Defines whether queue containes element with the given index.
      * @param[in] v index
      * @return true if queue containes element with the given index.
      */

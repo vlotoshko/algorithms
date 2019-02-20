@@ -52,7 +52,7 @@ private:
      */
     void visit(const EdgeWeightedGraph & gr, const size_t & v);
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
 
     /// edges of minimal spanning tree
@@ -96,7 +96,7 @@ private:
      */
     void visit(const EdgeWeightedGraph & gr, const size_t & v);
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
 
     /// holds minimal distance to the vertex

@@ -315,7 +315,7 @@ public:
     bool isCyclic() const { return cycle_.size() > 0; }
 
     /// @return a container of cycle edges
-    std::stack<size_t> cycle() const { return cycle; }
+    std::stack<size_t> cycle() const { return cycle_; }
 private:
     /**
      * @brief Modification of the depth-first search algorithm to find cycles.

@@ -17,22 +17,44 @@
 namespace data_structs
 {
 
-// ------------------------------------------------------------------------------------------
-// Structure that holds heap's pointer to the T and hold its index in the array
-// Incapsulates compartor to compare two T elements, stored in the heap
-//
+
+/**
+ * @struct IndexedItem
+ * @brief The IndexedItem template class holds heap's pointer to the T and hold its
+ * index in the array.
+ * Incapsulates compartor to compare two T elements, stored in the heap.
+ * @tparam T type of the element
+ * @tparam Compare type of the comparator
+ *
+ */
 template <typename T, typename Compare>
 struct IndexedItem
 {
+    /// @brief value type
     typedef T            value_type;
+    /// @brief ponter type
     typedef T *          pointer;
+    /// @brief const pointer type
     typedef const T *    const_pointer;
+    /// @brief reference type
     typedef T &          reference;
+    /// @brief const reference type
     typedef const T &    const_reference;
+    /// @brief size type
     typedef size_t       size_type;
 
-    size_type  index;
-    pointer    element;
+    /// @brief index in the array
+    size_type index;
+
+    /// @brief pointer to element in the heap
+    pointer element;
+
+    /**
+     * @brief Compares two elements using comparator.
+     * @param[in] lsh left-side-hand element
+     * @param[in] rsh right-side-hand element
+     * @return true if comparator returns true.
+     */
     static bool cmp(const IndexedItem & lsh, const IndexedItem & rsh);
 private:
     static Compare comp_;
@@ -48,26 +70,41 @@ bool IndexedItem<T, Compare>::cmp(const IndexedItem & lsh, const IndexedItem & r
 }
 
 
-// ------------------------------------------------------------------------------------------
-// Indexed priority queue. Holds vector of pointers to T to get T by index
-// Holds container of Sequence type to store sorted elemets
-// Indexed priority queue has fixed size(capasity) passed into the constructor
-// Does not check any size overflow or empty
-//
+/**
+ * @class IndexedPriorityQueue
+ * @brief The IndexedPriorityQueue template class is indexed priority queue.
+ * Holds container of Sequence type to store sorted elemets.
+ * Indexed priority queue has fixed size(capasity) passed into the constructor.
+ * Does not check any size overflow or empty.
+ * @tparam T type of element
+ * @tparam IndexedItem type of indexed element
+ * @tparam Sequence type of container
+ */
 template<typename T, typename Compare  = std::less<T>,
          typename IndexedItem = IndexedItem<T, Compare>,
          typename Sequence = std::vector<IndexedItem>>
 class IndexedPriorityQueue
 {
 public:
+    /// @brief value type
     typedef typename IndexedItem::value_type                value_type;
+    /// @brief pointer type
     typedef typename IndexedItem::pointer                   pointer;
+    /// @brief reference type
     typedef typename IndexedItem::reference                 reference;
+    /// @brief const reference type
     typedef typename IndexedItem::const_reference           const_reference;
+    /// @brief size type
     typedef typename IndexedItem::size_type                 size_type;
+    /// @brief container type
     typedef          IndexedItem                            container_type;
 
 public:
+    /**
+     * @brief The IndexedPriorityQueue constructor explores all graph and calculates
+     * shortest paths, using topolocigal sort.
+     * @param[in] size of the queue
+     */
     explicit IndexedPriorityQueue(size_t size) : byIndex_(size, nullptr) {}
     ~IndexedPriorityQueue()
     {
@@ -77,15 +114,39 @@ public:
         }
     }
 
+    /**
+     * @brief Gets top element.
+     * @return top element
+     */
     const_reference top() const { return *byOrder_.front().element; }
+
+    /**
+     * @brief Gets element by index
+     * @param[in] i index
+     * @return elememt by index.
+     */
     const_reference operator[] (size_t i) const { return *byIndex_[i]; }
+
+    /**
+     * @brief Defines wether queue containes element with the given index.
+     * @param[in] v index
+     * @return true if queue containes element with the given index.
+     */
     bool containes(size_t v) const { return byIndex_[v] != nullptr; }
 
+    /// @return capasity of the queue
     size_type capasity() const { return byIndex_.size(); }
-    size_type size()     const { return byOrder_.size(); }
-    bool      empty()    const { return byOrder_.empty(); }
 
-    // Removes top element and returns its index
+    /// @return size of the queue
+    size_type size() const { return byOrder_.size(); }
+
+    /// @return true if queue is empty
+    bool empty() const { return byOrder_.empty(); }
+
+    /**
+     * @brief Removes top element.
+     * @return returns index of the removed element.
+     */
     size_t pop()
     {
         size_t index = byOrder_.front().index;
@@ -97,20 +158,26 @@ public:
         return index;
     }
 
-    bool push(size_type v, value_type t)
+    /**
+     * @brief Adds or updates element in the queue.
+     * @param[in] i index of the element
+     * @param[in] v value of the element
+     * @return true if new element was added.
+     */
+    bool push(size_type i, value_type v)
     {
-        bool newElement = !containes(v);
+        bool newElement = !containes(i);
         if (newElement)
         {
-            pointer item = new value_type(t);
-            byIndex_[v] = item;
-            byOrder_.push_back({v, item});
+            pointer item = new value_type(v);
+            byIndex_[i] = item;
+            byOrder_.push_back({i, item});
             std::push_heap(byOrder_.begin(), byOrder_.end(), IndexedItem::cmp);
         }
         else
         {
-            auto item = byIndex_[v];
-            *item = t;
+            auto item = byIndex_[i];
+            *item = v;
             std::make_heap(byOrder_.begin(), byOrder_.end(), IndexedItem::cmp);
         }
         return newElement;

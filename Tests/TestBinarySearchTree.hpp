@@ -1,8 +1,7 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   30-May-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @date 30-May-2018
+ */
 
 //--------------------------------------------------------------------------------------------------
 #ifndef TESTBINARYSEARCHTREE_HPP
@@ -23,10 +22,18 @@
 namespace tests
 {
 
+/**
+ * @class TestBST
+ * @brief The TestBST class tests binary search tree.
+ */
 class TestBST : public CppUnit::TestFixture
 {
 public:
-    static CppUnit::Test * suite()
+    /**
+     * @brief suite implements implicit intreface for the TestSuiteFactory.
+     * @return test suite for the current tests.
+     */
+    static CppUnit::TestSuite * suite()
     {
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestBST");
         suiteOfTests->addTest(new CppUnit::TestCaller<TestBST>(
@@ -62,6 +69,9 @@ public:
         return suiteOfTests;
     }
 
+    /**
+     * @brief setUp sets up initial BST
+     */
     void setUp()
     {
         bst.put("word", 0);
@@ -75,6 +85,9 @@ public:
     }
 
 protected:
+    /**
+     * @brief get_ShouldReturnValue_WhenGivenKey tests returning correct value.
+     */
     void get_ShouldReturnValue_WhenGivenKey()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), bst.get("word"));
@@ -82,6 +95,9 @@ protected:
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), bst.get("zero"));
     }
 
+    /**
+     * @brief deleteNode_ShouldDeleteNode_WhenGivenKey tests deleting correct value.
+     */
     void deleteNode_ShouldDeleteNode_WhenGivenKey()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), bst.get("car"));
@@ -89,16 +105,25 @@ protected:
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(0), bst.get("car"));
     }
 
+    /**
+     * @brief min_ShouldReturnKeyWithMinimalValue tests returning minimal value.
+     */
     void min_ShouldReturnKeyWithMinimalValue()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("android"), bst.min());
     }
 
+    /**
+     * @brief max_ShouldReturnKeyWithMaximalValue tests returning maximal element.
+     */
     void max_ShouldReturnKeyWithMaximalValue()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("word"), bst.max());
     }
 
+    /**
+     * @brief size_ShouldReturnCountOfNodes tests returning correct size of tree.
+     */
     void size_ShouldReturnCountOfNodes()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(6), bst.size());
@@ -107,6 +132,9 @@ protected:
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(4), bst.size());
     }
 
+    /**
+     * @brief valueSum_ShouldReturnSumOfAllvalues tests returning sum of all elements.
+     */
     void valueSum_ShouldReturnSumOfAllvalues()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(8), bst.valueSum());
@@ -116,24 +144,36 @@ protected:
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(5), bst.valueSum());
     }
 
+    /**
+     * @brief floor_ShouldReturnFloor_WhengivenKey tests returning correct floor element.
+     */
     void floor_ShouldReturnFloor_WhengivenKey()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("connect"), bst.floor("cow"));
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("android"), bst.floor("ara"));
     }
 
+    /**
+     * @brief ceiling_ShouldReturnCeiling_WhengivenKey tests returning correct ceinig element.
+     */
     void ceiling_ShouldReturnCeiling_WhengivenKey()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("select"), bst.ceiling("flower"));
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("word"), bst.ceiling("star"));
     }
 
+    /**
+     * @brief select_ShouldReturnKey_WhenGivenRank tests returning element of the correct rank.
+     */
     void select_ShouldReturnKey_WhenGivenRank()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("connect"), bst.select(3));
         CPPUNIT_ASSERT_EQUAL(static_cast<std::string>("android"), bst.select(0));
     }
 
+    /**
+     * @brief rank_ShouldReturnRank_WhenGivenKey tests returning correct rank of the element.
+     */
     void rank_ShouldReturnRank_WhenGivenKey()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<size_t>(2), bst.rank("cat"));

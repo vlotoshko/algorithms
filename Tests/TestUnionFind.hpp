@@ -1,8 +1,7 @@
-//--------------------------------------------------------------------------------------------------
-// Author: Volodymyr Lotoshko (vlotoshko@gmail.com)
-// skype:  vlotoshko
-// Date:   30-May-2018
-//--------------------------------------------------------------------------------------------------
+/**
+ * @author Volodymyr Lotoshko (vlotoshko@gmail.com)
+ * @date 30-May-2018
+ */
 
 //--------------------------------------------------------------------------------------------------
 #ifndef TESTUNIONFIND_HPP
@@ -21,11 +20,23 @@
 namespace tests
 {
 
+/**
+ * @class TestUnionFind
+ * @brief The TestUnionFind template class tests union-find algorithms.
+ * @tparam UF_Type type of the union-find struct
+ * @tparam T type of the elements
+ */
 template <template <typename> class UF_Type, typename T>
 class TestUnionFind : public CppUnit::TestFixture
 {
 public:
-    static CppUnit::Test * suite()
+    TestUnionFind() = default;
+
+    /**
+     * @brief suite implements implicit intreface for the TestSuiteFactory.
+     * @return test suite for the current tests.
+     */
+    static CppUnit::TestSuite * suite()
     {
         CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite(UF_Type<T>::name);
         suiteOfTests->addTest(new CppUnit::TestCaller<TestUnionFind<UF_Type, T>>(
@@ -37,6 +48,9 @@ public:
         return suiteOfTests;
     }
 
+    /**
+     * @brief setUp sets up union-find structure.
+     */
     void setUp() override
     {
         uf_Type.unionComponents(ufData, 1, 3);
@@ -47,6 +61,9 @@ public:
     }
 
 protected:
+    /**
+     * @brief find_ShouldReturnClusterId_WhenGivenComponent tests returning correct cluster id.
+     */
     void find_ShouldReturnClusterId_WhenGivenComponent()
     {
         CPPUNIT_ASSERT_EQUAL(static_cast<T>(1), uf_Type.find(ufData, 9));
@@ -54,6 +71,10 @@ protected:
         CPPUNIT_ASSERT_EQUAL(static_cast<T>(6), uf_Type.find(ufData, 6));
     }
 
+    /**
+     * @brief unionComponents_ShouldConnectComponentsIntoOneCluster tests whether components
+     * belong to one cluster.
+     */
     void unionComponents_ShouldConnectComponentsIntoOneCluster()
     {
         CPPUNIT_ASSERT(uf_Type.connected(ufData, 1, 3));
@@ -70,6 +91,12 @@ private:
     UF_Type<T> uf_Type;
 };
 
+/**
+ * @brief find_ShouldReturnClusterId_WhenGivenComponent tests returning correct cluster id.
+ * Explicit instatiation.
+ * @tparam UnionFind_QuickUnion_Balanced
+ * @tparam size_t
+ */
 template<>
 void TestUnionFind<uf::UnionFind_QuickUnion_Balanced, size_t>::find_ShouldReturnClusterId_WhenGivenComponent()
 {
@@ -81,8 +108,21 @@ void TestUnionFind<uf::UnionFind_QuickUnion_Balanced, size_t>::find_ShouldReturn
 
 // Had to use aliases for the test suite registration, because in this particulat case
 // preprocessor does not accept templates with more that 1 parameter
-template<typename T> using TestUnionFind_QuickFind           = TestUnionFind<uf::UnionFind_QuickFind, T>;
-template<typename T> using TesUnionFind_QuickUnion           = TestUnionFind<uf::UnionFind_QuickUnion, T>;
+/**
+ * @brief TestUnionFind_QuickFind template class is the partial specialized template
+ * for the TestUnionFind unit test.
+ */
+template<typename T> using TestUnionFind_QuickFind = TestUnionFind<uf::UnionFind_QuickFind, T>;
+/**
+ * @brief TesUnionFind_QuickUnion template class is the partial specialized template
+ * for the TestUnionFind unit test.
+ */
+template<typename T> using TesUnionFind_QuickUnion = TestUnionFind<uf::UnionFind_QuickUnion, T>;
+
+/**
+ * @brief TestUnionFind_QuickUnion_Balanced template class is the partial
+ *  specialized template for the TestUnionFind unit test.
+ */
 template<typename T> using TestUnionFind_QuickUnion_Balanced = TestUnionFind<uf::UnionFind_QuickUnion_Balanced, T>;
 
 

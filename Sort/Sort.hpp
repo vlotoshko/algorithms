@@ -18,8 +18,8 @@ namespace sort
 /**
  * @brief The less template function is a comparator.
  * @tparam type of elements to compare
- * @param[in] a the first element
- * @param[in] b the second elements
+ * @param[in] a first element
+ * @param[in] b second element
  * @return true if a less than b
  */
 template<typename T>
@@ -470,8 +470,8 @@ private:
 
 
 /**
- * @class InsertionBinary
- * @brief The InsertionBinary template class. Complexity: O(n*n).
+ * @class InsertionBinarySort
+ * @brief The InsertionBinarySort template class. Complexity: O(n*n).
  */
 template <typename T>
 class InsertionBinarySort

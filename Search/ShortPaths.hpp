@@ -111,12 +111,12 @@ struct MinDouble
 };
 
 /**
- * @brief Explicit instantiation for short pathes.
+ * @brief Explicit instantiation for short paths.
  */
 using ShortPaths = Paths<std::greater<>, MaxDouble>;
 
 /**
- * @brief Explicit instantiation for long pathes.
+ * @brief Explicit instantiation for long paths.
  */
 using LongPaths  = Paths<std::less<>, MinDouble>;
 

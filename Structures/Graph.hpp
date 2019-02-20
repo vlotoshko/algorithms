@@ -45,7 +45,6 @@ public:
 
     /**
      * @brief The GraphT constructor creates grapth reading data from the file.
-     * @param[in] strategy type used for overloading template constructor
      * @param[in] fileName name of the file
      */
     template<typename Strategy>
@@ -82,7 +81,7 @@ public:
      * @return edges of the given vertex
      */
     const EdgeContainer & operator[] (size_t index) const { return vertexes_[index]; }
-protected:
+private:
     friend struct NonDirectedGraphPolicy<GraphT>;
     friend struct DirectedGraphPolicy<GraphT>;
     size_t v_;

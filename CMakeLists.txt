@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 2.8.12)
 
 project(algorithms)
 
+set(CMAKE_CXX_FLAGS "-Wall -Wextra -Werror -Wpedantic")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

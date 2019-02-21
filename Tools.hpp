@@ -17,22 +17,39 @@
 
 namespace tools
 {
-// ------------------------------------------------------------------------------------------
-// Timer returns time is seconds as xx.xxx between construction/start and timeSpent invokations
-//
+
+/**
+ * @brief The Timer class calculates time is seconds as xx.xxx between construction/start
+ * and timeSpent invokations.
+ */
 class Timer {
 public:
+    /**
+     * @brief The Timer constructor sets new start time point.
+     */
     Timer();
+
+    /**
+     * @brief start resets start time point
+     */
     void start();
+
+    /**
+     * @brief timeSpent calculates time between 'now' time point and saved time point.
+     * @return difference between 'now' time point and saved time point.
+     */
     double timeSpent();
 private:
     std::chrono::time_point<std::chrono::system_clock> start_;
 };
 
-
-// ------------------------------------------------------------------------------------------
-// Returns random T value within from min to max
-//
+/**
+ * @brief random returns random values from min to max of the type T.
+ * @tparam T type
+ * @param[in] min min value
+ * @param[in] max max value
+ * @return randome value of T
+ */
 template <typename T>
 T random(const T & min, const T & max)
 {
@@ -43,10 +60,14 @@ T random(const T & min, const T & max)
     return random_T;
 }
 
-
-// ------------------------------------------------------------------------------------------
-// Fills vector with the count of size elements with the random value from min to max
-//
+/**
+ * @brief randomData fills vector by random values from min to max of the type T.
+ * @tparam T type
+ * @param[out] elements
+ * @param[in] size size of the vector
+ * @param[in] min min value
+ * @param[in] max max value
+ */
 template <typename T>
 void randomData(std::vector<T> & elements, size_t size, T min, T max)
 {
@@ -58,10 +79,11 @@ void randomData(std::vector<T> & elements, size_t size, T min, T max)
     }
 }
 
-
-// ------------------------------------------------------------------------------------------
-// Outputs all elements of a vector
-//
+/**
+ * @brief show outputs elements of the vector.
+ * @tparam T type of the element
+ * @param[in] elements
+ */
 template <typename T>
 void show(const std::vector<T> & elements)
 {
@@ -72,9 +94,12 @@ void show(const std::vector<T> & elements)
     std::cout << std::endl;
 }
 
-
-/*! \brief Returns true if container is sorted
- * \param const reference to container Container
+/**
+ * @brief isSorted check wheter container is sorted or not.
+ * @tparam Container type of the container
+ * @tparam T type of the element
+ * @param[in] container
+ * @return true if container sorted.
  */
 template <template <typename...> class Container, typename T>
 bool isSorted(const Container<T> & container)
@@ -94,13 +119,21 @@ bool isSorted(const Container<T> & container)
     return true;
 }
 
-// ------------------------------------------------------------------------------------------
-// Calculates ratio between current value and previous, saved before.
-//
+/**
+ * @brief The CalcRatio class calculates ratio between current value and previous, saved before.
+ */
 class CalcRatio
 {
 public:
+    /**
+     * @brief The CalcRatio saver initial value as 1.
+     */
     CalcRatio() : previous_(1) {}
+    /**
+     * @brief getRatio calrulates ratio and saves given value.
+     * @param[in] value value
+     * @return ratio between current value and value saved before.
+     */
     double getRatio(double value);
 private:
     double previous_;

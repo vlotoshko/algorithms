@@ -20,6 +20,7 @@
 namespace tests
 {
 
+/// @brief default indentation for unit test results output
 constexpr int DEFAULT_WIDTH = 70;
 /**
  * @class ShowStartListener

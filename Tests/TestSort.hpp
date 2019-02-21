@@ -23,7 +23,7 @@ namespace tests
 
 /**
  * @class TestIsSorted
- * @brief The TestIsSorted template class tests wether container is sorted.
+ * @brief The TestIsSorted template class tests whether container is sorted.
  * @tparam T type of the container elements
  */
 template <typename T>

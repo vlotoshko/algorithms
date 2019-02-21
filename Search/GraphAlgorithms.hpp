@@ -80,7 +80,7 @@ size_t maxDegree(const G & g)
 
 /**
  * @brief The avgDegree template function calculates the average degree of the given graph
- * @tparam Strategy determines wether graph is directed or non-directed
+ * @tparam Strategy determines whether graph is directed or non-directed
  * @tparam G graph type
  * @param[in] g graph
  * @return average degree of given graph.
@@ -90,7 +90,7 @@ size_t avgDegree(const G & g) { return Strategy::factor() * g.edgeCount() / g.ve
 
 /**
  * @brief The selfLoops template function calculates vertexes self loops
- * @tparam Strategy determines wether graph is directed or non-directed
+ * @tparam Strategy determines whether graph is directed or non-directed
  * @tparam G graph type
  * @param[in] g graph
  * @return vertexes self loops count
@@ -116,7 +116,7 @@ size_t selfLoops(const G & g)
 
 /**
  * @brief The reverse template function reverses the given graph.
- * @tparam Strategy determines wether graph is directed or non-directed
+ * @tparam Strategy determines whether graph is directed or non-directed
  * @tparam G graph type
  * @param[in] g graph
  * @return reversed graph.
@@ -206,7 +206,7 @@ private:
      */
     void dfs(const Graph & g, const size_t & v);
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
     /// container of edges from which current vertex was found
     std::vector<size_t> edgeTo_;
@@ -248,7 +248,7 @@ private:
      */
     void dfs(const G & g, const size_t & v);
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
     /// holds vertexes in the reversed order
     std::stack<size_t> reversePost_;
@@ -289,7 +289,7 @@ private:
 
     /// equals true if graph has cycles
     bool hasCycle_;
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
 };
 
@@ -324,9 +324,9 @@ private:
      */
     void dfs(const G & g, const size_t & v);
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
-    /// holds information wether vertex was already visited in the current iteration
+    /// holds information whether vertex was already visited in the current iteration
     std::vector<bool> onStack_;
     /// edges from which current vertex was found
     std::vector<size_t> edgeTo_;
@@ -404,7 +404,7 @@ private:
     /// the count of strongly coupled components in the given graph
     size_t count_;
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
 
     /// holds ids of Strong Coupled Components for erevy vertex
@@ -417,27 +417,27 @@ private:
  * @brief The TransitiveClosure class explores grash and finds out is there parh
  * from one vertex to other.
  * Explores grash using depth-first search algorithm and fills bool matrix
- * by results wether reachable one vertex from other.
+ * by results whether reachable one vertex from other.
  */
 class TransitiveClosure
 {
 public:
     /**
-     * @brief The TransitiveClosure constructor fills bool matrix by results wether
+     * @brief The TransitiveClosure constructor fills bool matrix by results whether
      * reachable one vertex from other.
      * @param[in] g graph whose paths will be explored
      */
     explicit TransitiveClosure(const Graph & g);
 
     /**
-     * @brief Defines wether the vertex is reachable from other one.
+     * @brief Defines whether the vertex is reachable from other one.
      * @param[in] v vertex 'from'
      * @param[in] w vertex 'to'
      * @return true if one vertex is reachable from other.
      */
     bool reachable(const size_t & v, const size_t & w) const;
 private:
-    /// matrix with information wether reachable one vertex from other
+    /// matrix with information whether reachable one vertex from other
     std::vector<std::vector<bool>> marked_;
 };
 
@@ -481,7 +481,7 @@ private:
      */
     void bfs(const Graph & g, const size_t & v);
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
     /// container of edges from which current vertex was found
     std::vector<size_t> edgeTo_;
@@ -504,7 +504,7 @@ public:
     explicit CoupledComponents(const Graph & g);
 
     /**
-     * @brief Checks wether two vertexes are connected.
+     * @brief Checks whether two vertexes are connected.
      * @param[in] v vertex 'from'
      * @param[in] w vertex 'to'
      * @return true if components are connected.
@@ -533,7 +533,7 @@ private:
     /// the count of strongly coupled components in the given graph
     size_t count_;
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
 
     /// holds ids of Strong Coupled Components for erevy vertex
@@ -543,14 +543,14 @@ private:
 
 /**
  * @class TwoColored
- * @brief The TwoColored class defines wether graph is bipartite or not, using
+ * @brief The TwoColored class defines whether graph is bipartite or not, using
  * depth-first search algorithm.
  */
 class TwoColored
 {
 public:
     /**
-     * @brief The TwoColored constructor explores graph and defines wether graph is bipartite
+     * @brief The TwoColored constructor explores graph and defines whether graph is bipartite
      * @param[in] g non-directed graph
      */
     explicit TwoColored(const Graph& g);
@@ -559,7 +559,7 @@ public:
     bool isBipartite() const { return isTwoColors_; }
 private:
     /**
-     * @brief Modification of the depth-first search algorithm to define wether graph is
+     * @brief Modification of the depth-first search algorithm to define whether graph is
      * bipartite.
      * @param[in] g graph
      * @param[in] v initial vertex
@@ -569,7 +569,7 @@ private:
     /// true if graph is bipartite
     bool isTwoColors_;
 
-    /// holds information wether vertex was already visited in the graph
+    /// holds information whether vertex was already visited in the graph
     std::vector<bool> marked_;
 
     /// holds information about vertexes' 'colors'

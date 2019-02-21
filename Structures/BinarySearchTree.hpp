@@ -159,6 +159,8 @@ private:
         size_t size; // Number of nodes in a subtree of the current node, including itself
     };
 
+    static size_t size_(Node * n);
+
     Node* root_; // Root node of the binary search tree
 
     Value  get_(Node * n, Key k) const;
@@ -169,7 +171,6 @@ private:
 
     Node*  min_(Node * n) const;
     Node*  max_(Node * n) const;
-    size_t size_(Node * n) const;
     Value  valueSum_(Node * n) const;
 
     Node*  floor_(Node * n, Key k) const;
@@ -285,7 +286,7 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::max_(
 }
 
 template<typename Key, typename Value>
-size_t BinarySearchTree<Key, Value>::size_(Node * n) const
+size_t BinarySearchTree<Key, Value>::size_(Node * n)
 {
     return n ? n->size : 0;
 }

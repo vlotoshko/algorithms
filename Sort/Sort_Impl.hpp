@@ -659,8 +659,8 @@ template <typename T>
 void InsertionBinarySort<T>::sort(std::vector<T> & elements)
 {
      // TODO: implement InsertionBinary sort
-    size_t length = elements.size();
-    for (size_t i = 1; i < length; i++)
+    int length = static_cast<int>(elements.size());
+    for (int i = 1; i < length; i++)
     {
         T key = elements[i];
         int j = i - 1;

@@ -12,10 +12,9 @@ endif (WIN32)
 set(CMAKE_EXE_LINKER_FLAGS ${LINKER_FLAGS})
 
 
-include_directories(Search)
-include_directories(Sort)
-include_directories(Structures)
-include_directories(Tests)
+include_directories(include)
+include_directories(src)
+include_directories(test/unit)
 
 if (WIN32)
     include_directories("S:/Projects/cppunit/include/")
@@ -24,31 +23,31 @@ endif (WIN32)
 
 
 set(CPP_FILES
-    "Search/GraphAlgorithms.cpp"
-    "Search/MinimalSpanningTree.cpp"
-    "Search/ShortPaths.cpp"
-    "Tools.cpp"
-    "main.cpp"
+    "src/GraphAlgorithms.cpp"
+    "src/MinimalSpanningTree.cpp"
+    "src/ShortPaths.cpp"
+    "src/Tools.cpp"
+    "src/main.cpp"
     )
 
 set(HPP_FILES
-    "Tools.hpp"
-    "Search/GraphAlgorithms.hpp"
-    "Search/MinimalSpanningTree.hpp"
-    "Search/UnionFind.hpp"
-    "Search/ShortPaths.hpp"
-    "Sort/Sort.hpp"
-    "Sort/Sort_Impl.hpp"
-    "Structures/BinarySearchTree.hpp"
-    "Structures/Edge.hpp"
-    "Structures/Graph.hpp"
-    "Structures/GraphDirectionPolicies.hpp"
-    "Structures/IndexedPQ.hpp"
-    "Tests/CustomListeners.hpp"
-    "Tests/TestGraph.hpp"
-    "Tests/TestBinarySearchTree.hpp"
-    "Tests/TestUnionFind.hpp"
-    "Tests/TestSort.hpp"
+    "include/Tools.hpp"
+    "include/GraphAlgorithms.hpp"
+    "include/MinimalSpanningTree.hpp"
+    "include/UnionFind.hpp"
+    "include/ShortPaths.hpp"
+    "include/Sort.hpp"
+    "include/Sort_Impl.hpp"
+    "include/BinarySearchTree.hpp"
+    "include/Edge.hpp"
+    "include/Graph.hpp"
+    "include/GraphDirectionPolicies.hpp"
+    "include/IndexedPQ.hpp"
+    "test/unit/CustomListeners.hpp"
+    "test/unit/TestGraph.hpp"
+    "test/unit/TestBinarySearchTree.hpp"
+    "test/unit/TestUnionFind.hpp"
+    "test/unit/TestSort.hpp"
     )
 
 set(FILES ${CPP_FILES} ${HPP_FILES})

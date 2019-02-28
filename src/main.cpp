@@ -7,22 +7,28 @@
 #ifdef COMPILE_WITH_CPPUNIT
 #include "UnitTests.hpp"
 #endif
+
+#ifdef COMPILE_WITH_BENCHMARK
+#include "BenchmarkTests.hpp"
+#endif
 //--------------------------------------------------------------------------------------------------
 
-int launchUnitTests()
-{
-    int result = 0;
 
+void launchTests()
+{
 #ifdef COMPILE_WITH_CPPUNIT
-    tests::registerUnitTests();
-    result = tests::runUnitTests() ? 0 : 1;
+    tests::launchUnitTests();
 #endif
 
-    return result;
+#ifdef COMPILE_WITH_BENCHMARK
+    tests::launchBenchmarkTests();
+#endif
 }
+
 int main(/*int argc, char *argv[]*/)
 {
-    return launchUnitTests();
+    launchTests();
+    return 0;
 }
 
 //--------------------------------------------------------------------------------------------------

@@ -88,6 +88,12 @@ bool runUnitTests()
 }
 
 
+int launchUnitTests()
+{
+    registerUnitTests();
+    return runUnitTests() ? 0 : 1;
+}
+
 }// namespace tests
 
 //--------------------------------------------------------------------------------------------------

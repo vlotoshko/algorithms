@@ -38,7 +38,7 @@ public:
         suiteName_ = test->getName();
         std::string str = "---  " + suiteName_ + "  ";
         char prev = std::cout.fill ('-');
-        std::cout << std::setw(DEFAULT_WIDTH + 12) << setiosflags(std::ios::left)
+        std::cout << std::setw(DEFAULT_WIDTH + 12) << std::setiosflags(std::ios::left)
                   << str.c_str() << std::endl;
         std::cout.fill(prev);
 
@@ -50,8 +50,12 @@ public:
      */
     void startTest(CppUnit::Test * test) override
     {
-        auto str =/* suiteName_ + */ "| " + test->getName();
-        std::cout << std::setw(DEFAULT_WIDTH) << setiosflags(std::ios::left) << str.c_str() << "... ";
+        auto str = "| " + test->getName() + " ";
+        char prev = std::cout.fill ('.');
+        std::cout << std::setw(DEFAULT_WIDTH) << std::setiosflags(std::ios::left)
+                  << str.c_str() << "... ";
+        std::cout.fill(prev);
+
     }
 private:
     std::string suiteName_;

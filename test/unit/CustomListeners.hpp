@@ -50,8 +50,12 @@ public:
      */
     void startTest(CppUnit::Test * test) override
     {
-        auto str =/* suiteName_ + */ "| " + test->getName();
-        std::cout << std::setw(DEFAULT_WIDTH) << std::setiosflags(std::ios::left) << str.c_str() << "... ";
+        auto str = "| " + test->getName() + " ";
+        char prev = std::cout.fill ('.');
+        std::cout << std::setw(DEFAULT_WIDTH) << std::setiosflags(std::ios::left)
+                  << str.c_str() << "... ";
+        std::cout.fill(prev);
+
     }
 private:
     std::string suiteName_;

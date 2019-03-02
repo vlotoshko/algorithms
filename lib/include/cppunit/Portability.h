@@ -15,9 +15,7 @@
 #    include <cppunit/config/config-msvc6.h>
 #  endif
 #else
-// turn off auto config because we build cppunit without configure
-// thus config-auto.h does not generate
-//#    include <cppunit/config-auto.h>
+#    include <cppunit/config-auto.h>
 #endif
 
 // Version number of package

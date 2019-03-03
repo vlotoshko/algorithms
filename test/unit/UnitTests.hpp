@@ -25,6 +25,10 @@
 namespace tests
 {
 
+/**
+ * @brief registerUnitTests registers unit tests which will be lanched
+ * later.
+ */
 void registerUnitTests()
 {
     using namespace tests;
@@ -64,6 +68,10 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestCriticalPathMethod);
 }
 
+/**
+ * @brief runUnitTests runs registered unit tests.
+ * @return true if all tests are passed.
+ */
 bool runUnitTests()
 {
     CppUnit::TestResult testResults;
@@ -87,7 +95,10 @@ bool runUnitTests()
     return collectedResult.wasSuccessful();
 }
 
-
+/**
+ * @brief launchUnitTests registers and runs unit tests.
+ * @return zero if all tests are passed else 1.
+ */
 int launchUnitTests()
 {
     registerUnitTests();

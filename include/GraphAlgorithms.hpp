@@ -93,7 +93,7 @@ size_t avgDegree(const G & g) { return Strategy::factor() * g.edgeCount() / g.ve
  * @tparam Strategy determines whether graph is directed or non-directed
  * @tparam G graph type
  * @param[in] g graph
- * @return vertexes self loops count
+ * @return vertexes self loops count.
  */
 template<typename Strategy, typename G>
 size_t selfLoops(const G & g)
@@ -233,11 +233,11 @@ public:
      */
     explicit DepthFirstOrder(const G & g);
 
-    /// @return vertexes in the reversed order
+    /// @return vertexes in the reversed order.
     std::stack<size_t> & reversePost() { return reversePost_; }
-    /// @return vertexes in the pre- order
+    /// @return vertexes in the pre- order.
     std::queue<size_t> & pre() { return pre_; }
-    /// @return vertexes in the post- order
+    /// @return vertexes in the post- order.
     std::queue<size_t> & post() { return post_; }
 private:
     /**
@@ -276,7 +276,7 @@ public:
      */
     explicit Cyclic(const G & g);
 
-    /// @return true if given graph is cyclic
+    /// @return true if given graph is cyclic.
     bool isCyclic() const { return hasCycle_; }
 private:
     /**
@@ -311,10 +311,10 @@ public:
      */
     explicit DirectedCyclic(const G & g);
 
-    /// @return true if given graph is cyclic
+    /// @return true if given graph is cyclic.
     bool isCyclic() const { return cycle_.size() > 0; }
 
-    /// @return a container of cycle edges
+    /// @return a container of cycle edges.
     std::stack<size_t> cycle() const { return cycle_; }
 private:
     /**
@@ -353,10 +353,10 @@ public:
      */
     explicit Topological(const G & g);
 
-    /// @return vertexes ordered topologicaly
+    /// @return vertexes ordered topologicaly.
     std::stack<size_t> & order() { return dfo_.reversePost(); }
 
-    /// @return true if graph is directed uncyclic
+    /// @return true if graph is directed uncyclic.
     bool isDAG() const { return isDAG_; }
 private:
 
@@ -383,13 +383,13 @@ public:
      */
     explicit KosarajuSCC(const G & g);
 
-    /// @return true if given two vertexes are strongly coupled
+    /// @return true if given two vertexes are strongly coupled.
     bool stronglyConnected(const size_t & v, const size_t & w) const { return id_[v] == id_[w]; }
 
-    /// @return the count of strongly coupled components in the given graph
+    /// @return the count of strongly coupled components in the given graph.
     size_t count() const { return count_; }
 
-    /// @return id of the component to which belongs the given vertex
+    /// @return id of the component to which belongs the given vertex.
     size_t id(const size_t & v) const { return id_[v]; }
 private:
     /**
@@ -511,7 +511,7 @@ public:
      */
     bool connected(const size_t & v, const size_t & w) const { return id_[v] == id_[w]; }
 
-    /// @return the count of strongly coupled components in the given graph
+    /// @return the count of strongly coupled components in the given graph.
     size_t componentsCount() const { return count_; }
 
     /**
@@ -555,7 +555,7 @@ public:
      */
     explicit TwoColored(const Graph& g);
 
-    /// @return true if graph is bipartite
+    /// @return true if graph is bipartite.
     bool isBipartite() const { return isTwoColors_; }
 private:
     /**
@@ -610,7 +610,7 @@ public:
      */
     bool addEdge(const std::string & v, const std::string & w);
 
-    /// @return reference to the created graph
+    /// @return reference to the created graph.
     Graph & G() const { return *g_; }
 
     /**
@@ -623,7 +623,7 @@ public:
     /**
      * @brief Defined index of the given key.
      * @param[in] key key name
-     * @return index of the given key or -1 if key does not exist
+     * @return index of the given key or -1 if key does not exist.
      */
     int index(const std::string & key) const;
 

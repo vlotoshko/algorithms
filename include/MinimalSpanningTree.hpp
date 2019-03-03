@@ -42,7 +42,7 @@ public:
      */
     explicit PrimMST_Lazy(const EdgeWeightedGraph & gr);
 
-    /// @return edges of minimal spanning tree
+    /// @return edges of minimal spanning tree.
     EdgeContainer edges() const;
 private:
     /**
@@ -85,7 +85,7 @@ public:
      */
     explicit PrimMST_Energy(const EdgeWeightedGraph & gr);
 
-    /// @return edges of minimal spanning tree
+    /// @return edges of minimal spanning tree.
     EdgeContainer edges() const;
 private:
     /**
@@ -132,7 +132,7 @@ public:
      */
     explicit KruskalMST(const EdgeWeightedGraph & gr);
 
-    /// @return edges of minimal spanning tree
+    /// @return edges of minimal spanning tree.
     EdgeContainer edges() const;
 private:
     /// edges of minimal spanning tree

@@ -20,7 +20,7 @@ namespace sort
  * @tparam type of elements to compare
  * @param[in] a first element
  * @param[in] b second element
- * @return true if a less than b
+ * @return true if a less than b.
  */
 template<typename T>
 inline bool less(const T & a, const T & b)

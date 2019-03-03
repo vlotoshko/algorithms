@@ -46,7 +46,7 @@ public:
     /**
      * @brief Finds distance to given vertex.
      * @param[in] v index of the vertex
-     * @return distance to given vertex
+     * @return distance to given vertex.
      */
     double distTo(const size_t & v) const;
 
@@ -60,7 +60,7 @@ public:
     /**
      * @brief Finds path to given vertex.
      * @param[in] v index of the vertex
-     * @return path to given vertex as container of edges
+     * @return path to given vertex as container of edges.
      */
     EdgeContainer pathTo(const size_t & v) const;
 

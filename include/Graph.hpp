@@ -69,16 +69,16 @@ public:
         v_ = vertexes_.size();
     }
 
-    /// @return number of vertexes in the graph
+    /// @return number of vertexes in the graph.
     size_t vertexCount() const { return v_; }
 
-    /// @return number of edges in the graph
+    /// @return number of edges in the graph.
     size_t edgeCount() const { return e_; }
 
     /**
-     * @brief Gets edges of the given vertex
+     * @brief Gets edges of the given vertex.
      * @param[in] index vertex
-     * @return edges of the given vertex
+     * @return edges of the given vertex.
      */
     const EdgeContainer & operator[] (size_t index) const { return vertexes_[index]; }
 private:

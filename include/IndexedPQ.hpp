@@ -116,7 +116,7 @@ public:
 
     /**
      * @brief Gets top element.
-     * @return top element
+     * @return top element.
      */
     const_reference top() const { return *byOrder_.front().element; }
 
@@ -134,13 +134,13 @@ public:
      */
     bool containes(size_t v) const { return byIndex_[v] != nullptr; }
 
-    /// @return capasity of the queue
+    /// @return capasity of the queue.
     size_type capasity() const { return byIndex_.size(); }
 
-    /// @return size of the queue
+    /// @return size of the queue.
     size_type size() const { return byOrder_.size(); }
 
-    /// @return true if queue is empty
+    /// @return true if queue is empty.
     bool empty() const { return byOrder_.empty(); }
 
     /**

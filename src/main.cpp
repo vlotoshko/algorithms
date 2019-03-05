@@ -8,9 +8,9 @@
 #include "UnitTests.hpp"
 #endif
 
-#ifdef COMPILE_WITH_BENCHMARK
+//#ifdef COMPILE_WITH_BENCHMARK
 #include "BenchmarkTests.hpp"
-#endif
+//#endif
 //--------------------------------------------------------------------------------------------------
 
 
@@ -20,9 +20,9 @@ void launchTests()
     tests::launchUnitTests();
 #endif
 
-#ifdef COMPILE_WITH_BENCHMARK
+//#ifdef COMPILE_WITH_BENCHMARK
     tests::launchBenchmarkTests();
-#endif
+//#endif
 }
 
 int main(/*int argc, char *argv[]*/)

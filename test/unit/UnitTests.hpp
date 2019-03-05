@@ -4,8 +4,8 @@
  */
 
 //--------------------------------------------------------------------------------------------------
-#ifndef TESTS_HPP
-#define TESTS_HPP
+#ifndef UNIT_TESTS_HPP
+#define UNIT_TESTS_HPP
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
@@ -31,7 +31,6 @@ namespace tests
  */
 void registerUnitTests()
 {
-    using namespace tests;
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestIsSorted<size_t>);
 
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestDummySort<size_t>);
@@ -52,7 +51,7 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestInsertionBinarySort<size_t>);
 
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickFind<size_t>);
-    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TesUnionFind_QuickUnion<size_t>);
+    CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickUnion<size_t>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestUnionFind_QuickUnion_Balanced<size_t>);
 
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestBST);
@@ -105,8 +104,9 @@ int launchUnitTests()
     return runUnitTests() ? 0 : 1;
 }
 
+
 }// namespace tests
 
 //--------------------------------------------------------------------------------------------------
-#endif // TESTS
+#endif // UNIT_TESTS_HPP
 //--------------------------------------------------------------------------------------------------

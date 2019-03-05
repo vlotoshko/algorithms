@@ -117,7 +117,7 @@ template<typename T> using TestUnionFind_QuickFind = TestUnionFind<uf::UnionFind
  * @brief TesUnionFind_QuickUnion template class is the partial specialized template
  * for the TestUnionFind unit test.
  */
-template<typename T> using TesUnionFind_QuickUnion = TestUnionFind<uf::UnionFind_QuickUnion, T>;
+template<typename T> using TestUnionFind_QuickUnion = TestUnionFind<uf::UnionFind_QuickUnion, T>;
 
 /**
  * @brief TestUnionFind_QuickUnion_Balanced template class is the partial

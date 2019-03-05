@@ -25,6 +25,7 @@ set(MAIN_TARGET_HPP_FILES
     include/Graph.hpp
     include/GraphDirectionPolicies.hpp
     include/IndexedPQ.hpp
+    test/benchmark/BenchmarkTests.hpp
     test/unit/CustomListeners.hpp
     test/unit/TestGraph.hpp
     test/unit/TestBinarySearchTree.hpp
@@ -36,6 +37,7 @@ set(MAIN_TARGET_HPP_FILES
 add_executable(${MAIN_TARGET} ${MAIN_TARGET_CPP_FILES} ${MAIN_TARGET_HPP_FILES})
 
 target_include_directories(${MAIN_TARGET} PRIVATE include)
+target_include_directories(${MAIN_TARGET} PRIVATE test/benchmark)
 target_include_directories(${MAIN_TARGET} PRIVATE test/unit)
 
 target_compile_features(${MAIN_TARGET} PRIVATE cxx_std_14)

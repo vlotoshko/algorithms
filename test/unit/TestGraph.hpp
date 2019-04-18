@@ -421,7 +421,7 @@ public:
      */
     static CppUnit::TestSuite * suite()
     {
-        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestIsSorted");
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("TestSymbolGraph");
 
         suiteOfTests->addTest(new CppUnit::TestCaller<TestSymbolGraph>(
                                   "addEdge_ShouldAddEdge_WhenGivenTwoKeys",

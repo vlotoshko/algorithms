@@ -12,6 +12,8 @@
 #include <vector>
 #include <algorithm>
 #include <functional>
+#include <map>
+
 //--------------------------------------------------------------------------------------------------
 
 namespace data_structs
@@ -103,7 +105,7 @@ public:
     /**
      * @brief The IndexedPriorityQueue constructor explores all graph and calculates
      * shortest paths, using topolocigal sort.
-     * @param[in] size of the queue
+     * @param[in] size size of the queue
      */
     explicit IndexedPriorityQueue(size_t size) : byIndex_(size, nullptr) {}
     ~IndexedPriorityQueue()

@@ -1,6 +1,7 @@
 ## Implementations of the variety algorithms and data structures.
-###### Algorithms and their unit tests.
-Application outputs result of unit tests.
+###### Algorithms.
+Algorithms are implemented by examples from the book `Robert Sedgewick and Kevin Wayne - Java algorithms.`.
+Application just outputs result of unit tests for implemented algorithms.
 
 ###### Build
 Build project with the key `COMPILE_WITH_CPPUNIT` to enable unit tests.
@@ -145,7 +146,7 @@ Possible output:
 | breadthFirstPaths_ShouldReturnPaths_WhenGivenGraphAndVertex ........... [ OK ] |
 ----------------------------------------------------------------------------------
 
----  TestIsSorted  ---------------------------------------------------------------
+---  TestSymbolGraph  ------------------------------------------------------------
 | addEdge_ShouldAddEdge_WhenGivenTwoKeys ................................ [ OK ] |
 | addEdge_ShouldReturnFalse_WhenAddedOverflowEdge ....................... [ OK ] |
 | contains_ShouldReturnTrue_WhenGivenExistingsKey ....................... [ OK ] |

@@ -5,26 +5,10 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "vector"
-#ifdef COMPILE_WITH_CPPUNIT
-#include "UnitTests.hpp"
-#endif
 
-//#ifdef COMPILE_WITH_BENCHMARK
-//#include "BenchmarkTests.hpp"
-//#endif
+#include "BenchmarkTests.hpp"
 //--------------------------------------------------------------------------------------------------
 
-
-void launchTests()
-{
-#ifdef COMPILE_WITH_CPPUNIT
-    tests::launchUnitTests();
-#endif
-
-#ifdef COMPILE_WITH_BENCHMARK
-    tests::launchBenchmarkTests();
-#endif
-}
 
 void vector_create()
 {
@@ -56,7 +40,7 @@ void vector_push_back()
 
 int main(/*int argc, char *argv[]*/)
 {
-    launchTests();
+    tests::launchBenchmarkTests();
 //    vector_create();
 //    vector_reserve();
 //    vector_push_back();

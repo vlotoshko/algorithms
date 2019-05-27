@@ -66,11 +66,11 @@ set_target_properties(${ALGORITHMS_TARGET} PROPERTIES
 #
 
 if(OPTION_BUILD_UNIT_TESTS)
-    add_subdirectory(test/unit)
+    add_subdirectory(tests/unit)
 endif()
 
 if(OPTION_BUILD_BENCHMARK_TESTS)
-    add_subdirectory(test/benchmark)
+    add_subdirectory(tests/benchmark)
 endif()
 
 

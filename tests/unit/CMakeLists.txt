@@ -164,7 +164,7 @@ set_target_properties(cppunit PROPERTIES
 
 set(UNIT_TESTS_TARGET ${ALGORITHMS_TARGET}_unit_tests)
 
-set(UNIT_TEST_SRC_APP_DIR ${PROJECT_SOURCE_DIR}/test/unit/)
+set(UNIT_TEST_SRC_APP_DIR ${PROJECT_SOURCE_DIR}/tests/unit/)
 
 set(UNIT_TEST_SRC
     ${UNIT_TEST_SRC_APP_DIR}/main.cpp

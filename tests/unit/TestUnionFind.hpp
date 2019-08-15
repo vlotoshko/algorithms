@@ -20,6 +20,108 @@
 namespace tests
 {
 
+
+class IBenchmarkTestAble {
+public:
+    virtual ~IBenchmarkTestAble() = default;
+    virtual void doubleData() = 0;
+    virtual void execute() = 0;
+    virtual double eplacedTime() = 0;
+};
+
+
+class BmTest {
+public:
+    BmTest(std::unique_ptr<IBenchmarkTestAble> t) : test_(std::move(t)) {}
+
+    void run() {
+        getMinimalRequiredState();
+
+        while (!isEnoughIterations()) {
+            getArithmeticMean();
+            test_->doubleData();
+        }
+
+        // calculate ratio
+    }
+
+
+    bool isEnoughIterations() {
+        return true;
+    }
+
+    double getTime();
+
+private:
+    void getMinimalRequiredState() {
+        test_->execute();
+        while (test_->eplacedTime() < epsilon_) {
+            test_->doubleData();
+            test_->execute();
+        }
+    }
+
+    double getArithmeticMean() {
+        while (!isEnoughIterations()) {
+            test_->execute();
+        }
+        return 0;
+    }
+
+    double epsilon_;
+
+    std::unique_ptr<IBenchmarkTestAble> test_;
+
+};
+
+
+
+class BM_Sort : public CppUnit::TestFixture
+{
+public:
+    BM_Sort() = default;
+
+    /**
+     * @brief suite implements implicit intreface for the TestSuiteFactory.
+     * @return test suite for the current tests.
+     */
+    static CppUnit::TestSuite * suite()
+    {
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("sdgfsd");
+        suiteOfTests->addTest(new CppUnit::TestCaller<BM_Sort>(
+                                  "DummySort",
+                                  &BM_Sort::dummySort));
+        suiteOfTests->addTest(new CppUnit::TestCaller<BM_Sort>(
+                                  "BubleSorb",
+                                  &BM_Sort::bubleSort));
+        return suiteOfTests;
+    }
+
+
+protected:
+    /**
+     * @brief find_ShouldReturnClusterId_WhenGivenComponent tests returning correct cluster id.
+     */
+    void dummySort()
+    {
+        BmTest(std::move(test_)).run();
+    }
+
+    /**
+     * @brief unionComponents_ShouldConnectComponentsIntoOneCluster tests whether components
+     * belong to one cluster.
+     */
+    void bubleSort()
+    {
+    }
+
+private:
+    std::unique_ptr<IBenchmarkTestAble> test_;
+};
+
+
+
+
 /**
  * @class TestUnionFind
  * @brief The TestUnionFind template class tests union-find algorithms.

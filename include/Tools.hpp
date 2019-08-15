@@ -38,7 +38,7 @@ public:
      * @brief timeSpent calculates time between 'now' time point and saved time point.
      * @return difference between 'now' time point and saved time point.
      */
-    double timeSpent();
+    double timeSpent() const;
 private:
     std::chrono::time_point<std::chrono::system_clock> start_;
 };

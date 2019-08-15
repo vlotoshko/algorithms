@@ -17,40 +17,68 @@
 #include <cppunit/extensions/HelperMacros.h>
 //--------------------------------------------------------------------------------------------------
 
+
+#include "Tools.hpp"
+
 namespace tests
 {
 
 
-class IBenchmarkTestAble {
+class IBenchmarkTestable {
 public:
-    virtual ~IBenchmarkTestAble() = default;
+    virtual ~IBenchmarkTestable() = default;
     virtual void doubleData() = 0;
     virtual void execute() = 0;
-    virtual double eplacedTime() = 0;
+    virtual double eplacedTime() const = 0;
 };
 
 
-class BmTest {
+class BenchmarkTestableBase : public IBenchmarkTestable {
 public:
-    BmTest(std::unique_ptr<IBenchmarkTestAble> t) : test_(std::move(t)) {}
+    BenchmarkTestableBase() : eplacedTime_(0) {}
+
+    void execute() override {
+        timer_.start();
+        // do some heavy calculations
+        doSomeHeavy();
+        eplacedTime_ = timer_.timeSpent();
+    }
+
+    virtual void doSomeHeavy() = 0;
+
+    double eplacedTime() const override { return eplacedTime_; }
+private:
+    tools::Timer timer_;
+    double eplacedTime_;
+};
+
+
+class Example : public BenchmarkTestableBase {
+public:
+    void doubleData() override {}
+    void doSomeHeavy() override {}
+};
+
+
+
+
+class BenchmarkTest {
+public:
+    BenchmarkTest(std::unique_ptr<IBenchmarkTestable> t, size_t i = 10, size_t iAM = 10)
+        : epsilon_(0.01), iterations_(i), iterationsAM_(iAM), test_(std::move(t)) {}
 
     void run() {
         getMinimalRequiredState();
 
-        while (!isEnoughIterations()) {
-            getArithmeticMean();
+        size_t iterations = 1;
+        while (iterations <= iterations_) {
+            results_.push_back(getArithmeticMean());
             test_->doubleData();
+            ++iterations;
         }
-
-        // calculate ratio
     }
 
-
-    bool isEnoughIterations() {
-        return true;
-    }
-
-    double getTime();
+    const std::vector<double> & getResults() const { return results_; }
 
 private:
     void getMinimalRequiredState() {
@@ -62,15 +90,23 @@ private:
     }
 
     double getArithmeticMean() {
-        while (!isEnoughIterations()) {
+        test_->execute();
+        double result = test_->eplacedTime();
+
+        size_t iterations = 1;
+        while (iterations <= iterationsAM_) {
             test_->execute();
+            result += test_->eplacedTime();
+            ++iterations;
         }
-        return 0;
+        return result/iterations;
     }
 
     double epsilon_;
-
-    std::unique_ptr<IBenchmarkTestAble> test_;
+    size_t iterations_;
+    size_t iterationsAM_;
+    std::unique_ptr<IBenchmarkTestable> test_;
+    std::vector<double> results_;
 
 };
 
@@ -100,23 +136,22 @@ public:
 
 protected:
     /**
-     * @brief find_ShouldReturnClusterId_WhenGivenComponent tests returning correct cluster id.
+     * @brief
      */
     void dummySort()
     {
-        BmTest(std::move(test_)).run();
+        BenchmarkTest(std::move(test_)).run();
     }
 
     /**
-     * @brief unionComponents_ShouldConnectComponentsIntoOneCluster tests whether components
-     * belong to one cluster.
+     * @brief
      */
     void bubleSort()
     {
     }
 
 private:
-    std::unique_ptr<IBenchmarkTestAble> test_;
+    std::unique_ptr<IBenchmarkTestable> test_;
 };
 
 

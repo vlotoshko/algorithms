@@ -83,9 +83,12 @@ public:
 private:
     void getMinimalRequiredState() {
         test_->execute();
-        while (test_->eplacedTime() < epsilon_) {
+        
+        size_t attempts = 0;
+        while (test_->eplacedTime() < epsilon_ && attempts < 100) {
             test_->doubleData();
             test_->execute();
+            ++attempts;
         }
     }
 
@@ -123,7 +126,7 @@ public:
      */
     static CppUnit::TestSuite * suite()
     {
-        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("sdgfsd");
+        CppUnit::TestSuite *suiteOfTests = new CppUnit::TestSuite("Benchmark sort");
         suiteOfTests->addTest(new CppUnit::TestCaller<BM_Sort>(
                                   "DummySort",
                                   &BM_Sort::dummySort));
@@ -140,7 +143,7 @@ protected:
      */
     void dummySort()
     {
-        BenchmarkTest(std::move(test_)).run();
+        //BenchmarkTest(std::move(test_)).run();
     }
 
     /**
@@ -148,6 +151,8 @@ protected:
      */
     void bubleSort()
     {
+    	std::unique_ptr<IBenchmarkTestable> ex (new Example);
+        BenchmarkTest(std::move(ex)).run();
     }
 
 private:

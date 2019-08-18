@@ -65,8 +65,6 @@ void registerUnitTests()
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::AcyclicShortPaths>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestShortPahes<graph::AcyclicLongPaths>);
     CPPUNIT_TEST_SUITE_REGISTRATION(tests::TestCriticalPathMethod);
-    
-    CPPUNIT_TEST_SUITE_REGISTRATION(tests::BM_Sort);
 }
 
 /**

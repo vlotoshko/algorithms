@@ -18,7 +18,7 @@ set(CMAKE_EXE_LINKER_FLAGS ${LINKER_FLAGS})
 #
 
 option(OPTION_BUILD_UNIT_TESTS "Build unit test application" ON)
-option(OPTION_BUILD_BENCHMARK_TESTS "Build benchmark test application" OFF)
+option(OPTION_BUILD_BENCHMARK_TESTS "Build benchmark test application" ON)
 option(OPTION_BUILD_DOCUMENTATION "Build documentation" OFF)
 option(OPTION_CHECK_WITH_CPPCHECK "" OFF)
 

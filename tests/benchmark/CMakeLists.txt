@@ -3,14 +3,20 @@
 # Benchmark tests app building section
 #
 
-set(BENCHMARK_TESTS_TARGET ${ALGORITHMS_TARGET}_benchmark_tests)
+set(BENCHMARK_TESTS_TARGET ${ALGORITHMS_TARGET}_benchmarks)
 
 set(BENCHMARK_TEST_SRC_APP_DIR ${PROJECT_SOURCE_DIR}/tests/benchmark/)
 
 set(BENCHMARK_TEST_SRC
     ${BENCHMARK_TEST_SRC_APP_DIR}/main.cpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmarkable.cpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmark.cpp
 
-    ${BENCHMARK_TEST_SRC_APP_DIR}/BenchmarkTests.hpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmarkable.hpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmark.hpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmarks.hpp
+
+    ${BENCHMARK_TEST_SRC_APP_DIR}/BmSort.hpp
     )
 
 add_executable(${BENCHMARK_TESTS_TARGET}

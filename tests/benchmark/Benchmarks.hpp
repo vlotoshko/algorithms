@@ -4,14 +4,16 @@
  */
 
 //--------------------------------------------------------------------------------------------------
-#ifndef BENCHMARK_TESTS_HPP
-#define BENCHMARK_TESTS_HPP
+#ifndef BENCHMARKS_HPP
+#define BENCHMARKS_HPP
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include "TestUnionFind.hpp"
-#include "CustomListeners.hpp"
+#include "BmSort.hpp"
 
+#include "../unit/CustomListeners.hpp"
+
+#include <cppunit/extensions/HelperMacros.h>
 #include <cppunit/TestResult.h>
 #include <cppunit/TestResultCollector.h>
 #include <cppunit/TestRunner.h>
@@ -22,15 +24,12 @@
 namespace tests
 {
 
-
-void registerBenchmarkTests()
+void registerBenchmarks()
 {
-    CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(tests::TestUnionFind_QuickFind<size_t>, "Benchmark Tests");
-    CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(tests::TestUnionFind_QuickUnion<size_t>, "Benchmark Tests");
-    CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(tests::TestUnionFind_QuickUnion_Balanced<size_t>, "Benchmark Tests");
+    CPPUNIT_TEST_SUITE_NAMED_REGISTRATION(benchmark::BmSort, "Benchmarks");
 }
 
-bool runBenchmarkTests()
+bool runBenchmarks()
 {
     CppUnit::TestResult testResults;
     CppUnit::TestResultCollector collectedResult;
@@ -42,7 +41,7 @@ bool runBenchmarkTests()
     tests::ShowEndListener showEnd;
     testResults.addListener(&showEnd);
 
-    CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("Benchmark Tests");
+    CppUnit::TestFactoryRegistry &registry = CppUnit::TestFactoryRegistry::getRegistry("Benchmarks");
 
     CppUnit::TestRunner runner;
     runner.addTest(registry.makeTest());
@@ -58,10 +57,10 @@ bool runBenchmarkTests()
  * @brief launchBenchmarkTests registers and runs unit tests.
  * @return zero if all tests are passed else 1.
  */
-int launchBenchmarkTests()
+int launchBenchmarks()
 {
-    registerBenchmarkTests();
-    return runBenchmarkTests() ? 0 : 1;
+    registerBenchmarks();
+    return runBenchmarks() ? 0 : 1;
 }
 
 
@@ -69,5 +68,5 @@ int launchBenchmarkTests()
 }// namespace tests
 
 //--------------------------------------------------------------------------------------------------
-#endif // BENCHMARK_TESTS_HPP
+#endif // BENCHMARKS_HPP
 //--------------------------------------------------------------------------------------------------

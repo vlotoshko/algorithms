@@ -17,8 +17,13 @@ namespace benchmark
 // -------------------------------------------------------------------------------
 // ----- Helper functions declaration -----
 //
+
 void getMinimalRequiredState(std::unique_ptr<IBenchmarkable> & test, double epsilon);
-double getArithmeticMean(std::unique_ptr<IBenchmarkable> & test, size_t iterations);
+std::vector<double> calculateResults(std::unique_ptr<IBenchmarkable> & test, size_t i, size_t iAM);
+
+std::vector<double> getRatios(const std::vector<double> & items);
+bool goodResults(const std::vector<double> & items);
+double arithmeticMean(const std::vector<double> & items);
 
 
 // -------------------------------------------------------------------------------
@@ -30,29 +35,27 @@ Benchmark::Benchmark(std::unique_ptr<IBenchmarkable> t, size_t i, size_t iAM)
 
 void Benchmark::run()
 {
-    getMinimalRequiredState(test_, epsilon_);
     std::cout << std::endl;
-    size_t iterations = 1;
-    while (iterations <= iterations_)
+    getMinimalRequiredState(test_, epsilon_);
+
+    std::vector<double> results = calculateResults(test_, iterations_, iterationsAM_);
+    std::vector<double> ratios = getRatios(results);
+
+    int attempts = 0;
+    int allAttempts = 10;
+    while(!goodResults(ratios) && attempts < allAttempts)
     {
-        results_.push_back(getArithmeticMean(test_, iterationsAM_));
-        test_->doubleData();
-        ++iterations;
+        ++attempts;
+        std::cout << "Results are not good enough, specifying... "
+                  << attempts << "/" << allAttempts << std::endl;
+        double ratioAM = arithmeticMean(ratios);
+
+        getMinimalRequiredState(test_, epsilon_);
+        ratios = getRatios(calculateResults(test_, iterations_, iterationsAM_));
+        ratios.push_back(ratioAM);
     }
 
-    if (results_.size() > 1)
-    {
-        tools::CalcRatio cr;
-        cr.getRatio(results_[0]);
-        double rat = 0;
-
-        for (size_t i = 1; i < results_.size(); ++i) {
-            double rr = cr.getRatio(results_[i]);
-            rat += rr;
-            std::cout << " rr = " << rr << std::endl;
-        }
-        std::cout << "ratio = " << rat/(results_.size() -1) << std::endl;
-    }
+    std::cout << "Multiply coefficient is: " << arithmeticMean(ratios) << std::endl;
 }
 
 
@@ -62,6 +65,7 @@ void Benchmark::run()
 
 void getMinimalRequiredState(std::unique_ptr<IBenchmarkable> & test, double epsilon)
 {
+    test->reset();
     test->execute();
 
     size_t attempts = 0;
@@ -72,20 +76,72 @@ void getMinimalRequiredState(std::unique_ptr<IBenchmarkable> & test, double epsi
     }
 }
 
-double getArithmeticMean(std::unique_ptr<IBenchmarkable> & test, size_t iterations)
+std::vector<double> calculateResults(std::unique_ptr<IBenchmarkable> & test, size_t i, size_t iAM)
 {
-    test->execute();
-    double result = test->eplacedTime();
-
-    size_t itersDone = 1;
-    while (itersDone <= iterations)
+    std::vector<double> results;
+    size_t itersDone = 0;
+    while (itersDone < i)
     {
-        test->execute();
-        result += test->eplacedTime();
+        std::vector<double> resultsForAM;
+        size_t itersDoneAM = 0;
+        while (itersDoneAM < iAM)
+        {
+            test->execute();
+            resultsForAM.push_back(test->eplacedTime());
+            ++itersDoneAM;
+        }
+
+        results.push_back(arithmeticMean(resultsForAM));
+        test->doubleData();
         ++itersDone;
     }
-    std::cout << "  am = " << result/itersDone << std::endl;
-    return result/itersDone;
+
+//    for (auto & item : results) std::cout << "res = " << item << std::endl;
+    return results;
 }
+
+std::vector<double> getRatios(const std::vector<double> & items)
+{
+    std::vector<double> ratios;
+    if (items.size() > 1)
+    {
+        tools::CalcRatio cr;
+        cr.getRatio(items[0]);
+
+        for (size_t i = 1; i < items.size(); ++i) {
+            ratios.push_back(cr.getRatio(items[i]));
+        }
+    }
+
+    return ratios;
+}
+
+bool goodResults(const std::vector<double> & items)
+{
+    double spread = 0.1;
+    for (auto & r1 : items)
+    {
+        for (auto r2 : items)
+        {
+            if (r1 - r2 > spread || r2 - r1 > spread)
+            {
+                std::cout << r1 << " " << r2 << " " << spread << std::endl;
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+double arithmeticMean(const std::vector<double> & items)
+{
+    double d = 0;
+    for (const auto & i : items)
+    {
+        d += i;
+    }
+    return d/items.size();
+}
+
 
 } // namespace benchmark

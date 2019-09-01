@@ -28,10 +28,11 @@ template<template<typename> class SortAlg, typename T>
 class SortBmAble : public BenchmarkableBase
 {
 public:
-    explicit SortBmAble (size_t c = 100) : elementsCount_(c) {
+    explicit SortBmAble (size_t c = 100) : elementsCount_(c), elementsCountInitial_(c) {
         init();
     }
     void init() override { tools::randomData<T>(elements_, elementsCount_, 0, 10000); }
+    void reset() override { elementsCount_ = elementsCountInitial_; }
     void doubleData() override {
         elementsCount_ += elementsCount_;
         init();
@@ -40,6 +41,7 @@ public:
 private:
     std::vector<T> elements_;
     size_t elementsCount_;
+    size_t elementsCountInitial_;
 };
 
 class BmSort : public CppUnit::TestFixture

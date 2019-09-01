@@ -19,6 +19,7 @@ class IBenchmarkable {
 public:
     virtual ~IBenchmarkable() = default;
     virtual void init() = 0;
+    virtual void reset() = 0;
     virtual void doubleData() = 0;
     virtual void execute() = 0;
     virtual double eplacedTime() const = 0;

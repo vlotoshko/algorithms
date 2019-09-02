@@ -22,7 +22,7 @@ namespace benchmark
 class Benchmark
 {
 public:
-    Benchmark(std::unique_ptr<IBenchmarkable> t, size_t i = 4, size_t iAM = 20);
+    Benchmark(std::unique_ptr<IBenchmarkable> t, size_t i = 5, size_t iAM = 10);
     void run();
     inline const std::vector<double> & getResults() const { return results_; }
 

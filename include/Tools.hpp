@@ -19,7 +19,7 @@ namespace tools
 {
 
 /**
- * @brief The Timer class calculates time is seconds as xx.xxx between construction/start
+ * @brief The Timer class calculates time in seconds as xx.xxx between construction/start
  * and timeSpent invokations.
  */
 class Timer {

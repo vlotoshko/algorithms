@@ -10,9 +10,11 @@ set(BENCHMARK_TEST_SRC_APP_DIR ${PROJECT_SOURCE_DIR}/tests/benchmark/)
 set(BENCHMARK_TEST_SRC
     ${BENCHMARK_TEST_SRC_APP_DIR}/main.cpp
     ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmarkable.cpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/BenchmarkSettings.cpp
     ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmark.cpp
 
     ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmarkable.hpp
+    ${BENCHMARK_TEST_SRC_APP_DIR}/BenchmarkSettings.hpp
     ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmark.hpp
     ${BENCHMARK_TEST_SRC_APP_DIR}/Benchmarks.hpp
 

@@ -47,8 +47,7 @@ private:
 class BmSort : public CppUnit::TestFixture
 {
 public:
-    BmSort() = default;
-
+    BmSort() : settings_() {}
     /**
      * @brief suite implements implicit intreface for the TestSuiteFactory.
      * @return test suite for the current tests.
@@ -76,119 +75,127 @@ public:
         return suiteOfTests;
     }
 
+    void setUp() override
+    {
+        settings_.reset(new BenchmarkSettings(0.01, 5, 10, std::make_unique<InterruptByTime>(900)));
+    }
 
 protected:
     ///
     void dummySort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::DummySort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::DummySort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void bubleSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::BubleSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::BubleSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void combSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::CombSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::CombSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void shakeSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::ShakeSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::BubleSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void quickSort()
     {
         std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::QuickSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::QuickSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void quickSortM()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::QuickSortM, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::QuickSortM, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void quick3Sort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::Quick3Sort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::Quick3Sort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void gnomeSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::GnomeSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::GnomeSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void selectionSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::SelectionSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::SelectionSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void heapSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::HeapSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::HeapSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void insertionSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::InsertionSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::InsertionSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void mergeSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::MergeSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::MergeSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void mergeUpSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::MergeUpSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::BubleSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void quickInsSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::QuickInsSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::QuickInsSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void mergeInsSort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::MergeInsSort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::MergeInsSort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
 
     ///
     void insertionBinarySort()
     {
-        std::unique_ptr<IBenchmarkable> ex (new SortBmAble<sort::InsertionBinarySort, size_t>);
-        Benchmark(std::move(ex)).run();
+        auto test = std::make_unique<SortBmAble<sort::InsertionBinarySort, size_t>>();
+        Benchmark(std::move(test), std::move(settings_)).run();
     }
+
+private:
+    std::unique_ptr<BenchmarkSettings> settings_;
 };
 
 

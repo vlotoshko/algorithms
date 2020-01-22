@@ -10,6 +10,7 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "Benchmarkable.hpp"
+#include "BenchmarkSettings.hpp"
 
 #include <memory>
 #include <vector>
@@ -22,18 +23,16 @@ namespace benchmark
 class Benchmark
 {
 public:
-    Benchmark(std::unique_ptr<IBenchmarkable> t, size_t i = 5, size_t iAM = 10);
+    Benchmark(std::unique_ptr<IBenchmarkable> t, std::unique_ptr<BenchmarkSettings> s);
     void run();
     inline const std::vector<double> & getResults() const { return results_; }
 
 private:
-    double epsilon_;
-    size_t iterations_;
-    size_t iterationsAM_;
     std::unique_ptr<IBenchmarkable> test_;
+    std::unique_ptr<BenchmarkSettings> settings_;
+//    BenchmarkSettings settings_;
     std::vector<double> results_;
 };
-
 
 } // namespace benchmark
 

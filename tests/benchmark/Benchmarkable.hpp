@@ -15,6 +15,22 @@
 namespace benchmark
 {
 
+
+namespace types
+{
+using Results = std::vector<double>;
+}
+
+using namespace types;
+
+class IBenchmark {
+public:
+    virtual ~IBenchmark() = default;
+    virtual void run() = 0;
+    virtual Results & getResults() const = 0;
+};
+
+
 class IBenchmarkable {
 public:
     virtual ~IBenchmarkable() = default;

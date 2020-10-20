@@ -171,9 +171,10 @@ set(UNIT_TEST_SRC
     ${UNIT_TEST_SRC_APP_DIR}/catch2/catch.hpp
     ${UNIT_TEST_SRC_APP_DIR}/main.cpp
     ${UNIT_TEST_SRC_APP_DIR}/TestSort.cpp
+    ${UNIT_TEST_SRC_APP_DIR}/TestBinarySearchTree.cpp
+    ${UNIT_TEST_SRC_APP_DIR}/TestGraph.cpp
 #    ${UNIT_TEST_SRC_APP_DIR}/CustomListeners.hpp
 #    ${UNIT_TEST_SRC_APP_DIR}/TestGraph.hpp
-#    ${UNIT_TEST_SRC_APP_DIR}/TestBinarySearchTree.hpp
 #    ${UNIT_TEST_SRC_APP_DIR}/TestUnionFind.hpp
 #    ${UNIT_TEST_SRC_APP_DIR}/TestSort.hpp
 #    ${UNIT_TEST_SRC_APP_DIR}/UnitTests.hpp

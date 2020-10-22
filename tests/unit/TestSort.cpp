@@ -16,7 +16,7 @@ SCENARIO( "isSorted tool testing", "[tools]" ) {
     GIVEN( "Unsorted container with some items" ) {
         std::vector<int> v = {1,7,3,4,5};
         WHEN( "Container is unsorted" ) {
-            THEN( "isSorted returns false" ) { REQUIRE( !tools::isSorted(v) ); }
+            THEN( "isSorted returns false" ) { REQUIRE_FALSE( tools::isSorted(v) ); }
         }
     }
     GIVEN( "Sorted container with some items" ) {
@@ -28,7 +28,7 @@ SCENARIO( "isSorted tool testing", "[tools]" ) {
     GIVEN( "Usnorted container with not unique items" ) {
         std::vector<int> v = {1,2,2,3,3,4,5,3};
         WHEN( "Container with duplicates is unsorted" ) {
-            THEN( "isSorted returns false" ) { REQUIRE( !tools::isSorted(v) ); }
+            THEN( "isSorted returns false" ) { REQUIRE_FALSE( tools::isSorted(v) ); }
         }
     }
     GIVEN( "Sorted container with not unique items" ) {

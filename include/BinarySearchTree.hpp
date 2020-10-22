@@ -33,7 +33,7 @@ size_t ObjectCounter::count = 0;
 
 /**
  * @class BinarySearchTree
- * @brief The UnionFind template class is the base class for all UnionFind classes.
+ * @brief The BinarySearchTree class is the implementation of binary tree structure
  * @tparam Key key type of the tree
  * @tparam Value value type of the tree
  */
@@ -183,7 +183,6 @@ private:
 
 };
 
-
 template<typename Key, typename Value>
 typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::put_(Node * n,  Key k, Value v)
 {
@@ -201,7 +200,6 @@ typename BinarySearchTree<Key, Value>::Node* BinarySearchTree<Key, Value>::put_(
     n->size = (n->left ? n->left->size : 0) + (n->right ? n->right->size : 0) + 1;
     return n;
 }
-
 
 template<typename Key, typename Value>
 Value BinarySearchTree<Key, Value>::get_(Node * n,  Key k) const

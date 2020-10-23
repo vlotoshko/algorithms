@@ -545,6 +545,4 @@ SCENARIO( "CriticalPathMethod testing", "[critical_path]" ) {
     }
 }
 
-
-
 } // namespace tests

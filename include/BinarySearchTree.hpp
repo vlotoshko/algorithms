@@ -130,7 +130,7 @@ public:
     size_t rank(Key k)  const { return rank_(root_, k); }
 
     /**
-     * @brief Prints all elements fo the tree.
+     * @brief Prints all elements of the tree.
      */
     void print() const { print_(root_); }
 

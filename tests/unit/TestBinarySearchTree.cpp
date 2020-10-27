@@ -5,14 +5,17 @@
 
 //--------------------------------------------------------------------------------------------------
 #include "catch2/catch.hpp"
-#include "BinarySearchTree.hpp"
+#include "BstUnbalanced.hpp"
+#include "BstRedBlack.hpp"
 //--------------------------------------------------------------------------------------------------
 
 namespace tests
 {
 
-SCENARIO( "BinarySearchTree testing", "[bst]" ) {
+bst::BstRedBlack<std::string, size_t> rbBst;
 
+SCENARIO( "BinarySearchTree testing", "[bst]" ) {
+rbBst.put("word", 0);
     GIVEN( "BinarySearchTree with some items" ) {
         bst::BinarySearchTree<std::string, size_t> bst;
         bst.put("word", 0);

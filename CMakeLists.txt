@@ -41,8 +41,9 @@ set(ALGORITHMS_TARGET_SRC_FILES
     include/ShortPaths.hpp
     include/Sort.hpp
     include/Sort_Impl.hpp
-    include/BinarySearchTree.hpp
-    include/RedBlackBST.hpp
+    include/BstHelperFunctions.hpp
+    include/BstRedBlack.hpp
+    include/BstUnbalanced.hpp
     include/Edge.hpp
     include/Graph.hpp
     include/GraphDirectionPolicies.hpp

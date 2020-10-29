@@ -26,24 +26,27 @@ class BstRedBlack
 {
 public:
     enum class Color{ RED, BLACK };
-    /**
-     * @brief The RedBlackBST constructor. Default.
-     */
+
+    /// @brief The BstRedBlack default constructor..
     BstRedBlack() : root_(nullptr) {}
     ~BstRedBlack() { bst::clear(root_); }
 
-    /**
-     * @brief put Puts new element into the tree.
-     * @param[in] k key
-     * @param[in] v value
-     */
-    void put(Key k, Value v) { root_ = put_(root_, k, v); root_->color = Color::BLACK; }
+    /// @brief Puts new element into the tree.
+    void put(Key k, Value v) { root_ = put_(root_, k, v);  root_->color = Color::BLACK; }
 
-    /**
-     * @brief Deletes element with the given key.
-     * @param[in] k key of the element
-     */
+    /// @brief Gets from the tree value by key.
+    Value get(Key k) const { return bst::get(root_, k); }
+
+    /// @brief Deletes element with the given key.
     void deleteNode(Key k) { root_ = deleteNode_(root_, k); }
+
+    /// @brief Returns true if tree is balanced keys sorted.
+    bool isBalanced() const { return bst::isBalanced(root_); }
+
+    /// @brief Returns true if tree is balanced keys sorted.
+    void print() const { return bst::print(root_); }
+    /// @brief Returns true if tree is balanced keys sorted.
+    Key rootKey() const { return root_->key; }
 
 private:
     struct Node //: public ObjectCounter
@@ -92,9 +95,9 @@ typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::put_(Node * n, 
 
     if (isRed_(n->right) && !isRed_(n->left))
         n = rotateLeft_(n);
-    if (isRed_(n->left) && !isRed_(n->left->left))
+    if (n->left != nullptr && isRed_(n->left) && isRed_(n->left->left))
         n = rotateRight_(n);
-    if(isRed_(n->left) && isRed_(n->left))
+    if(isRed_(n->left) && isRed_(n->right))
         flipColors_(n);
 
     n->size = (n->left ? n->left->size : 0) + (n->right ? n->right->size : 0) + 1;
@@ -140,7 +143,10 @@ typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::deleteNode_(Nod
 template<typename Key, typename Value>
 bool BstRedBlack<Key, Value>::isRed_(const Node * n) const
 {
-    return !(n == nullptr || n->color == Color::BLACK);
+    if (n == nullptr)
+        return false;
+
+    return n->color == Color::RED;
 }
 
 template<typename Key, typename Value>
@@ -153,7 +159,7 @@ typename BstRedBlack<Key, Value>::Node*  BstRedBlack<Key, Value>::rotateLeft_(No
     n->color = Color::RED;
     x->size = n->size;
     n->size = bst::size(n->left) + bst::size(n->right) + 1;
-    return nullptr;
+    return x;
 }
 
 template<typename Key, typename Value>
@@ -166,15 +172,18 @@ typename BstRedBlack<Key, Value>::Node*  BstRedBlack<Key, Value>::rotateRight_(N
     n->color = Color::RED;
     x->size = n->size;
     n->size = bst::size(n->left) + bst::size(n->right) + 1;
-    return nullptr;
+    return x;
 }
 
 template<typename Key, typename Value>
 void BstRedBlack<Key, Value>::flipColors_(Node * n)
 {
     n->color = Color::RED;
-    n->left->color = Color::BLACK;
-    n->right->color = Color::BLACK;
+    if (n->left != nullptr)
+        n->left->color = Color::BLACK;
+
+    if (n->right != nullptr)
+        n->right->color = Color::BLACK;
 }
 
 } // namespace bst

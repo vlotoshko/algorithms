@@ -130,7 +130,7 @@ typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::deleteNode_(Nod
         }
 
         Node* t = n;
-        n = min_(t->right);
+        n = min(t->right);
         n->right = forgetMin_(t->right);
         n->left = t->left;
         delete t;
@@ -139,6 +139,18 @@ typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::deleteNode_(Nod
     n->size = bst::size(n->left) + bst::size(n->right) + 1;
     return n;
 }
+
+template<typename Key, typename Value>
+typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::forgetMin_(BstRedBlack::Node * n)
+{
+    if (n->left == nullptr)
+        return n->right;
+
+    n->left = forgetMin_(n->left);
+    n->size = bst::size(n->left) + bst::size(n->right) + 1;
+    return n;
+}
+
 
 template<typename Key, typename Value>
 bool BstRedBlack<Key, Value>::isRed_(const Node * n) const

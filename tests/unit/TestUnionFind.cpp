@@ -11,36 +11,6 @@
 
 namespace tests
 {
-//TEMPLATE_PRODUCT_TEST_CASE("Union-find testing", "[union_find]",
-//                           (uf::UnionFind_QuickFind, uf::UnionFind_QuickUnion), (size_t)) {
-//    uf::UnionFindInfo<typename TestType::ElementType> ufData{10};
-//    TestType unionFind;
-//    unionFind.unionComponents(ufData, 1, 3);
-//    unionFind.unionComponents(ufData, 2, 8);
-//    unionFind.unionComponents(ufData, 1, 7);
-//    unionFind.unionComponents(ufData, 3, 9);
-//    unionFind.unionComponents(ufData, 4, 8);
-//    GIVEN( "Non directed graph" ) {
-//        WHEN( "Get average degree" ) {
-//            THEN( "Average degree of the graph returns" ) {
-//                REQUIRE( static_cast<typename TestType::ElementType>(1) == unionFind.find(ufData, 9) );
-//                REQUIRE( static_cast<typename TestType::ElementType>(4) == unionFind.find(ufData, 2) );
-//                REQUIRE( static_cast<typename TestType::ElementType>(6) == unionFind.find(ufData, 6) );
-//            }
-//        }
-//        WHEN( "Get average degree" ) {
-//            THEN( "Average degree of the graph returns" ) {
-//                REQUIRE( unionFind.connected(ufData, 1, 3));
-//                REQUIRE( unionFind.connected(ufData, 2, 8));
-//                REQUIRE( unionFind.connected(ufData, 1, 7));
-//                REQUIRE( unionFind.connected(ufData, 3, 9));
-//                REQUIRE( unionFind.connected(ufData, 4, 8));
-//                REQUIRE( unionFind.connected(ufData, 7, 3));
-//                REQUIRE( unionFind.connected(ufData, 4, 2));
-//            }
-//        }
-//    }
-//}
 
 SCENARIO( "Union-find testing", "[union_find]" ) {
     uf::UnionFindInfo<size_t> ufData{10};

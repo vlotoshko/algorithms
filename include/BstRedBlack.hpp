@@ -40,14 +40,6 @@ public:
     /// @brief Deletes element with the given key.
     void deleteNode(Key k) { root_ = deleteNode_(root_, k); }
 
-    /// @brief Returns true if tree is balanced keys sorted.
-    bool isBalanced() const { return bst::isBalanced(root_); }
-
-    /// @brief Returns true if tree is balanced keys sorted.
-    void print() const { return bst::print(root_); }
-    /// @brief Returns true if tree is balanced keys sorted.
-    Key rootKey() const { return root_->key; }
-
 private:
     struct Node //: public ObjectCounter
     {
@@ -107,37 +99,8 @@ typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::put_(Node * n, 
 template<typename Key, typename Value>
 typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::deleteNode_(Node * n,  Key k)
 {
-    if(n == nullptr)
-        return nullptr;
-
-    if (k < n->key)
-        n->left = deleteNode_(n->left, k);
-    else if (k > n->key)
-        n->right = deleteNode_(n->right, k);
-    else
-    {
-        if (n->right == nullptr)
-        {
-            Node * t = n->left;
-            delete n;
-            return t;
-        }
-        if (n->left == nullptr)
-        {
-            Node * t = n->right;
-            delete n;
-            return t;
-        }
-
-        Node* t = n;
-        n = min(t->right);
-        n->right = forgetMin_(t->right);
-        n->left = t->left;
-        delete t;
-    }
-
-    n->size = bst::size(n->left) + bst::size(n->right) + 1;
-    return n;
+    // TODO: implement node deleting
+    return nullptr;
 }
 
 template<typename Key, typename Value>

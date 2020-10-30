@@ -237,61 +237,6 @@ void print(Node * n)
 }
 
 /**
- * @brief Calculated deep of the balanced tree from its size
- * @param[in] base max number of child nodes
- * @param[in] size number of all nodes of the tree
- * @return true if tree is balanced.
- */
-size_t calculateDeepFromSize(size_t base, size_t treeSize)
-{
-    size_t deep = 0;
-    size_t calculatedSize = 0;
-
-    while (calculatedSize <= treeSize) {
-        calculatedSize += std::pow(base, deep);
-        ++deep;
-    }
-    return deep;
-}
-
-/**
- * @brief Prints all keys of the tree into cout.
- * @param[in] n root of the tree
- * @return true if tree is balanced.
- */
-template<typename Node>
-bool isBalanced(Node * n)
-{
-    size_t maxDeep = 0;
-    size_t currentDeep = 0;
-
-    // Declare function to have apility to use lambda recursively
-    std::function<void(Node * n, size_t & maxDeep, size_t & currentDeep)> dfs;
-    dfs = [&dfs](Node * n, size_t & maxDeep, size_t & currentDeep) -> void {
-        ++currentDeep;
-
-        if (n->left != nullptr)
-            dfs(n->left, maxDeep, currentDeep);
-
-        if (n->right != nullptr)
-            dfs(n->right, maxDeep, currentDeep);
-
-        if (n->left == nullptr && n->right == nullptr)
-            maxDeep = maxDeep >= currentDeep ? maxDeep : currentDeep;
-
-        --currentDeep;
-    };
-
-    // Get deep of the tree
-    dfs(n, maxDeep, currentDeep);
-
-    return maxDeep == calculateDeepFromSize(2, bst::size(n));
-}
-
-
-
-
-/**
  * @brief Gets sorted keys within lo-hi interval.
  * @param[out] v container for the keys
  * @param[in] lo low boundary of the inveral

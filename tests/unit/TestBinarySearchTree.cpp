@@ -7,15 +7,13 @@
 #include "catch2/catch.hpp"
 #include "BstUnbalanced.hpp"
 #include "BstRedBlack.hpp"
+#include "Tools.hpp"
 //--------------------------------------------------------------------------------------------------
 
 namespace tests
 {
 
-bst::BstRedBlack<std::string, size_t> rbBst;
-
 SCENARIO( "BinarySearchTree testing", "[bst]" ) {
-rbBst.put("word", 0);
     GIVEN( "BinarySearchTree with some items" ) {
         bst::BinarySearchTree<std::string, size_t> bst;
         bst.put("word", 0);
@@ -90,7 +88,7 @@ rbBst.put("word", 0);
                 REQUIRE( std::string{"android"} == bst.select(0) );
             }
         }
-        WHEN( "Get get rank of the elemet" ) {
+        WHEN( "Get get rank of the element" ) {
             THEN( "Proper rank returns" ) {
                 REQUIRE( static_cast<size_t>(2) == bst.rank("cat") );
                 REQUIRE( static_cast<size_t>(5) == bst.rank("word") );
@@ -100,5 +98,6 @@ rbBst.put("word", 0);
     }
 
 }
+
 
 } // namespace tests

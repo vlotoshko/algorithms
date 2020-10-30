@@ -86,9 +86,6 @@ public:
     /// @brief Returns all keys sorted.
     std::vector<Key> keys() const { return keys(min(), max()); }
 
-    /// @brief Returns true if tree is balanced keys sorted.
-    bool isBalanced() const { return bst::isBalanced(root_); }
-
 private:
     Node* root_; // Root node of the binary search tree
 

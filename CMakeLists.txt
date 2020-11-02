@@ -47,6 +47,7 @@ set(ALGORITHMS_TARGET_SRC_FILES
     include/Edge.hpp
     include/Graph.hpp
     include/GraphDirectionPolicies.hpp
+    include/HashTable.hpp
     include/IndexedPQ.hpp
     )
 

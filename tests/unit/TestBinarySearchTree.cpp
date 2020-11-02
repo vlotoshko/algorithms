@@ -96,8 +96,6 @@ SCENARIO( "BinarySearchTree testing", "[bst]" ) {
             }
         }
     }
-
 }
-
 
 } // namespace tests

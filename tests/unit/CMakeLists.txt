@@ -11,6 +11,7 @@ set(UNIT_TEST_SRC
     ${UNIT_TEST_SRC_APP_DIR}/TestGraph.cpp
     ${UNIT_TEST_SRC_APP_DIR}/TestSort.cpp
     ${UNIT_TEST_SRC_APP_DIR}/TestUnionFind.cpp
+    ${UNIT_TEST_SRC_APP_DIR}/TestHashTable.cpp
     )
 
 add_executable(${UNIT_TESTS_TARGET}

@@ -12,7 +12,6 @@
 #include <algorithm>
 #include <list>
 #include <vector>
-#include <iostream>
 //--------------------------------------------------------------------------------------------------
 
 namespace hash
@@ -40,12 +39,17 @@ public:
     /// @brief Gets value from the table.
     Value get(Key k) const;
 
-    /// @brief Deletes element with the given key.
-    void deleteNode(Key k);
+    /// @brief Deletes item with the given key.
+    void del(Key k);
 
 private:
+    /// @brief hashTable_ container that contains items
     HashTable hashTable_;
+
+    /// @brief Simple modular hash-fucntion
     size_t hash(Key k) const { return k % hashTable_.size(); }
+
+    /// @brief Comparator is used to find item by key
     class Comparator {
     public:
         explicit Comparator(Key k) : k_(k){}
@@ -83,10 +87,10 @@ Value HashTableChaining<Key, Value>::get(Key k) const
 }
 
 template<typename Key, typename Value>
-void HashTableChaining<Key, Value>::deleteNode(Key k)
+void HashTableChaining<Key, Value>::del(Key k)
 {
     auto & chain = hashTable_[hash(k)];
-    chain.erase(chain.begin(), chain.end(), Comparator{k});
+    chain.erase(std::remove_if(chain.begin(), chain.end(), Comparator{k}), chain.end());
 }
 
 } // namespace hash

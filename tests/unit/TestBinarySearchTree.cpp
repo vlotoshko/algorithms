@@ -98,4 +98,98 @@ SCENARIO( "BinarySearchTree testing", "[bst]" ) {
     }
 }
 
+SCENARIO( "RedBlack nodes coloring testing", "[bst_rb]" ) {
+    GIVEN( "BstRedBlack with some items" ) {
+        bst::BstRedBlack<std::string, size_t> bstRb;
+
+        WHEN( "Adding new nodes" ) {
+            bstRb.put("s", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+            }
+            bstRb.put("e", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+            }
+            bstRb.put("a", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+            }
+            bstRb.put("r", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+            }
+            bstRb.put("c", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "c") );
+            }
+            bstRb.put("h", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "c") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "h") );
+            }
+            bstRb.put("x", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "c") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "h") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "x") );
+            }
+            bstRb.put("m", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "c") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "h") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "x") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "m") );
+            }
+            bstRb.put("p", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "c") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "h") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "x") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "m") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "p") );
+            }
+            bstRb.put("l", 0);
+            THEN( "Nodes colored properly" ) {
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "s") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "e") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "a") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "r") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "c") );
+                REQUIRE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "h") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "x") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "m") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "p") );
+                REQUIRE_FALSE( bst::testRbNodeIsRed<std::string, size_t>(bstRb, "l") );
+            }
+        }
+    }
+}
+
 } // namespace tests

@@ -45,7 +45,7 @@ public:
     void put(Key k, Value v) { root_ = put_(root_, k, v); }
 
     /// @brief Gets from the tree value by key.
-    Value get(Key k) const { return bst::get(root_, k); }
+    Value get(Key k) const { Node * n = bst::get(root_, k); return n ? n->val : typename Node::ValueType{}; }
 
     /// @brief Deletes element with the given key.
     void deleteNode(Key k) { root_ = deleteNode_(root_, k); }

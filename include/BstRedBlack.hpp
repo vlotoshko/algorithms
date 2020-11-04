@@ -35,7 +35,7 @@ public:
     void put(Key k, Value v) { root_ = put_(root_, k, v);  root_->color = Color::BLACK; }
 
     /// @brief Gets from the tree value by key.
-    Value get(Key k) const { return bst::get(root_, k); }
+    Value get(Key k) const { Node * n = bst::get(root_, k); return n ? n->val : typename Node::ValueType{}; }
 
     /// @brief Deletes element with the given key.
     void deleteNode(Key k) { root_ = deleteNode_(root_, k); }
@@ -67,6 +67,9 @@ private:
     Node*  rotateLeft_(Node * n);
     Node*  rotateRight_(Node * n);
     void   flipColors_(Node * n);
+
+    template<typename K, typename V>
+    friend bool testRbNodeIsRed(const BstRedBlack<K, V> & bst, K k);
 };
 
 template<typename Key, typename Value>
@@ -118,10 +121,7 @@ typename BstRedBlack<Key, Value>::Node* BstRedBlack<Key, Value>::forgetMin_(BstR
 template<typename Key, typename Value>
 bool BstRedBlack<Key, Value>::isRed_(const Node * n) const
 {
-    if (n == nullptr)
-        return false;
-
-    return n->color == Color::RED;
+    return n != nullptr && n->color == Color::RED;
 }
 
 template<typename Key, typename Value>
@@ -159,6 +159,12 @@ void BstRedBlack<Key, Value>::flipColors_(Node * n)
 
     if (n->right != nullptr)
         n->right->color = Color::BLACK;
+}
+
+template<typename Key, typename Value>
+bool testRbNodeIsRed(const BstRedBlack<Key, Value> & bst, Key k)
+{
+    return bst.isRed_(bst::get(bst.root_, k));
 }
 
 } // namespace bst

@@ -9,7 +9,6 @@
 //--------------------------------------------------------------------------------------------------
 
 //--------------------------------------------------------------------------------------------------
-#include <functional>
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -36,19 +35,19 @@ size_t ObjectCounter::count = 0;
  * @brief Gets value by key.
  * @param[in] n root of the tree.
  * @param[in] k key of the node
- * @return value of the node.
+ * @return node or nullptr.
  */
 template<typename Node>
-typename Node::ValueType get(Node * n,  typename Node::KeyType k)
+Node* get(Node * n,  typename Node::KeyType k)
 {
     if(n == nullptr)
-        return typename Node::ValueType{};
+        return nullptr;
 
     if (k < n->key)
         return get(n->left, k);
     if (k > n->key)
         return get(n->right, k);
-    return n->val;
+    return n;
 }
 
 /**

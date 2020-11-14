@@ -5,8 +5,8 @@
 # -------------------------------------------------------------------------
 
 PATH_TO_SOURCE="src"
-INCLUDE_DIR="-I include -I test/unit"
-OUTPUT_DIR=./test/cppcheck/html
+INCLUDE_DIR="-I include"
+OUTPUT_DIR=./tests/cppcheck/html
 
 HEADERS_TO_CHECK=" \
     include/Tools.hpp \
@@ -21,12 +21,12 @@ HEADERS_TO_CHECK=" \
     include/Graph.hpp \
     include/GraphDirectionPolicies.hpp \
     include/IndexedPQ.hpp \
-    test/unit/CustomListeners.hpp \
-    test/unit/TestGraph.hpp \
-    test/unit/TestBinarySearchTree.hpp \
-    test/unit/TestUnionFind.hpp \
-    test/unit/TestSort.hpp \
-    test/unit/UnitTests.hpp"
+    tests/unit/main.cpp \
+    tests/unit/TestBinarySearchTree.cpp \
+    tests/unit/TestGraph.cpp \
+    tests/unit/TestHashTable.cpp \
+    tests/unit/TestSort.cpp \
+    tests/unit/TestUnionFind.cpp"
 
 # cd to source directory
 cd "$(dirname "$0")"

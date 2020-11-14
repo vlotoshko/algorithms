@@ -53,7 +53,7 @@ private:
     class Comparator {
     public:
         explicit Comparator(Key k) : k_(k){}
-        bool operator()(const std::pair<Key, Value> & pair) {return k_ == pair.first; }
+        bool operator()(const std::pair<Key, Value> & pair) const {return k_ == pair.first; }
     private:
         Key k_;
     };
